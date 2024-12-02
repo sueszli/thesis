@@ -1,3 +1,11 @@
+.PHONY: pdf
+pdf:
+	pdflatex main.tex
+	bibtex main.aux
+	pdflatex main.tex
+	pdflatex main.tex
+	rm -f *.aux *.log *.out *.synctex.gz *.bcf *.bbl *.blg *.run.xml
+
 .PHONY: up
 up:
 	git pull
