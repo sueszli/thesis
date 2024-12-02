@@ -1,0 +1,231 @@
+\documentclass[a4paper, oneside]{discothesis}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{epigraph}
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT METADATA
+
+\thesistype{Master's Thesis} % Master's Thesis, Bachelor's Thesis, Semester Thesis, Group Project
+\title{Rethinking Adversarial Examples}
+
+\author{Yahya Jabary}
+\email{yjabary@ethz.ch}
+
+\institute{Computer Engineering and Networks Laboratory \\[2pt]
+ETH Zürich}
+
+% Optionally, you can put in your own logo here
+% \logo{\includegraphics[width=0.2\columnwidth]{figures/dsg-logo}}
+
+\supervisors{
+	Prof.\ Dr.\ Roger Wattenhofer\\[2pt]
+	Prof.\ Dr.\ Schahram Dustdar
+}
+
+% Optionally, keywords and categories of the work can be shown (on the Abstract page)
+% \keywords{Keywords go here.}
+% \categories{ACM categories go here.}
+
+\date{\today}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\hr}{\begin{center}\rule{0.5\textwidth}{0.4pt}\end{center}}
+
+\begin{document}
+
+\frontmatter % do not remove this line
+\maketitle
+
+\cleardoublepage
+
+\begin{acknowledgements}
+	Thanks y'all!
+
+	% This thesis is the result of finally getting to work on a problem that truly matters to me, in a place where curiosity and passion were shared and I felt like I belonged. More than that, it's a testament to holding on – through uncertainty and rejection – with the hope that one day, I would be given the chance to contribute in my own way.
+
+	% \noindent I am really grateful to those who stood by me:
+		
+	% \begin{minipage}{\linewidth}
+	% 	\setlength{\parskip}{0.5em}
+	% 	My parents, Shima and Florian and family whose support never wavered, even when I took risks and turned down financial opportunities to follow my heart.
+		
+	% 	My partner, Laura, whose love and encouragement reached me across the Atlantic ocean and carried me through the hardest moments.
+	% \end{minipage}
+	
+	% \noindent I owe so much to those who made this work possible:
+	
+	% \begin{minipage}{\linewidth}
+	% 	\setlength{\parskip}{0.5em}
+	% 	Prof.\ Wattenhofer, for trusting me with this project and helping me navigate challenges with wisdom and humor.
+	
+	% 	Andreas Plesner, for being just as much of a mentor as a colleague and for his hard work and dedication to our shared vision.
+		
+	% 	Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie.
+	% \end{minipage}
+
+	% \noindent I also want to thank those whose paths diverged from mine but whose impact I carry with me: Prof.\ Schahram Dustdar, who enabled me to study abroad and Prof.\ Ali Mashtizadeh, who introduced me to operating systems research.
+
+	% \noindent Finally, studying adversarial examples has held a deeply personal significance for me. At its heart, this field explores how subtle differences in perception can lead to unintended outcomes. This resonates with my own journey: navigating environments where my way of seeing the world was often misunderstood or unwelcome. This thesis, in its small way, reflects my hope to bridge those gaps – not just between machines, but between people too.
+	
+	% good style: https://arxiv.org/pdf/2202.02435
+\end{acknowledgements}
+
+\begin{abstract}
+    The abstract should be short, stating what you did and what the most important result is.
+	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+\end{abstract}
+
+\tableofcontents
+
+\mainmatter % do not remove this line
+
+% start writing here
+
+\chapter{Introduction}
+
+\section{Definition}
+
+Adversarial examples are closely related to the concept of perturbation methods.
+
+The origin of perturbations can be traced back to the early days of computational geometry by Seidel et al.~\cite{seidel1998nature} in 1998. Perturbation techniques in computational geometry address a fundamental challenge: handling ``degeneracies'' in geometric algorithms. These are special cases that occur when geometric primitives align in ways that break the general position assumptions the algorithms rely on.
+
+% use a block or something for experiments
+% https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+
+\paragraph{Example: Linear Classifier}
+
+Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant, and $\delta(x)$ is the perturbation function to break degeneracies.
+
+A perturbation scheme should be (1) consistent, meaning that the same input always produces the same perturbed output (2) infinitesimal, such that perturbations are small enough not to affect non-degenerate cases and (3) effective, in breaking all possible degeneracies.
+
+One powerful perturbation approach is Simulation of Simplicity (SoS)~\cite{franklin2022implementing, edelsbrunner2002topological, edelsbrunner2001sink, edelsbrunner1990simulation, levy2016robustness, schorn1993axiomatic}. SoS systematically perturbs input coordinates using powers of a symbolic infinitesimal. For a point $p_i = (x_i, y_i)$, the perturbed coordinates become:
+
+$$(\tilde{x_i}, \tilde{y_i}) = (x_i + \varepsilon^{2i}, y_i + \varepsilon^{2i+1}) = p_i + \varepsilon^{2i} \cdot (1, \varepsilon)$$
+
+This scheme ensures that no two perturbed points share any coordinate, effectively eliminating collinearity and other degeneracies.
+
+The beauty of perturbation methods lies in their ability to handle degeneracies without explicitly detecting them, making geometric algorithms both simpler and more robust.
+
+Adversarial examples follow the same principles as perturbation methods, but with the opposite goal of misleading machine learning models. This concept was first introduced by Szegedy et al.~\cite{szegedy2013intriguing} in 2014. Intuitively adversarial examples can be understood as seeking the closest point in the input space that lies on the "wrong side" of a decision boundary.
+
+\paragraph{Example: Fast Gradient Sign Method}
+
+The Fast Gradient Sign Method (FGSM) is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. The perturbation is controlled by a parameter $\varepsilon > 0$, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function is denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label.
+
+FGSM works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$, and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains imperceptible to human observers~\cite{zhang2019adversarial}.
+
+The process for generating an adversarial example with FGSM can be expressed as:
+
+$$x' = x + \varepsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))$$
+
+In the targeted version of FGSM, the perturbation is designed to minimize the loss with respect to a chosen target class, making the model predict the wrong class deliberately. In the untargeted version, the perturbation is designed to increase the loss for the correct class, causing the model to misclassify the input. In both cases, the perturbation is added to the original input, $x$, to create the adversarial example.
+
+% there are a bunch of other different kinds of attacks
+
+% there are a bunch of other ways to define adversarial examples, ie. human machine vision gap, large language models, we just arbitrarily chose the visual domain
+
+% we can categorize them: white box vs. black box
+
+
+
+\section{Mental Models}
+
+% ---> people tried a bunch of different ways to explain adversarial examples
+
+% Today, we recognize that adversarial examples are not random noise but rather carefully crafted perturbations that exploit the model's learned features. This understanding has led to the development of various defense mechanisms, including adversarial training and robust optimization techniques.
+
+% The field has evolved from simple linear classifiers to complex scenarios involving physical-world attacks, demonstrating that adversarial examples are not merely theoretical constructs but practical concerns in machine learning systems.
+
+% https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/not%20bugs%20features.md
+
+
+In 2013 Szegedy et al. \cite{cubuk2017intriguing} discovered that deep neural networks are vulnerable to adversarial examples \textendash{} inputs with imperceptible perturbations that cause misclassification, revealing blind spots where the models' decision boundaries are brittle, despite appearing to generalize well on normal inputs. Since then we have made a lot of progress in both finding attack vectors \cite{goodfellow2014explaining} \cite{madry2017towards} \cite{papernot2016limitations} and adversarially training models to be more robust \cite{shafahi2019adversarial} \cite{madry2017towards} \cite{papernot2016distillation} to these attacks.
+
+However, despite the progress, we still don't fully understand:
+
+\begin{itemize}
+    \item What they are, why they exist and how they work.
+    \item How to defend against them without sacrificing accuracy (robustness vs accuracy trade-off).
+    \item Why they transfer between different models, datasets, architectures, training procedures and even to the human visual system \cite{elsayed2018adversarial}.
+\end{itemize}
+
+There have been many attempts at explaining adversarial examples, each with limitations and assumptions \textendash{} some complementary, some contradictory  \footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al. \cite{ilyas2019adversarial}}.
+
+For example, the \textit{dimpled manifold hypothesis} \cite{shamir2021dimpled}  suggests that the decision boundary of deep neural networks is close to the data manifold, making it easy to find adversarial examples, while the \textit{non-robust features hypothesis} \cite{ilyas2019adversarial} suggests that models exploit non-robust features that are imperceptible to humans, leading to a vulnerability against small perturbations
+
+The \textit{dimpled manifold hypothesis} is a particularly controversial one, as it was criticized by Yannik Kilcher \cite{kilcher2021dimpled} in 2021, who also provided a counterexample in less than 100 lines of code \cite{kilcher2021dimpledcode}. Despite the lack of generalizability, a master's student from the University of Vienna, Lukas Karner, successfully verified and replicated all experiments detailed in the dimples paper \cite{karner2023dimpled} in 2023. Lukas allowed me to use his results in my work. He mentioned that there is currently no paper or thesis based on his work and that he would be happy to see his results being used in a meaningful way.
+
+This leaves us with the possibility that the experiments carried out are correct in themselves, but that the chain of reasoning is inconclusive and therefore doesn't generalize. Investigating this further would require more rigor by formalizing falsifiable hypotheses based on the paper and conducting experiments to test them.
+
+Another aspect of the \textit{dimpled manifold hypothesis} worth exploring is the idea of projecting the perturbations on the data manifold before applying them to the input space. Reducing the dimensionality of the perturbations or compressing them makes them visible to the human eye and interpretable as demonstrated by Karner \cite{karner2023dimpled}.
+
+\section{Counterintuitive Properties}
+
+% ---> there is still a bunch of stuff we don't understand
+
+% unsolved mysteries:
+% - https://arxiv.org/pdf/1610.08401
+
+\chapter{Methodology}
+
+\chapter{Results}
+
+\chapter{Stuff}
+
+% hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
+
+\newpage
+
+\begin{flushright}
+	``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''
+	
+	\textit{\textemdash{} James Mickens, USENIX Security 18~\cite{218395}}
+\end{flushright}
+
+\bigskip
+
+\section{First Section Title}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+
+\subsection{First Subsection Title}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+
+\begin{theorem}[First Theorem] \label{thm:first theorem}
+	This is our first theorem.
+\end{theorem}
+
+\begin{proof}
+	And this is the proof of the first theorem with a complicated formula and a reference to Theorem \ref{thm:first theorem}. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+	\begin{equation}
+		{\frac {\mathrm d}{\mathrm dx}}\arctan(\sin({x}^{2}))=-2 \cdot {\frac {\cos({x}^{2})x}{-2+\left (\cos({x}^{2})\right )^{2}}}
+	\end{equation}	
+\end{proof}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.2\columnwidth]{figures/disco_logo_faded}
+    \caption{This is an example graphic.}
+    \label{fig:example_figure}
+\end{figure}
+
+And here we cite some external documents~\cite{TestReference, TestReference2}.
+An example of an included graphic can be found in Figure~\ref{fig:example_figure}.
+Note that in \LaTeX, ``quotes'' do not use the usual double quote characters.
+
+% This displays the bibliography for all cited external documents. All references have to be defined in the file references.bib and can then be cited from within this document.
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+% This creates an appendix chapter, comment if not needed.
+\appendix
+\chapter{First Appendix Chapter Title}
+
+\end{document}

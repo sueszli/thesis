@@ -1,0 +1,134 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{graphicx}
+\usepackage[margin=2.8cm]{geometry}
+\usepackage{wrapfig}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=black]{hyperref}
+\usepackage{color}
+\usepackage[english]{babel}
+\usepackage{forloop}
+
+\newenvironment{reqlist}{\par \medskip \noindent \begin{tabular}{cp{0.83\textwidth}r} \\[-24pt]}{\end{tabular}}
+\newcommand\req{\\ \smallskip \smallskip \hspace{0.24cm} $\bullet$\hspace{-0.2cm} & }
+\newcounter{num}
+\newcommand\effort[1]{\mbox{(\forloop{num}{0}{\value{num} < #1}{$\star$})}}
+
+\setlength{\parindent}{0pt} % disable indentation
+\definecolor{gray}{rgb}{0.75,0.75,0.75}
+\definecolor{darkgray}{rgb}{0.55,0.55,0.55}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent \hrulefill \vspace{6pt}
+
+\noindent \includegraphics[viewport=8 8 185 55]{figures/eth_logo_black} \hfill
+\noindent \includegraphics[trim=0 0 2 0]{figures/disco-logo-col} \hspace{-6pt} \vspace{-6pt}
+
+\noindent \hrulefill \vspace{4pt}
+
+\noindent {\textit{Yahya Jabary}} \hfill {\textit{Prof.\ S.\ Dustdar (DSG TU Wien)}}
+
+\noindent \hfill {\textit{Prof.\ R.\ Wattenhofer (DISCO ETH Zürich)}}
+
+\bigskip
+
+\noindent Thesis based on: \url{https://www.arxiv.org/pdf/2409.05558} (in submission)
+
+\vspace{2em}
+
+\noindent \textbf{\LARGE Seeing Through the Mask: \\ Rethinking Adversarial Examples for CAPTCHAs} \bigskip
+
+\bigskip
+
+% alternatively: "Exploiting the Gap Between Human and Machine Perception in CAPTCHAs"
+
+% -----------------------------------------------------------------------------------------------------------
+
+% > what are common denominators among attacks? do you recognize a pattern? define a problem based on that. hypothize what the common denominator is. if you manage to defend against the common attack vector, then you're able to prove / disprove yourself.
+
+% RQ1: how do existing attacks against captchav2 compare, what are common patterns in existing attacks against captcha?
+% RQ2: how resilient are perturbed captchas against these attacks and how well do they transfer across models (and also the human vision systems)?
+% RQ3: [find a third question, it's a nice number lol] -> think about the human vision system part. maybe you could unetify a resnet to emulate human vision to finally.
+
+% mention the empirical approach in your methodology. this should be an empirical study on the generalizability of defenses (advx) against threats image recognition models
+
+The widespread reliance on Google's reCAPTCHAv2 as a primary defense\footnote{Google's reCAPTCHAv3 falls back on reCAPTCHAv2 when it detects suspicious traffic.} against automated web attacks is facing a critical challenge due to recent advances in computer vision technology. With an estimated market share of 99.93\%~\cite{captchashare}, this Turing test is vulnerable to solvers using pre-trained image recognitionmodels. These attacks have been shown to achieve a success rate of 92-98\%~\cite{9121132,hossen2019bots,sukhani2021automating,hossen2020object} and most recently 100\% as demonstrated by Plesner et al.~\cite{plesner2024breaking}. The low computational cost of these open pre-trained models makes them accessible to a wide range of adversaries and poses a significant threat to the security of online platforms.
+
+\bigskip
+
+\textbf{We hypothesize} that due to the transferability of adversarial perturbations across models~\cite{goodfellow2014explaining, demontis2019adversarial} and the gap between human and machine perception~\cite{elsayed2018adversarial} perturbing CAPTCHA images can effectively mitigate vision-based attacks without compromising the user experience.
+
+This approach offers a practical, cost-effective, and scalable solution for Google and other organizations that rely on reCAPTCHA to secure their online platforms.  Our study aims to fill a critical gap in the field by developing and implementing a practical solution to fortify reCAPTCHAv2 against vision-based attacks, an approach that has been hypothesized for a subset of the CAPTCHA tasks~\cite{hitaj2020capture} but not yet realized.
+
+\bigskip
+
+\textbf{We expect} this counter-offensive strategy to be a generalizable defense against adversarial attacks. We will evaluate the effectiveness of the perturbations by measuring the success rate of vision-based attacks on the perturbed CAPTCHAs and the usability of the perturbed images for human users.
+
+This leaves us with the following research questions:
+
+\begin{enumerate}
+    \item[RQ1] How do the existing vision-based attacks against reCAPTCHAv2 compare, and what are the common patterns among them?
+    \item[RQ2] How do perturbed CAPTCHAs perform against these attacks and how well do they transfer across models?
+    % \item[RQ3] Is the ``dimpled manifold hypothesis'' a valid explanation for adversarial examples, and can it be used to make adversarial examples perceptible to humans?
+\end{enumerate}
+
+\bigskip
+
+\textbf{We will} address these questions empirically by building a reCAPTCHAv2 clone, perturbing its images with adversarial noise
+such as FGSM~\cite{goodfellow2014explaining} and PGD~\cite{madry2017towards} and evaluating the effectiveness of the perturbations against vision-based attacks.
+
+We will also assess the transferability of the perturbations across different models and the robustness of the perturbed CAPTCHAs against adversarial attacks. The results will provide insights into the generalizability of adversarial defenses against vision-based attacks and the potential of adversarial perturbations to fortify reCAPTCHAv2 against vision-based attacks.
+
+By addressing these research questions, our study will not only contribute to the fields of adversarial machine learning and cybersecurity but also provide practical insights for improving the security of widely used CAPTCHA systems. The results could have far-reaching implications for online security practices and the development of more robust human-AI differentiation techniques.
+
+\section*{Detailed project outline}
+
+The detailed project outline is as follows \footnote{The stars indicate the estimated effort required for each task on a scale from 0 to 5 (0 = no effort, 5 = high effort)}:
+
+\begin{reqlist}
+    % general
+	\req Literature review (related work, previous approaches) & \effort{3}
+
+    % captcha
+    \req Building a reCAPTCHAv2 clone (as an open-source attack/defense benchmarking tool for the community) & \effort{4}
+    \req Generating a robust dataset for the CAPTCHA clone using adversarial examples & \effort{3}
+    \req Evaluating the effectiveness of perturbations against vision based attacks & \effort{3}
+    % standard
+    \req Writing the final report/thesis & \effort{4}
+	\req Midterm and final presentations & \effort{3}
+\end{reqlist}
+
+\medskip
+
+The student's duties include:
+
+\begin{itemize}
+	\item One meeting per week with the advisors to discuss current matters
+	\item A final report in English, presenting work and results
+	\item A midterm and a final presentation (15 min) of the work and results obtained in the project
+\end{itemize}
+
+\section*{Extension}
+
+Optional extensions to the project if time allows include researching the nature of adversarial examples:
+
+\begin{reqlist}
+    \req Assessing previous work on the dimpled manifold hypothesis
+    \req Studying the transferability of adversarial perturbations to human vision systems. Thinking of the possibility of emulating human vision systems using deep learning models.
+    \req Formalizing falsifiable hypotheses for the dimples paper and conducting experiments to test them (based on:~\cite{kilcher2021dimpled, kilcher2021dimpledcode, karner2023dimpled})
+    \req Exploring distillation learning to improve adversarial robustness (based on:~\cite{papernot2016distillation, madry2017towards})
+    \req ... (more ideas are welcome)
+\end{reqlist}
+
+For some context: Since the adversarial vulnerability of deep neural networks was discovered in 2013~\cite{goodfellow2014explaining}, there have been many attempts to explain why adversarial examples exist and how they work, each with their limitations and assumptions \textendash{} some complementary, some contradictory \footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.~\cite{ilyas2019adversarial}}. And there are still many open questions. One of the hypotheses is the ``dimpled manifold hypothesis'' \footnote{A similar idea was previously proposed by Elliot et al.~\cite{elliott2021explaining}} proposed by Shamir et al.~\cite{shamir2021dimpled}, suggests that the decision boundary of deep neural networks is close to the data manifold, making it easy to find adversarial examples. Additionally, the paper found that by reducing the dimensionality of the perturbations and projecting them on the data manifold before passing them to the model, they can be made perceptible and interpretable to humans. 
+
+\bigskip
+
+Additionally the paper ``Adversarial Examples that Fool both Computer Vision and Time-Limited Humans''~\cite{elsayed2018adversarial} showed that adversarial examples can fool time-limited humans, suggesting that there could be a connection between adversarial examples and human perception.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
