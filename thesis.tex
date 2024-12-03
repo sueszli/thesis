@@ -19,7 +19,7 @@
 
 \supervisors{Prof.\ Dr.\ Roger Wattenhofer\\[2pt] Prof.\ Dr.\ Schahram Dustdar}
 
-\keywords{Robustness, Alignment, Security in Machine Learning} % abstract keywords
+\keywords{Robustness, Alignment, Interpretability in Machine Learning} % abstract keywords
 % \categories{ACM categories go here.}
 
 \date{\today}
@@ -39,7 +39,7 @@
 \usepackage{setspace}
 \usepackage{multicol}
 \tcbset{sharp corners, colback = white, before skip = 0.5cm, after skip = 0.5cm, breakable}
-\newtcolorbox{examplebox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
+\newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 
 %
 % content
@@ -85,7 +85,7 @@ Adversarial examples are closely related to the concept of perturbation methods.
 
 The origin of perturbations can be traced back to the early days of computational geometry by Seidel et al. in 1998~\cite{seidel1998nature}. Perturbation techniques in computational geometry address a fundamental challenge: handling ``degeneracies'' in geometric algorithms. These are special cases that occur when geometric primitives align in ways that break the general position assumptions the algorithms rely on.
 
-\begin{examplebox}
+\begin{highlightbox}
 	\textbf{Example:} Perturbation scheme for a linear classifier. \\
 
 	Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant, and $\delta(x)$ is the perturbation function to break degeneracies. \\
@@ -97,13 +97,13 @@ The origin of perturbations can be traced back to the early days of computationa
 	$$(\tilde{x_i}, \tilde{y_i}) = (x_i + \varepsilon^{2i}, y_i + \varepsilon^{2i+1}) = p_i + \varepsilon^{2i} \cdot (1, \varepsilon)$$
 
 	This scheme ensures that no two perturbed points share any coordinate, effectively eliminating collinearity and other degeneracies.
-\end{examplebox}
+\end{highlightbox}
 
 The beauty of perturbation methods lies in their ability to handle degeneracies without explicitly detecting them, making geometric algorithms both simpler and more robust.
 
 Adversarial examples on the other hand, first introduced by Szegedy et al. in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
 
-\begin{examplebox}
+\begin{highlightbox}
 	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
 
 	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining} in the context of visual recognition tasks. Given an input image $x$, FGSM generates an adversarial example $x'$ by perturbing the input in the direction of the gradient of the loss function with respect to the input.\\
@@ -117,17 +117,49 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 	$$x' = x + \underbracket{\varepsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))}_{\text{Perturbation}}$$
 	
 	In the untargeted version, the perturbation is designed to increase the loss for the correct class. In the targeted version the perturbation is designed to minimize the loss with respect to the adversary's chosen target class, making the model predict it deliberately.
-\end{examplebox}
+\end{highlightbox}
 
-% continue writing my report in a casual but academic tone.
+While initially discovered in computer vision applications, the principles behind these attacks remain consistent across all domains: Paper-reviewer assignment algorithms for academic conferences can be subverted, such that the authors are able to preselect reviewers who are likely to favor their work~\cite{eisenhofer2023no}, despite challenges in the discrete and semantic nature of text~\cite{Han2022TextAA}. Speech recognition systems are vulnerable to audio-based attacks, where carefully crafted noise can cause automatic speech recognition systems to fail~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
-% this definition can be expanded to any domain but due to the visual nature of the human being and how this concept was initially introduced by szegedy et al. in 2014, we will focus on the visual domain in this work.
+Having established the general concept of adversarial examples, we can now explore the various dimensions among which they can be categorized. This is particularly important when building a threat model.
 
-% explain that there are various domains (cv, nlp, rl, ...) that adversarial examples could be applied to.
+Adversarial examples in machine learning can be categorized along several key dimensions that reflect both their implementation approach and intended impact. One fundamental distinction lies between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings[4]. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security[4].
 
-% explain ways to categorize adversarial examples: white box vs. black box, targeted vs. untargeted, ... (more categories)
+Another crucial categorization distinguishes between targeted and untargeted attacks. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output[4][5]. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
+
+The domain of application represents another important categorization axis. Adversarial attacks can be crafted for various types of data, including images, text, and graphs[5]. Each domain presents unique challenges and opportunities for attackers, requiring different technical approaches and defensive strategies.
+
+The sophistication and complexity of attacks form another categorical dimension. Some attacks employ simple greedy algorithms with spatial heuristics, while others utilize advanced gradient-guided strategies borrowed from image classification domains[4]. The choice of attack strategy often depends on the attacker's resources, knowledge, and objectives.
+
+The semantic nature of adversarial examples provides yet another classification framework. Some attacks focus on manipulating the semantic meaning of inputs, while others exploit the mathematical properties of neural networks without regard for semantic interpretation[3]. This distinction has important implications for both the effectiveness of attacks and the development of defensive measures.
+
+In the context of system security, adversarial attacks can also be categorized based on their timing and persistence. Some attacks target the training phase of machine learning models, while others focus on the inference phase[5]. This temporal dimension is particularly relevant for developing comprehensive defense strategies that protect systems throughout their lifecycle.
+
+These various categorization schemes help researchers and practitioners better understand the landscape of adversarial attacks, enabling more effective defense mechanisms and contributing to the development of more robust machine learning systems. The field continues to evolve, with new attack vectors and categories emerging as artificial intelligence applications become more prevalent in security-critical domains[6].
+
+Citations:
+[1] https://www.semanticscholar.org/paper/9a5cb1e6eb6bc0bf282232658b658cfd94c57c19
+[2] https://arxiv.org/abs/2107.01809
+[3] https://arxiv.org/abs/2012.10076
+[4] https://arxiv.org/abs/2303.11143
+[5] https://www.semanticscholar.org/paper/706c89249b11b8b03cb96a1437ab6a83b759529d
+[6] https://www.semanticscholar.org/paper/c99750f0156be77fbe4148452be446462289af13
+
+
+
+\newpage
+
+% ----- machine vision gap ------
+
+% taking a step back, because vision models are trying to learn the human judgement function, adversarial examples are exploiting the so called ``human-machine vision gap''.
 
 % one important requirement is that the perturbation intensity must be chosen such that it is imperceptible to human observers. this description in the original paper doesn't match the pixel space change constraint, since we can change a bunch of pixels and have very little changes in the semantic space (i.e. changing exposure, sharpness, brightness, ...).
+
+% ----- imperceptability ------
+
+% then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
+
+% we will come back to this when talking about the generalizability of these models.
 
 \begin{figure}
     \centering
@@ -137,11 +169,8 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 \end{figure}
 
 
-% then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
 
 
-
-\section{Motivation}
 
 % Why is this relevant?
 
