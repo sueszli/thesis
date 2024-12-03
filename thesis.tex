@@ -119,30 +119,25 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 	In the untargeted version, the perturbation is designed to increase the loss for the correct class. In the targeted version the perturbation is designed to minimize the loss with respect to the adversary's chosen target class, making the model predict it deliberately.
 \end{highlightbox}
 
-Having established the general concept of adversarial examples, we can now explore the various dimensions among which they can be categorized. This is particularly important when building a threat model.
+While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be subverted by circumventing the discrete nature of text data~\cite{Han2022TextAA}. One particularly entertaining example is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors can preselect reviewers to gain a competitive advantage. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
-One fundamental distinction lies between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
+Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}.
 
-Another crucial categorization distinguishes between targeted and untargeted attacks. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
+We can differentiate between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
 
-The domain of application represents another important categorization axis. Adversarial attacks can be crafted for various types of data, including images, text, and graphs~\cite{Kashyap2024AdversarialAA}. Each domain presents unique challenges and opportunities for attackers, requiring different technical approaches and defensive strategies.
+An attack can be targeted or untargeted. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
 
-\begin{highlightbox}
-	\textbf{Digression:} \\
+The extent to which adversarial examples are transferable - meaning their ability to fool multiple different models - represents yet another categorization axis. Some adversarial examples demonstrate high transferability across various model architectures, making them particularly challenging for defensive systems to counter, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack}. To enhance transferability, researchers have developed techniques such as random perturbation dropping and feature dominance enhancement over random natural images~\cite{zheng2023black}.
 
-	While initially discovered in computer vision applications, the principles behind these attacks remain consistent across all domains: Paper-reviewer assignment algorithms for academic conferences can be subverted, such that the authors are able to preselect reviewers who are likely to favor their work~\cite{eisenhofer2023no}, despite challenges in the discrete and semantic nature of text~\cite{Han2022TextAA}. Speech recognition systems are vulnerable to audio-based attacks, where carefully crafted noise can cause automatic speech recognition systems to fail~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
-\end{highlightbox}
+Finally, the semantic nature of adversarial examples provides yet another classification framework. Some attacks focus on manipulating the semantic meaning of inputs, while others exploit the mathematical properties of models without regard for semantic interpretation~\cite{browne2020semantics}.
 
-The sophistication and complexity of attacks form another categorical dimension. Some attacks employ simple greedy algorithms with spatial heuristics, while others utilize advanced gradient-guided strategies borrowed from image classification domains~\cite{capozzi2024adversarial}. The choice of attack strategy often depends on the attacker's resources, knowledge, and objectives.
-
-The semantic nature of adversarial examples provides yet another classification framework. Some attacks focus on manipulating the semantic meaning of inputs, while others exploit the mathematical properties of neural networks without regard for semantic interpretation~\cite{browne2020semantics}. This distinction has important implications for both the effectiveness of attacks and the development of defensive measures.
-
-In the context of system security, adversarial attacks can also be categorized based on their timing and persistence. Some attacks target the training phase of machine learning models, while others focus on the inference phase~\cite{Kashyap2024AdversarialAA}. This temporal dimension is particularly relevant for developing comprehensive defense strategies that protect systems throughout their lifecycle.
-
-These various categorization schemes help researchers and practitioners better understand the landscape of adversarial attacks, enabling more effective defense mechanisms and contributing to the development of more robust machine learning systems. The field continues to evolve, with new attack vectors and categories emerging as artificial intelligence applications become more prevalent in security-critical domains~\cite{Khaleel2024AdversarialAI}.
 
 
 \newpage
+
+\subsection{Imperceptibility vs. Semantic Preservation}
+
+Dedicate a whole section to this, it's important.
 
 % ----- machine vision gap ------
 
