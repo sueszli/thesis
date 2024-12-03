@@ -77,7 +77,7 @@
 
 % good style: https://arxiv.org/pdf/2202.02435
 
-We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning. To our knowledge, this is the first attempt to introduce this topic as a gateway for a broader audience, without any assumptions about prior knowledge. We hope it will be valuable to those interested.
+We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning to a broader audience, with fewer technical prerequisites. We hope it will be valuable to those interested.
 
 \section{Definition}
 
@@ -121,35 +121,33 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA}. One particularly entertaining example is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
+\section{Types of Adversarial Examples}
+
 Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}.
 
 We can differentiate between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
 
 An attack can be targeted or untargeted. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
 
-The extent to which adversarial examples are transferable - meaning their ability to fool multiple different models - represents yet another categorization axis. Some adversarial examples demonstrate high transferability across various model architectures, making them particularly challenging for defensive systems to counter, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack}. To enhance transferability, researchers have developed techniques such as random perturbation dropping and feature dominance enhancement over random natural images~\cite{zheng2023black}.
+The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models \textendash{} represents yet another categorization axis. Some adversarial examples demonstrate high transferability across various model architectures, making them particularly challenging for defensive systems to counter, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
 
 Finally, the semantic nature of adversarial examples provides yet another classification framework. Some attacks focus on manipulating the semantic meaning of inputs, while others exploit the mathematical properties of models without regard for semantic interpretation~\cite{browne2020semantics}.
 
 
-
 \newpage
 
-\subsection{Imperceptibility vs. Semantic Preservation}
+\section{Imperceptibility vs.\ Semantic Preservation}
 
-Dedicate a whole section to this, it's important.
+
+
+% ----- imperceptability ------
+
+% one important requirement is that the perturbation intensity must be chosen such that it is imperceptible to human observers. this description in the original paper doesn't match the pixel space change constraint, since we can change a bunch of pixels and have very little changes in the semantic space (i.e. changing exposure, sharpness, brightness, ...).
 
 % ----- machine vision gap ------
 
 % taking a step back, because vision models are trying to learn the human judgement function, adversarial examples are exploiting the so called ``human-machine vision gap''.
 
-% one important requirement is that the perturbation intensity must be chosen such that it is imperceptible to human observers. this description in the original paper doesn't match the pixel space change constraint, since we can change a bunch of pixels and have very little changes in the semantic space (i.e. changing exposure, sharpness, brightness, ...).
-
-% ----- imperceptability ------
-
-% then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
-
-% we will come back to this when talking about the generalizability of these models.
 
 \begin{figure}
     \centering
@@ -161,14 +159,33 @@ Dedicate a whole section to this, it's important.
 
 
 
+% then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
 
-% Why is this relevant?
+% we will come back to this when talking about the generalizability of these models.
 
-example with email spam
 
-% https://drive.google.com/file/d/1NrSS34u0hVSZvJ2puYIR8bAw_IPIEzqL/view
 
-% https://blog.jgc.org/2023/07/how-to-beat-adaptivebayesian-spam.html
+
+
+
+
+
+\section{Transferability to the Human Visual System}
+
+% https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/platon.md
+
+% https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/transfer%20to%20humans.md
+
+% transferability to humans
+
+% platonic shapes
+
+
+
+
+
+
+
 
 \section{Counterintuitive Properties}
 
