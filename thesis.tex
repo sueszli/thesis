@@ -104,7 +104,7 @@ Adversarial examples follow the same principles as perturbation methods, but wit
 \begin{examplebox}
 	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
 
-	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. The perturbation is controlled by a parameter $\varepsilon > 0$, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function is denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
+	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. The perturbation is controlled by a parameter $\varepsilon > 0$, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
 	
 	FGSM works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$, and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains imperceptible to human observers~\cite{zhang2019adversarial}. \\
 	
