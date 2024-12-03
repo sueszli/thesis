@@ -106,7 +106,7 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 \begin{examplebox}
 	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
 
-	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. Initially introduced in the context of image classification, FGSM has since been adapted to various domains, including natural language processing and reinforcement learning~\cite{korkmaz2023detecting}.\\
+	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining} in the context of visual recognition tasks. Given an input image $x$, FGSM generates an adversarial example $x'$ by perturbing the input in the direction of the gradient of the loss function with respect to the input.\\
 
 	The perturbation is controlled by a parameter $\varepsilon > 0$~\footnote{Commonly $\varepsilon = 8/255$ for 8-bit images, so it stays within the precision constraints of the pixel values.}, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
 	
@@ -121,6 +121,14 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 
 % continue writing my report in a casual but academic tone.
 
+% this definition can be expanded to any domain but due to the visual nature of the human being and how this concept was initially introduced by szegedy et al. in 2014, we will focus on the visual domain in this work.
+
+% explain that there are various domains (cv, nlp, rl, ...) that adversarial examples could be applied to.
+
+% explain ways to categorize adversarial examples: white box vs. black box, targeted vs. untargeted, ... (more categories)
+
+% one important requirement is that the perturbation intensity must be chosen such that it is imperceptible to human observers. this description in the original paper doesn't match the pixel space change constraint, since we can change a bunch of pixels and have very little changes in the semantic space (i.e. changing exposure, sharpness, brightness, ...).
+
 \begin{figure}
     \centering
     \includegraphics[width=1\columnwidth]{assets/latentspace.pdf}
@@ -129,16 +137,8 @@ Adversarial examples on the other hand, first introduced by Szegedy et al. in 20
 \end{figure}
 
 
-% explain that the this definition can be expanded to any domain but due to the visual nature of the human being and how this concept was initially introduced by szegedy et al. in 2014, we will focus on the visual domain in this work.
-
-% continue writing that most literature says "epsilon should be chosen in a way that's imperceptible to human observers" but that actually as soon as we introduce any kind of human perception into the equation, we're no longer talking about adversarial examples this system is harder to formalize. therefore we want to focus on the concept of "semantics perservation" rather than "imperceptibility" in this work as it makes a lot more sense.
-% this is because changing certain qualities (exposure, light, sharpness, ...) these changes while massively changing the input $x$ in the pixel space, should have no effect on the semantics of the image. this is a much more formalizable concept than "imperceptibility" and is also more in line with the original definition of adversarial examples.
-
 % then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
 
-% explain that there are various domains (cv, nlp, rl, ...) that adversarial examples could be applied to.
-
-% explain ways to categorize adversarial examples: white box vs. black box, targeted vs. untargeted, ... (more categories)
 
 
 \section{Motivation}
