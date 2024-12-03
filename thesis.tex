@@ -7,56 +7,41 @@
 \usepackage{epigraph}
 \usepackage{amsmath}
 
-\setlength\parindent{0pt}   % killing indentation for all the text
-\setstretch{1.3}            % setting line spacing to 1.3
-\setlength\columnsep{0.25in} % setting length of column separator
-
-% example boxes: https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
-\usepackage[many]{tcolorbox}
-\usepackage{mathspec}
-\usepackage{setspace}
-\usepackage{multicol}
-\tcbset{
-    sharp corners,
-    colback = white,
-    before skip = 0.5cm,
-    after skip = 0.5cm,
-	breakable
-}
-\newtcolorbox{examplebox}{
-    sharpish corners,
-    boxrule = 0pt,
-	leftrule = 4.5pt,
-    enhanced,
-	breakable,
-    fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35} % {xshift}{yshift}{offset}{step}{options}
-}
-
-\thesistype{Master's Thesis} % Master's Thesis, Bachelor's Thesis, Semester Thesis, Group Project
+\thesistype{Master's Thesis}
 \title{Rethinking Adversarial Examples}
 
 \author{Yahya Jabary}
 \email{yjabary@ethz.ch}
 
-\institute{Computer Engineering and Networks Laboratory \\[2pt]
-ETH Zürich}
+\institute{Computer Engineering and Networks Laboratory \\[2pt] ETH Zürich}
 
 % \logo{\includegraphics[width=0.2\columnwidth]{figures/dsg-logo}}
 
-\supervisors{
-	Prof.\ Dr.\ Roger Wattenhofer\\[2pt]
-	Prof.\ Dr.\ Schahram Dustdar
-}
+\supervisors{Prof.\ Dr.\ Roger Wattenhofer\\[2pt] Prof.\ Dr.\ Schahram Dustdar}
 
-% Optionally, keywords and categories of the work can be shown (on the Abstract page)
-\keywords{Robustness, Alignment, Security in Machine Learning}
+\keywords{Robustness, Alignment, Security in Machine Learning} % abstract keywords
 % \categories{ACM categories go here.}
 
 \date{\today}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% extended config
+%
 
-\newcommand{\hr}{\begin{center}\rule{0.5\textwidth}{0.4pt}\end{center}}
+\setlength\parindent{0pt}
+
+% example boxes
+% https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+\usepackage[many]{tcolorbox}
+\usepackage{mathspec}
+\usepackage{setspace}
+\usepackage{multicol}
+\tcbset{sharp corners, colback = white, before skip = 0.5cm, after skip = 0.5cm, breakable}
+\newtcolorbox{examplebox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
+
+%
+% content
+%
 
 \begin{document}
 
@@ -66,34 +51,15 @@ ETH Zürich}
 \cleardoublepage
 
 \begin{acknowledgements}
-	...
+	This thesis comes from working on a problem that truly matters to me, in an environment where curiosity and passion were shared, and I felt a sense of belonging. The topic of adversarial examples reflects my journey well, highlighting how subtle difference in perspective can lead to vastly different interpretations.
 
-	% This thesis is the result of finally getting to work on a problem that truly matters to me, in a place where curiosity and passion were shared and I felt like I belonged. More than that, it's a testament to holding on – through uncertainty and rejection – with the hope that one day, I would be given the chance to contribute in my own way.
-
-	% \noindent I am really grateful to those who stood by me:
-		
-	% \begin{minipage}{\linewidth}
-	% 	\setlength{\parskip}{0.5em}
-	% 	My parents, Shima and Florian and family whose support never wavered, even when I took risks and turned down financial opportunities to follow my heart.
-		
-	% 	My partner, Laura, whose love and encouragement reached me across the Atlantic ocean and carried me through the hardest moments.
-	% \end{minipage}
+	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian, and my family, for their unwavering support, even when I took risks and turned down financial opportunities to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and got me through tough times.
 	
-	% \noindent I owe so much to those who made this work possible:
+	I owe much to those who made this work possible. Prof.\ Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision. Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie.
 	
-	% \begin{minipage}{\linewidth}
-	% 	\setlength{\parskip}{0.5em}
-	% 	Prof.\ Wattenhofer, for trusting me with this project and helping me navigate challenges with wisdom and humor.
+	Thanks also to those whose paths have diverged from mine but whose impact remains with me: Prof.\ Schahram Dustdar, who enabled my studies abroad, and Prof.\ Ali Mashtizadeh, who introduced me to operating systems research.
 	
-	% 	Andreas Plesner, for being just as much of a mentor as a colleague and for his hard work and dedication to our shared vision.
-		
-	% 	Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie.
-	% \end{minipage}
-
-	% \noindent I also want to thank those whose paths diverged from mine but whose impact I carry with me: Prof.\ Schahram Dustdar, who enabled me to study abroad and Prof.\ Ali Mashtizadeh, who introduced me to operating systems research.
-
-	% \noindent Finally, studying adversarial examples has held a deeply personal significance for me. At its heart, this field explores how subtle differences in perception can lead to unintended outcomes. This resonates with my own journey: navigating environments where my way of seeing the world was often misunderstood or unwelcome. This thesis, in its small way, reflects my hope to bridge those gaps – not just between machines, but between people too.
-	
+	I hope to continue this journey with the same spirit that brought me here.
 \end{acknowledgements}
 
 \begin{abstract}
