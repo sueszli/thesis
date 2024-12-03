@@ -129,56 +129,97 @@ We can differentiate between white-box and black-box attacks. White-box attacks 
 
 An attack can be targeted or untargeted. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
 
-% gradient based vs. optimization based
+The method used to generate adversarial examples can be gradient-based, optimization-based or search-based strategies. For example, some text-based attacks leverage language models to generate alternatives for masked tokens, ensuring grammatical correctness and semantic coherence~\cite{garg2020bae}.
 
-The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models \textendash{} represents yet another categorization axis. Some adversarial examples demonstrate high transferability across various model architectures, making them particularly challenging for defensive systems to counter, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
+The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
 
-Finally, whether the attacks focus on manipulating the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides yet another classification framework~\cite{browne2020semantics}.
+Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
 
-\section{Imperceptibility vs.\ Semantic Preservation}
+\section{Semantics Preservation}
+
+Initially, Szegedy and colleagues proposed using epsilon-bounded perturbations in pixel space to create changes ``imperceptible [to humans]'', that could fool neural networks~\cite{szegedy2013intriguing}. However, the term ``imperceptibility'' is indeed more accurately described as ``semantics preserving'' as demonstrated by recent work~\cite{kariyappasemantics}. The assumption that limiting pixel-space modifications ensures semantic preservation is fundamentally flawed, because substantial pixel-space changes can occur without affecting semantic meaning, such as changes in lighting, exposure, sharpness, angle, shadow, field of view, ..., or the the orientation of an animal's fur~\ref{fig:latentspace}.
+
+Also, assuming that a human under time constraints is fooled by an adversarial example
+
+Additionally, the transferability of adversarial examples to human perception under time constraints raises profound questions about the nature of neural network vulnerabilities. This observation aligns with the perspective that neural network depth might correlate with human processing time, suggesting a deeper connection between artificial and human visual processing systems.
+
+The challenge of defining semantics remains central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
+
+Recent work has shown that many generated adversarial examples fail to preserve semantics, with up to 70\% of examples potentially requiring rejection~\cite{herel2023preserving}. This finding emphasizes the importance of developing better methods for ensuring semantic preservation in adversarial attacks, leading to new approaches like Semantics-Preserving-Encoder (SPE) and other manifold-based techniques~\cite{lee2020semantics}.
+
+Moving forward, the field should continue to prioritize semantic preservation over simple pixel-space constraints, acknowledging that true imperceptibility requires a deeper understanding of semantic representation in both human and machine perception systems.
+
+
+
+
 
 write a paper in a casual but academic tone. write full sentences. don't use enumerations, itemizations, headings. use academic papers as citations.
 
 ```
-in the definition of adversarial examples often authors say that the varepsilon with the norm
+In the paper where adversarial examples are introduced by Szegedy, he says that they're using an epsilon value to limit the changes in the pixel-space, in order to ensure ``imperceptibility [to humans]'', however this doesn't make sense.
+
+first of all the term ``imperceptibility'' here is interchangable with the much more well-defined term ``semantics preserving''.
+
+second of all you can't preserve semantics through changes in the pixel space, because: (1) you can have very few pixels changed and still have a change in semantics, in time constrained humans and the authors didn't conduct any experiments with humans and this constraint doesn't ensure anything and (2) you can have much more pixsels changed and have no change in the semantic space (i.e. changing exposure, sharpness, brightness, angle, shadow, field of view, ... the orientation of the fur of a pet).
+
+recent experiments on the transferability of adversarial examples to the human vision system might sugegst that the core assumptions under which adversarial examples were introduced are flawed, because these attacks do transfer to time constrained humans. this raises the philosophical question of whether it's then justified for a model to be fooled by an attack by which time constrained humans are fooled and whether or what kinds of flaws of the human judgement function we are learning should be learned by the model. this is particularly interesting because ilya sutskever briefly mentions in an interview that he believes an increased depth in a neural network is equivalent to a human with more ``time'' available to perceive something. so this would in some sense further underline.
+
+in order order to be able to decide whether an attack is semantically preserving or not, we need to have a clear definition of what semantics are. in the paper ``what makes an image realistic'' by theis this is discussed further, but in short, as long as we don't have representations that perfectly align with the human judgement function, we can't have a clear definition of what semantics are and to which extent our attacks are working as intended.
+
+therefore for the remainder of this paper we will use the term ``semantics preserving'' instead of ``imperceptibility'' and we refer to the best possible encoder we have at our disposal because we can't have a perfect representation of the human judgement function and did not conduct any experiments with humans.
+```
+
+idea: adversarial examples are a problem of misaligned internal representations and not necessarily a problem of attack vectors.
+
+```
+having introduced the concepts of an ``Image Space'' a subset of which are reasonably realistic images, a ``latent space'' of how an encoder's latent representations are stored, the reader might reasonably ask why adversarial examples exist to begin with and why the ``latent space'' isn't an accurate depiction of the ``semantic space'' such that our encoder and internal latent representation is entirely undisturbed by any non-semantics-changing perturbations.
+
+we believe that this is further evident by the fact that adversarial exampels transfer across models, datasets, architectures, training procedures. the reason adversarial exampels transfer across models, is because the human visual system they're trying to approximate is, we assume, the same. this is there the theory of platonic representations comes in, that are shared both across modailities (text, image) and models, independent of their architecture, when you take certain slices.
+
+we believe that in it's essence any adversarial vulnerability is therefore not necessarily a vulnerability to attack vectors but just an insufficiently aligned model and a problem of misaligned internal representations. this drift between the human judgement function that the models are trying to learn and the model's internal representation is what causes adversarial examples to exist. this is called the ``human-machine vision gap'' and this is why we believe that the term ``alignment'' is a much more accurate term to describe the problem of adversarial examples, and that the term ``robustness'' is a much more accurate term to describe the solution to this problem.
+
+we make the bold claim that therefore hypothetically, a correctly robustified model that can withstand adversarial attacks is infact a simply better generalizing model to downstream tasks, although it might perform worse on the test set (this is described as the bias-variance tradeoff). our second claim is that therefore the robustness-accuracy tradeoff is a false dichotomy and that it's essentially the same as the bias-variance tradeoff.
+
+therefore what we're studying here isn't necessarily adversarial examples but the human-machine vision gap and the alignment of the model's internal representation with the human judgement function. this is why we believe that the term ``adversarial examples'' is a misnomer and that the term ``misaligned examples'' is a much more accurate term to describe the problem of insufficiently generalizing models.
+
+but it doesn't stop here.
 ```
 
 
+idea: transferability to humans
 
 
 
+idea: transferability across models
 
-% ----- imperceptability ------
 
-% one important requirement is that the perturbation intensity must be chosen such that it is imperceptible to human observers. this description in the original paper doesn't match the pixel space change constraint, since we can change a bunch of pixels and have very little changes in the semantic space (i.e. changing exposure, sharpness, brightness, ...).
+% philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
 
-% ----- machine vision gap ------
 
-% taking a step back, because vision models are trying to learn the human judgement function, adversarial examples are exploiting the so called ``human-machine vision gap''.
+
+figure~\ref{fig:latentspace}
+
+realism: \cite{theis2024makes}
+
+
 
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\columnwidth]{assets/latentspace.pdf}
-    \caption{Semantics Preserving vs. Semantics Changing Perturbations in the Latent Space.}
+    \includegraphics[width=1\columnwidth]{figures/latentspace.pdf}
+    \caption{Semantics Preserving vs. Semantics Changing Perturbations (assuming the latent representations are perfectly aligned with the human judgement function).}
     \label{fig:latentspace}
 \end{figure}
 
 
 
 
-% then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
-
-% we will come back to this when talking about the generalizability of these models.
 
 
 
 
 
 
-
-
-\section{Transferability to the Human Visual System}
 
 % https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/platon.md
 
@@ -189,6 +230,7 @@ in the definition of adversarial examples often authors say that the varepsilon 
 % platonic shapes
 
 
+% Recent research has made significant progress in developing frameworks for creating truly semantics-preserving adversarial examples. These approaches focus on learning low-dimensional manifolds that capture semantic information rather than relying on pixel-space constraints~\cite{lee2020semantics}. This shift in methodology acknowledges that semantics are better represented in the embedding space of inputs rather than in high-level feature spaces by Kariyappa et. al.~\cite{kariyappasemantics}.
 
 
 
