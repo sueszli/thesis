@@ -7,19 +7,28 @@
 \usepackage{epigraph}
 \usepackage{amsmath}
 
-% The content of the thesis should be structured using the three commands \frontmatter, \mainmatter, and \appendix, which change the pagestyle and in particular the page numbering accordingly.
+\setlength\parindent{0pt} % no indentation
 
-% The template provides the \TODO{...} and \REMARK{...} commands to add annotations to the generated document.
-
-% The template provides the following theorem-like environments:
-
-% - theorem, lemma, corollary, observation
-% - definition, problem, assumption, example
-% - claim, remark
-% - proof
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% DOCUMENT METADATA
+% example boxes: https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+\usepackage[many]{tcolorbox}
+\usepackage{mathspec}
+\usepackage{setspace}
+\usepackage{multicol}
+\tcbset{
+    sharp corners,
+    colback = white,
+    before skip = 0.5cm,
+    after skip = 0.5cm,
+	breakable
+}
+\newtcolorbox{examplebox}{
+    sharpish corners,
+    boxrule = 0pt,
+	leftrule = 4.5pt,
+    enhanced,
+	breakable,
+    fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35} % {xshift}{yshift}{offset}{step}{options}
+}
 
 \thesistype{Master's Thesis} % Master's Thesis, Bachelor's Thesis, Semester Thesis, Group Project
 \title{Rethinking Adversarial Examples}
@@ -30,7 +39,6 @@
 \institute{Computer Engineering and Networks Laboratory \\[2pt]
 ETH Zürich}
 
-% Optionally, you can put in your own logo here
 % \logo{\includegraphics[width=0.2\columnwidth]{figures/dsg-logo}}
 
 \supervisors{
@@ -39,7 +47,7 @@ ETH Zürich}
 }
 
 % Optionally, keywords and categories of the work can be shown (on the Abstract page)
-% \keywords{Keywords go here.}
+\keywords{Robustness, Alignment, Security in Machine Learning}
 % \categories{ACM categories go here.}
 
 \date{\today}
@@ -56,7 +64,7 @@ ETH Zürich}
 \cleardoublepage
 
 \begin{acknowledgements}
-	Thanks y'all!
+	...
 
 	% This thesis is the result of finally getting to work on a problem that truly matters to me, in a place where curiosity and passion were shared and I felt like I belonged. More than that, it's a testament to holding on – through uncertainty and rejection – with the hope that one day, I would be given the chance to contribute in my own way.
 
@@ -84,58 +92,61 @@ ETH Zürich}
 
 	% \noindent Finally, studying adversarial examples has held a deeply personal significance for me. At its heart, this field explores how subtle differences in perception can lead to unintended outcomes. This resonates with my own journey: navigating environments where my way of seeing the world was often misunderstood or unwelcome. This thesis, in its small way, reflects my hope to bridge those gaps – not just between machines, but between people too.
 	
-	% good style: https://arxiv.org/pdf/2202.02435
 \end{acknowledgements}
 
 \begin{abstract}
-    The abstract should be short, stating what you did and what the most important result is.
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    % The abstract should be short, stating what you did and what the most important result is.
+	...
 \end{abstract}
 
 \tableofcontents
 
-\mainmatter % do not remove this line
-
-% start writing here
+\mainmatter % do not remove
 
 \chapter{Introduction}
 
+% good style: https://arxiv.org/pdf/2202.02435
+
+We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning. To our knowledge, this is the first attempt to introduce this topic as a gateway for a broader audience, and we hope it will be valuable to those interested. No prior knowledge is assumed, but a basic understanding of linear algebra and machine learning terminology will be helpful.
+
 \section{Definition}
 
-Adversarial examples are closely related to the concept of perturbation methods.
+Adversarial Examples are closely related to the concept of perturbation methods.
 
-The origin of perturbations can be traced back to the early days of computational geometry by Seidel et al.~\cite{seidel1998nature} in 1998. Perturbation techniques in computational geometry address a fundamental challenge: handling ``degeneracies'' in geometric algorithms. These are special cases that occur when geometric primitives align in ways that break the general position assumptions the algorithms rely on.
+The origin of perturbations can be traced back to the early days of computational geometry by Seidel et al. in 1998~\cite{seidel1998nature}. Perturbation techniques in computational geometry address a fundamental challenge: handling ``degeneracies'' in geometric algorithms. These are special cases that occur when geometric primitives align in ways that break the general position assumptions the algorithms rely on.
 
-% use a block or something for experiments
-% https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+\begin{examplebox}
+	\textbf{Example:} Perturbation scheme for a linear classifier. \\
 
-\paragraph{Example: Linear Classifier}
+	Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant, and $\delta(x)$ is the perturbation function to break degeneracies. \\
 
-Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant, and $\delta(x)$ is the perturbation function to break degeneracies.
+	A perturbation scheme should be (1) consistent, meaning that the same input always produces the same perturbed output (2) infinitesimal, such that perturbations are small enough not to affect non-degenerate cases and (3) effective, in breaking all possible degeneracies. \\
 
-A perturbation scheme should be (1) consistent, meaning that the same input always produces the same perturbed output (2) infinitesimal, such that perturbations are small enough not to affect non-degenerate cases and (3) effective, in breaking all possible degeneracies.
+	One powerful perturbation approach is Simulation of Simplicity (SoS)~\cite{franklin2022implementing, edelsbrunner2002topological, edelsbrunner2001sink, edelsbrunner1990simulation, levy2016robustness, schorn1993axiomatic}. SoS systematically perturbs input coordinates using powers of a symbolic infinitesimal. For a point $p_i = (x_i, y_i)$, the perturbed coordinates become:
 
-One powerful perturbation approach is Simulation of Simplicity (SoS)~\cite{franklin2022implementing, edelsbrunner2002topological, edelsbrunner2001sink, edelsbrunner1990simulation, levy2016robustness, schorn1993axiomatic}. SoS systematically perturbs input coordinates using powers of a symbolic infinitesimal. For a point $p_i = (x_i, y_i)$, the perturbed coordinates become:
+	$$(\tilde{x_i}, \tilde{y_i}) = (x_i + \varepsilon^{2i}, y_i + \varepsilon^{2i+1}) = p_i + \varepsilon^{2i} \cdot (1, \varepsilon)$$
 
-$$(\tilde{x_i}, \tilde{y_i}) = (x_i + \varepsilon^{2i}, y_i + \varepsilon^{2i+1}) = p_i + \varepsilon^{2i} \cdot (1, \varepsilon)$$
-
-This scheme ensures that no two perturbed points share any coordinate, effectively eliminating collinearity and other degeneracies.
+	This scheme ensures that no two perturbed points share any coordinate, effectively eliminating collinearity and other degeneracies.
+\end{examplebox}
 
 The beauty of perturbation methods lies in their ability to handle degeneracies without explicitly detecting them, making geometric algorithms both simpler and more robust.
 
-Adversarial examples follow the same principles as perturbation methods, but with the opposite goal of misleading machine learning models. This concept was first introduced by Szegedy et al.~\cite{szegedy2013intriguing} in 2014. Intuitively adversarial examples can be understood as seeking the closest point in the input space that lies on the "wrong side" of a decision boundary.
+Adversarial examples follow the same principles as perturbation methods, but with the opposite goal of misleading machine learning models. This concept was first introduced by Szegedy et al. in 2014~\cite{szegedy2013intriguing}. Intuitively adversarial examples can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary.
 
-\paragraph{Example: Fast Gradient Sign Method}
+\begin{examplebox}
+	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
 
-The Fast Gradient Sign Method (FGSM) is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. The perturbation is controlled by a parameter $\varepsilon > 0$, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function is denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label.
+	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. The perturbation is controlled by a parameter $\varepsilon > 0$, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function is denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
+	
+	FGSM works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$, and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains imperceptible to human observers~\cite{zhang2019adversarial}. \\
+	
+	The process for generating an adversarial example with FGSM can be expressed as:
+	
+	$$x' = x + \varepsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))$$
+	
+	In the targeted version of FGSM, the perturbation is designed to minimize the loss with respect to a chosen target class, making the model predict the wrong class deliberately. In the untargeted version, the perturbation is designed to increase the loss for the correct class, causing the model to misclassify the input. In both cases, the perturbation is added to the original input, $x$, to create the adversarial example.
+\end{examplebox}
 
-FGSM works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$, and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains imperceptible to human observers~\cite{zhang2019adversarial}.
-
-The process for generating an adversarial example with FGSM can be expressed as:
-
-$$x' = x + \varepsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))$$
-
-In the targeted version of FGSM, the perturbation is designed to minimize the loss with respect to a chosen target class, making the model predict the wrong class deliberately. In the untargeted version, the perturbation is designed to increase the loss for the correct class, causing the model to misclassify the input. In both cases, the perturbation is added to the original input, $x$, to create the adversarial example.
 
 % there are a bunch of other different kinds of attacks
 
