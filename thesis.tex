@@ -77,7 +77,7 @@
 
 % good style: https://arxiv.org/pdf/2202.02435
 
-We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning. To our knowledge, this is the first attempt to introduce this topic as a gateway for a broader audience, and we hope it will be valuable to those interested. No prior knowledge is assumed, but a basic understanding of linear algebra and calculus will be helpful.
+We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning. To our knowledge, this is the first attempt to introduce this topic as a gateway for a broader audience, without any assumptions about prior knowledge. We hope it will be valuable to those interested.
 
 \section{Definition}
 
@@ -101,12 +101,14 @@ The origin of perturbations can be traced back to the early days of computationa
 
 The beauty of perturbation methods lies in their ability to handle degeneracies without explicitly detecting them, making geometric algorithms both simpler and more robust.
 
-Adversarial examples, first introduced by Szegedy et al. in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Intuitively adversarial examples can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary.
+Adversarial examples on the other hand, first introduced by Szegedy et al. in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
 
 \begin{examplebox}
 	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
 
-	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. The perturbation is controlled by a parameter $\varepsilon > 0$, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
+	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining}. Initially introduced in the context of image classification, FGSM has since been adapted to various domains, including natural language processing and reinforcement learning~\cite{korkmaz2023detecting}.\\
+
+	The perturbation is controlled by a parameter $\varepsilon > 0$~\footnote{Commonly $\varepsilon = 8/255$ for 8-bit images, so it stays within the precision constraints of the pixel values.}, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
 	
 	It works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$, and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains imperceptible to human observers~\cite{zhang2019adversarial}. \\
 	
@@ -114,19 +116,38 @@ Adversarial examples, first introduced by Szegedy et al. in 2014~\cite{szegedy20
 	
 	$$x' = x + \underbracket{\varepsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))}_{\text{Perturbation}}$$
 	
-	In the untargeted version, the perturbation is designed to increase the loss for the correct class, causing the model to misclassify the input. In the targeted version of FGSM, the perturbation is designed to minimize the loss with respect to the adversary's chosen target class, making the model predict it deliberately. In both cases, the perturbation is added to the original input, $x$, to create the adversarial example.
+	In the untargeted version, the perturbation is designed to increase the loss for the correct class. In the targeted version the perturbation is designed to minimize the loss with respect to the adversary's chosen target class, making the model predict it deliberately.
 \end{examplebox}
 
-In both contexts, the concept of a perturbation is shared, however while perturbation methods aim to improve the robustness of algorithms, adversarial examples exploit the brittleness of machine learning models to cause misclassification.
+% continue writing my report in a casual but academic tone.
+
+% explain that the this definition can be expanded to any domain but due to the visual nature of the human being and how this concept was initially introduced by szegedy et al. in 2014, we will focus on the visual domain in this work.
+
+% continue writing that most literature says "epsilon should be chosen in a way that's imperceptible to human observers" but that actually as soon as we introduce any kind of human perception into the equation, we're no longer talking about adversarial examples this system is harder to formalize. therefore we want to focus on the concept of "semantics perservation" rather than "imperceptibility" in this work as it makes a lot more sense.
+% this is because changing certain qualities (exposure, light, sharpness, ...) these changes while massively changing the input $x$ in the pixel space, should have no effect on the semantics of the image. this is a much more formalizable concept than "imperceptibility" and is also more in line with the original definition of adversarial examples.
+
+% then explain that philosophically speaking the semantic space is the latent space of the human and all models are trying to approximate this platonic space but that's beyond the scope of this thesis.
+
+% explain that there are various domains (cv, nlp, rl, ...) that adversarial examples could be applied to.
+
+% explain ways to categorize adversarial examples: white box vs. black box, targeted vs. untargeted, ... (more categories)
 
 
-% there are a bunch of other different kinds of attacks
+\section{Motivation}
 
-% there are a bunch of other ways to define adversarial examples, ie. human machine vision gap, large language models, we just arbitrarily chose the visual domain
+% Why is this relevant?
 
-% we can categorize them: white box vs. black box
+example with email spam
 
+% https://drive.google.com/file/d/1NrSS34u0hVSZvJ2puYIR8bAw_IPIEzqL/view
 
+% https://blog.jgc.org/2023/07/how-to-beat-adaptivebayesian-spam.html
+
+\section{Counterintuitive Properties}
+
+Despite how important and useful they are, there's still a bunch we don't really know about them.
+
+There are a bunch of stuff we don't know about them
 
 \section{Mental Models}
 
@@ -139,7 +160,7 @@ In both contexts, the concept of a perturbation is shared, however while perturb
 % https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/not%20bugs%20features.md
 
 
-In 2013 Szegedy et al. \cite{cubuk2017intriguing} discovered that deep neural networks are vulnerable to adversarial examples \textendash{} inputs with imperceptible perturbations that cause misclassification, revealing blind spots where the models' decision boundaries are brittle, despite appearing to generalize well on normal inputs. Since then we have made a lot of progress in both finding attack vectors \cite{goodfellow2014explaining} \cite{madry2017towards} \cite{papernot2016limitations} and adversarially training models to be more robust \cite{shafahi2019adversarial} \cite{madry2017towards} \cite{papernot2016distillation} to these attacks.
+In 2013 Szegedy et al.~\cite{cubuk2017intriguing} discovered that deep neural networks are vulnerable to adversarial examples \textendash{} inputs with imperceptible perturbations that cause misclassification, revealing blind spots where the models' decision boundaries are brittle, despite appearing to generalize well on normal inputs. Since then we have made a lot of progress in both finding attack vectors \cite{goodfellow2014explaining} \cite{madry2017towards} \cite{papernot2016limitations} and adversarially training models to be more robust \cite{shafahi2019adversarial} \cite{madry2017towards} \cite{papernot2016distillation} to these attacks.
 
 However, despite the progress, we still don't fully understand:
 
@@ -149,7 +170,7 @@ However, despite the progress, we still don't fully understand:
     \item Why they transfer between different models, datasets, architectures, training procedures and even to the human visual system \cite{elsayed2018adversarial}.
 \end{itemize}
 
-There have been many attempts at explaining adversarial examples, each with limitations and assumptions \textendash{} some complementary, some contradictory  \footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al. \cite{ilyas2019adversarial}}.
+There have been many attempts at explaining adversarial examples, each with limitations and assumptions \textendash{} some complementary, some contradictory  \footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.~\cite{ilyas2019adversarial}}.
 
 For example, the \textit{dimpled manifold hypothesis} \cite{shamir2021dimpled}  suggests that the decision boundary of deep neural networks is close to the data manifold, making it easy to find adversarial examples, while the \textit{non-robust features hypothesis} \cite{ilyas2019adversarial} suggests that models exploit non-robust features that are imperceptible to humans, leading to a vulnerability against small perturbations
 
