@@ -123,28 +123,19 @@ While initially discovered in computer vision applications, the principles behin
 
 Having established the general concept of adversarial examples, we can now explore the various dimensions among which they can be categorized. This is particularly important when building a threat model.
 
-Adversarial examples in machine learning can be categorized along several key dimensions that reflect both their implementation approach and intended impact. One fundamental distinction lies between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings[4]. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security[4].
+Adversarial examples in machine learning can be categorized along several key dimensions that reflect both their implementation approach and intended impact. One fundamental distinction lies between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
 
-Another crucial categorization distinguishes between targeted and untargeted attacks. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output[4][5]. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
+Another crucial categorization distinguishes between targeted and untargeted attacks. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
 
-The domain of application represents another important categorization axis. Adversarial attacks can be crafted for various types of data, including images, text, and graphs[5]. Each domain presents unique challenges and opportunities for attackers, requiring different technical approaches and defensive strategies.
+The domain of application represents another important categorization axis. Adversarial attacks can be crafted for various types of data, including images, text, and graphs~\cite{Kashyap2024AdversarialAA}. Each domain presents unique challenges and opportunities for attackers, requiring different technical approaches and defensive strategies.
 
-The sophistication and complexity of attacks form another categorical dimension. Some attacks employ simple greedy algorithms with spatial heuristics, while others utilize advanced gradient-guided strategies borrowed from image classification domains[4]. The choice of attack strategy often depends on the attacker's resources, knowledge, and objectives.
+The sophistication and complexity of attacks form another categorical dimension. Some attacks employ simple greedy algorithms with spatial heuristics, while others utilize advanced gradient-guided strategies borrowed from image classification domains~\cite{capozzi2024adversarial}. The choice of attack strategy often depends on the attacker's resources, knowledge, and objectives.
 
-The semantic nature of adversarial examples provides yet another classification framework. Some attacks focus on manipulating the semantic meaning of inputs, while others exploit the mathematical properties of neural networks without regard for semantic interpretation[3]. This distinction has important implications for both the effectiveness of attacks and the development of defensive measures.
+The semantic nature of adversarial examples provides yet another classification framework. Some attacks focus on manipulating the semantic meaning of inputs, while others exploit the mathematical properties of neural networks without regard for semantic interpretation~\cite{browne2020semantics}. This distinction has important implications for both the effectiveness of attacks and the development of defensive measures.
 
-In the context of system security, adversarial attacks can also be categorized based on their timing and persistence. Some attacks target the training phase of machine learning models, while others focus on the inference phase[5]. This temporal dimension is particularly relevant for developing comprehensive defense strategies that protect systems throughout their lifecycle.
+In the context of system security, adversarial attacks can also be categorized based on their timing and persistence. Some attacks target the training phase of machine learning models, while others focus on the inference phase~\cite{Kashyap2024AdversarialAA}. This temporal dimension is particularly relevant for developing comprehensive defense strategies that protect systems throughout their lifecycle.
 
-These various categorization schemes help researchers and practitioners better understand the landscape of adversarial attacks, enabling more effective defense mechanisms and contributing to the development of more robust machine learning systems. The field continues to evolve, with new attack vectors and categories emerging as artificial intelligence applications become more prevalent in security-critical domains[6].
-
-Citations:
-[1] https://www.semanticscholar.org/paper/9a5cb1e6eb6bc0bf282232658b658cfd94c57c19
-[2] https://arxiv.org/abs/2107.01809
-[3] https://arxiv.org/abs/2012.10076
-[4] https://arxiv.org/abs/2303.11143
-[5] https://www.semanticscholar.org/paper/706c89249b11b8b03cb96a1437ab6a83b759529d
-[6] https://www.semanticscholar.org/paper/c99750f0156be77fbe4148452be446462289af13
-
+These various categorization schemes help researchers and practitioners better understand the landscape of adversarial attacks, enabling more effective defense mechanisms and contributing to the development of more robust machine learning systems. The field continues to evolve, with new attack vectors and categories emerging as artificial intelligence applications become more prevalent in security-critical domains~\cite{Khaleel2024AdversarialAI}.
 
 
 \newpage
