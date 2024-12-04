@@ -178,18 +178,14 @@ This aligns with the ``Platonic Representation Hypothesis'', which suggests that
 
 Should the Platonic Representation Hypothesis hold true, it would mean that by converging to a shared model of reality (not that of the human perception), ultimately, a single adversarial example could fool all models, regardless of their architecture, training data or objective function. Moosavi-Dezfooli et al. have demonstrated the existence of a single perturbation on most models for all naturally occurring images, adding weight to this possibility~\cite{moosavi2017universal}.
 
-\section{Counterintuitive Properties}
+\section{Counterintuitive Properties \& Mental Models}
 
 Understanding the human-machine vision gap provides a foundation for exploring the mysteries of adversarial examples.
-
-
 
 % There are a bunch of stuff we don't know about them
 
 % unsolved mysteries:
 % - https://arxiv.org/pdf/1610.08401
-
-\section{Mental Models}
 
 % ---> people tried a bunch of different ways to explain adversarial examples
 
@@ -198,7 +194,6 @@ Understanding the human-machine vision gap provides a foundation for exploring t
 % The field has evolved from simple linear classifiers to complex scenarios involving physical-world attacks, demonstrating that adversarial examples are not merely theoretical constructs but practical concerns in machine learning systems.
 
 % https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/not%20bugs%20features.md
-
 
 % In 2013 Szegedy et al.~\cite{cubuk2017intriguing} discovered that deep neural networks are vulnerable to adversarial examples \textendash{} inputs with imperceptible perturbations that cause misclassification, revealing blind spots where the models' decision boundaries are brittle, despite appearing to generalize well on normal inputs. Since then we have made a lot of progress in both finding attack vectors \cite{goodfellow2014explaining} \cite{madry2017towards} \cite{papernot2016limitations} and adversarially training models to be more robust \cite{shafahi2019adversarial} \cite{madry2017towards} \cite{papernot2016distillation} to these attacks.
 
@@ -220,13 +215,20 @@ Understanding the human-machine vision gap provides a foundation for exploring t
 
 % Another aspect of the \textit{dimpled manifold hypothesis} worth exploring is the idea of projecting the perturbations on the data manifold before applying them to the input space. Reducing the dimensionality of the perturbations or compressing them makes them visible to the human eye and interpretable as demonstrated by Karner \cite{karner2023dimpled}.
 
+
+
+
+
+
+
 \chapter{Methodology}
+
+% hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
 
 \chapter{Results}
 
 \chapter{Stuff}
 
-% hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
 
 \newpage
 
