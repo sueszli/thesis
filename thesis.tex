@@ -255,7 +255,7 @@ Recent work by Moosavi-Dezfooli et al.\ \cite{moosavi2017universal} have demonst
 
 \section{Mental Models}
 
-The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}, among others:
+The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}. Among them are:
 
 \begin{itemize}
 	\setlength\itemsep{0em}
@@ -264,22 +264,23 @@ The question discussed in the previous section is just one of many that remain o
 	\item Why don't the adversarial perturbations resemble the target class?
 	\item Why do robustness and accuracy trade-off~\cite{zhang2019theoretically}?
 	\item Why do adversarial examples transfer between models, even on disjoint training sets~\cite{szegedy2013intriguing}?
+	\item Why do adversarial examples transfer between models~\cite{szegedy2013intriguing}?
 	\item Why do adversarial examples transfer between models and time-limited humans~\cite{elsayed2018adversarial}?
 \end{itemize}
 
-There have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory~\cite{ilyas2019adversarial}.
+Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term they proposed that adversarial examples are caused by (1) neural networks developing internal representations that become increasingly disconnected from the input features as they progress through deeper layers, and (2) that these networks fail to maintain the smoothness properties typically assumed in traditional machine learning approaches. The idea was that this lack of smoothness gives them their expressive power, but also makes them vulnerable to these attacks.
 
 \begin{highlightbox}
 	\textbf{Definition:} Manifold \\
 	
-	At the discovery of adversarial examples the concept of a manifold was introduced to explain the phenomenon:
+	The attempt to explain adversarial examples used the term ``manifold''.
 	
 	\begin{flushright}
 		\textit{``In some sense, what we describe is a way to traverse the manifold represented by the network [...]. The adversarial examples represent low-probability (high-dimensional) `pockets' in the manifold [...].''}
 		
 		\textemdash{} Szegedy et al., 2013~\cite{szegedy2013intriguing}
 	\end{flushright}	
-		
+	
 	A manifold can be thought of as a low-dimensional structure embedded in a high-dimensional space, representing the set of valid data points (e.g., natural images) that the neural network is trained to classify. Mathematically, if the input data lies on a manifold $\mathcal{M} \subset \mathbb{R}^m$, then $\mathcal{M}$ represents the subset of the high-dimensional input space $\mathbb{R}^m$ that corresponds to meaningful or real-world data. \\
 
 	Szegedy et al.\ suggest that adversarial examples exploit the structure of this manifold and its surrounding space. Specifically, adversarial examples are small perturbations $r$ added to an input $x \in \mathcal{M}$, such that the perturbed input $x' = x + r$ lies off the data manifold but still within the high-dimensional input space.
@@ -298,46 +299,28 @@ There have been many attempts at finding a cohesive narrative to explain these c
 \end{highlightbox}
 
 \begin{highlightbox}
-	\textbf{Digression:} Manifolds 
+	\textbf{Digression:} Realism  \\
 
-	When discussing manifolds we are referring to the low-dimensional structures that data, such as images, are thought to lie on within the high-dimensional input space. In deep learning, these manifolds represent the regions of meaningful data that neural networks are trained to classify.  \\
-
-	In the context of adversarial examples and high-dimensional spaces of realistic images, a "realistic subspace" or "subdimension" can be understood as a subset of the data manifold where the images appear plausible according to human perception or a given distribution $P$. This concept is crucial in understanding how adversarial perturbations exploit vulnerabilities in models by moving data points outside this realistic subspace. \\
-
-	A simple formula that encapsulates this idea is derived from the notion of randomness deficiency in algorithmic information theory~\cite{theis2024makes}. The formula for quantifying realism is: \\
+	A ``realistic subspace'' can be understood as a subset of the data manifold where the images appear plausible according to human perception or a given distribution $P$. A simple formula that expresses this idea elegantly to quantify realism is derived from the notion of randomness deficiency in algorithmic information theory~\cite{theis2024makes}:\\
 
 	$$
 	U(x) = -\log P(x) - K(x),
 	$$
 
-	where $ P(x) $ is the probability density of the image $ x $ under the target distribution, and $ K(x) $ is the Kolmogorov complexity of $ x $, representing the shortest description of $ x $ in a universal programming language. This measure, called a "universal critic," captures how well $ x $ aligns with both the statistical properties of $ P $ and its compressibility. A low value of $ U(x) $ indicates that $ x $ is realistic, while a high value suggests it is unrealistic. \\
+	where $P(x)$ is the probability density of the image $x$ under the target distribution, and $K(x)$ is the Kolmogorov complexity of $x$, representing the shortest description of $x$ in a universal programming language. This measure, called a ``universal critic'', captures how well $x$ aligns with both the statistical properties of $P$ and its compressibility. A low value of $U(x)$ indicates that $x$ is realistic, while a high value suggests it is unrealistic~\cite{theis2024makes}. \\
 
-	This approach generalizes prior methods by integrating both probabilistic and structural aspects of realism. It highlights that realism depends not only on adherence to statistical patterns (e.g., probabilities or divergences) but also on whether an image can be plausibly generated within the constraints of $ P $. While directly computing $ K(x) $ is infeasible due to its uncomputability, practical approximations (e.g., compression algorithms or neural network-based critics) can serve as proxies. \\
+	This approach generalizes prior methods by integrating both probabilistic and structural aspects of realism. It highlights that realism depends not only on adherence to statistical patterns (e.g., probabilities or divergences) but also on whether an image can be plausibly generated within the constraints of $P$. While directly computing $K(x)$ is infeasible due to its uncomputability, practical approximations (e.g., compression algorithms or neural network-based critics) can serve as proxies~\cite{theis2024makes}. \\
 
 	The distinction between realistic and unrealistic perturbations is crucial for practical applications, as some adversarial examples may be mathematically valid but physically impossible to realize in real-world scenarios~\cite{dyrmishi2023empirical}. \\
 	
-	The challenge of quantifying realism remains a fundamental problem in machine learning, particularly because the boundary between realistic and unrealistic images can only be roughly approximated through information-theoretic measures~\cite{theis2024makes}.
-
+	The challenge of quantifying realism remains a fundamental problem in machine learning~\cite{theis2024makes}.
 \end{highlightbox}
 
-The initial hypothesis by Szegedy et al.\ \cite{szegedy2013intriguing} suggests that adversarial examples are a result of (1) latents in higher layers only being meaningful in relation to themselves, not the input, and (2) the smoothness assumption that underlies many kernel methods not holding for deep neural networks.
-
-% https://arxiv.org/pdf/2404.13631v1 --> validate the first assumption, they say they found a way to have robustness and accuracy
-
-% Adversarial examples exploit the fact that neural networks are highly sensitive to small perturbations in input data, which can push an input off this manifold or into regions where the network's decision boundaries behave unpredictably.
-	
-
-
-
-
-
-
+Since then there have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory~\cite{ilyas2019adversarial}.
 
 
 
 % comments: https://distill.pub/2019/advex-bugs-discussion/
-
-% https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/not%20bugs%20features.md
 
 % For example, the \textit{dimpled manifold hypothesis} \cite{shamir2021dimpled}  suggests that the decision boundary of deep neural networks is close to the data manifold, making it easy to find adversarial examples, while the \textit{non-robust features hypothesis} \cite{ilyas2019adversarial} suggests that models exploit non-robust features that are imperceptible to humans, leading to a vulnerability against small perturbations
 
@@ -365,28 +348,38 @@ The initial hypothesis by Szegedy et al.\ \cite{szegedy2013intriguing} suggests 
 
 \chapter{Methodology}
 
-\begin{quotebox}
-	\begin{flushright}
-		\textit{``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
-		
-		\textemdash{} James Mickens, USENIX Security 18 Opening Keynote~\cite{218395}
-	\end{flushright}
-\end{quotebox}
+\section{Geometric masks inspired by hCaptcha}
 
-% hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
+\section{Self-ensembled learning}
 
-\begin{theorem}[First Theorem] \label{thm:first theorem}
-	This is our first theorem.
-\end{theorem}
-
-\begin{proof}
-	And this is the proof of the first theorem with a complicated formula and a reference to Theorem \ref{thm:first theorem}. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	\begin{equation}
-		{\frac {\mathrm d}{\mathrm dx}}\arctan(\sin({x}^{2}))=-2 \cdot {\frac {\cos({x}^{2})x}{-2+\left (\cos({x}^{2})\right )^{2}}}
-	\end{equation}	
-\end{proof}
+% layer wise learning
+% simpler and more rigerous approach https://arxiv.org/pdf/2404.13631v1
 
 
+
+\chapter{Results}
+
+
+% \begin{theorem}[First Theorem] \label{thm:first theorem}
+% 	This is our first theorem.
+% \end{theorem}
+
+% \begin{proof}
+% 	And this is the proof of the first theorem with a complicated formula and a reference to Theorem \ref{thm:first theorem}. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+% 	\begin{equation}
+% 		{\frac {\mathrm d}{\mathrm dx}}\arctan(\sin({x}^{2}))=-2 \cdot {\frac {\cos({x}^{2})x}{-2+\left (\cos({x}^{2})\right )^{2}}}
+% 	\end{equation}	
+% \end{proof}
+
+\chapter{Conclusion}
+
+\begin{flushright}
+	\textit{``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
+	
+	\textemdash{} James Mickens, USENIX Security 18 Opening Keynote~\cite{218395}
+\end{flushright}
+
+\bigskip
 
 
 
