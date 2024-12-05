@@ -190,7 +190,7 @@ Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2
 	In the untargeted version, the perturbation is designed to increase the loss for the correct class. In the targeted version the perturbation is designed to minimize the loss with respect to the adversary's chosen target class, making the model predict it deliberately.
 \end{highlightbox}
 
-While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. One particularly entertaining example is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
+While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
 \section{Threat Modeling}
 
@@ -253,7 +253,7 @@ Should the ``Platonic Representation Hypothesis'' hold true, this would either m
 
 Recent work by Moosavi-Dezfooli et al.\ \cite{moosavi2017universal} have demonstrated the existence of a single perturbation that can fool most models for all naturally occurring images, adding weight to the latter interpretation, though the question remains open.
 
-\section{Mental Models}
+\section{Open Questions \& Mental Models}
 
 The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}. Among them are:
 
@@ -283,17 +283,17 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 	
 	A manifold can be thought of as a low-dimensional structure embedded in a high-dimensional space, representing the set of valid data points (e.g., natural images) that the neural network is trained to classify. Mathematically, if the input data lies on a manifold $\mathcal{M} \subset \mathbb{R}^m$, then $\mathcal{M}$ represents the subset of the high-dimensional input space $\mathbb{R}^m$ that corresponds to meaningful or real-world data. \\
 
-	Szegedy et al.\ suggest that adversarial examples exploit the structure of this manifold and its surrounding space. Specifically, adversarial examples are small perturbations $r$ added to an input $x \in \mathcal{M}$, such that the perturbed input $x' = x + r$ lies off the data manifold but still within the high-dimensional input space.
+	Szegedy et al.\ suggest that adversarial examples exploit the structure of this manifold and its surrounding space. Specifically, adversarial examples are small perturbations $r$ added to an input $x \in \mathcal{M}$, such that the perturbed input $x' = x + r$ lies off the data manifold but still within the high-dimensional input space. \\
 	
-	Formally, given a classifier $f: \mathbb{R}^m \to \{1, ..., k\}$ and its associated loss function $\text{Loss}_f(x, y)$, an adversarial example $x'$ for an input $x$ with true label $y$ can be found by solving:
+	Formally, given a classifier $f: \mathbb{R}^m \to \{1, ..., k\}$ and its associated loss function $\text{Loss}_f(x, y)$, an adversarial example $x'$ for an input $x$ with true label $y$ can be found by solving: \\
 	
 	$$
 	\min_{r} \|r\|_2 \quad \text{subject to } f(x + r) \neq y, \; x + r \in [0, 1]^m,
 	$$
 	
-	where $r$ is constrained to be small (e.g., in terms of its $L_2$-norm). This optimization problem effectively traverses the space near $x$, moving off the manifold $\mathcal{M}$, to find regions where the classifier's decision boundary behaves unexpectedly.
+	where $r$ is constrained to be small (e.g., in terms of its $L_2$-norm). This optimization problem effectively traverses the space near $x$, moving off the manifold $\mathcal{M}$, to find regions where the classifier's decision boundary behaves unexpectedly. \\
 	
-	The paper suggests that these adversarial examples expose ``blind spots'' in the learned representation of the manifold by the neural network. The network's decision boundary may extend into regions near $\mathcal{M}$ in ways that are not semantically meaningful, allowing adversarial perturbations to exploit these regions. This phenomenon arises due to the high dimensionality of the input space and the discontinuous mappings learned by deep networks, which can fail to generalize smoothly beyond the manifold~\cite{khoury2018geometry, Jha2018DetectingAE, Sha2020ADA, dube2018high, shamir2021dimpled}.
+	The paper suggests that these adversarial examples expose ``blind spots'' in the learned representation of the manifold by the neural network. The network's decision boundary may extend into regions near $\mathcal{M}$ in ways that are not semantically meaningful, allowing adversarial perturbations to exploit these regions. This phenomenon arises due to the high dimensionality of the input space and the discontinuous mappings learned by deep networks, which can fail to generalize smoothly beyond the manifold~\cite{khoury2018geometry, Jha2018DetectingAE, Sha2020ADA, dube2018high, shamir2021dimpled}. \\
 	
 	A more rigorous definition of the manifold hypothesis is provided by Khoury et al.\ in 2018~\cite{khoury2018geometry}.
 \end{highlightbox}
@@ -301,7 +301,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 \begin{highlightbox}
 	\textbf{Digression:} Realism  \\
 
-	A ``realistic subspace'' can be understood as a subset of the data manifold where the images appear plausible according to human perception or a given distribution $P$. A simple formula that expresses this idea elegantly to quantify realism is derived from the notion of randomness deficiency in algorithmic information theory~\cite{theis2024makes}:\\
+	A ``realistic subspace'' can be understood as a subset of the data manifold where the images appear plausible according to human perception or a given distribution $P$. A simple formula that expresses this idea elegantly to quantify realism is derived from the notion of randomness deficiency in algorithmic information theory~\cite{theis2024makes}:
 
 	$$
 	U(x) = -\log P(x) - K(x),
@@ -318,9 +318,17 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 
 Since then there have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory~\cite{ilyas2019adversarial}.
 
+\paragraph{Non-robust features \& concentration of measure in high-dimensions.} Most popularly, Ilyas et al.\ \cite{ilyas2019adversarial} proposed that features that models learn from can be divided in 3 categories: (1) useless featurs, to be discarded by the feature extractor, (2) robust features, which are comprehensible to humans, generalize across multiple datasets and remain stable under small adversarial perturbations, and (3) non-robust features, which are incomprehensible to humans, learned by the supervised model to exploit patterns in the data distribution which are highly effective for the task at hand but also brittle and easily manipulated by adversarial perturbations. The authors suggest that the vulnerability of deep neural networks to adversarial examples is due to their reliance on non-robust features, and inherent to how the models are optimized to minimize the loss function. In essence, the authors argue that adversarial vulnerability is a property of the dataset, not the algorithm and by removing these non-robust features from the training data although the adversarial robustness of the model can be improved, due to information loss of the most predictive features, the model's overall accuracy will decrease. This view is also shared among~\cite{engstrom2019a, raghunathan2018certified, wong2018provable, xiao2018training, cohen2019certified, fawzi2018adversarial, mahloujifar2019curse, shafahi2018adversarial, gilmer2018adversarial, madry2017towards}.
 
+\paragraph{Insufficient data.} Schmidt et al. argue~\cite{schmidt2018adversarially} that adversarial vulnerabilities are intrinsic to statistical learning in high-dimensional spaces and not merely due to flaws in specific algorithms or architectures. This is a natural consequence of the mental model proposed by Ilyas et al.\ \cite{ilyas2019adversarial}. They also argue that due to information loss in a robust dataset, significantly more data is required during training in order to achieve comparable performance.
 
-% comments: https://distill.pub/2019/advex-bugs-discussion/
+\paragraph{Boundary Tilting.}
+
+\paragraph{Test Error in Noise.}
+
+\paragraph{Local Linearity.}
+
+\paragraph{Piecewise-linear decision boundaries.}
 
 % For example, the \textit{dimpled manifold hypothesis} \cite{shamir2021dimpled}  suggests that the decision boundary of deep neural networks is close to the data manifold, making it easy to find adversarial examples, while the \textit{non-robust features hypothesis} \cite{ilyas2019adversarial} suggests that models exploit non-robust features that are imperceptible to humans, leading to a vulnerability against small perturbations
 
@@ -328,15 +336,17 @@ Since then there have been many attempts at finding a cohesive narrative to expl
 
 % Another aspect of the \textit{dimpled manifold hypothesis} worth exploring is the idea of projecting the perturbations on the data manifold before applying them to the input space. Reducing the dimensionality of the perturbations or compressing them makes them visible to the human eye and interpretable as demonstrated by Karner \cite{karner2023dimpled}.
 
+\paragraph{Theoretical constructions which incidentally exploit non-robust features.}
 
 
 
 
+\section{Countermeasures}
 
+% - adversarial training
 
-
-
-
+% - robustness with guarantees: https://arxiv.org/pdf/2404.13631v1
+% - self-ensembling architecture (state of the art)
 
 
 
@@ -346,14 +356,25 @@ Since then there have been many attempts at finding a cohesive narrative to expl
 
 \newpage
 
+\chapter{Motivation}
+
+% interpretability - baking adversarial robustness right into model
+% - 
+
+% cybersecurity - adversarial examples in the wild
+% - One particularly entertaining example is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage. 
+% - fooling any kind of detection systen: malware detection, supply chain attacks, tax evasion, etc.
+% - using adversarial examples as a turing test for captchas, particularly interesting because the "perceptual quality" part can take care of itself by gathering data from deployment
+
+
+
+
 \chapter{Methodology}
 
 \section{Geometric masks inspired by hCaptcha}
 
 \section{Self-ensembled learning}
 
-% layer wise learning
-% simpler and more rigerous approach https://arxiv.org/pdf/2404.13631v1
 
 
 
