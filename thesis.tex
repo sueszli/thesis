@@ -35,6 +35,7 @@
 \usepackage{multicol}
 \tcbset{sharp corners, colback = white, before skip = 0.5cm, after skip = 0.5cm, breakable}
 \newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
+\newtcolorbox{quotebox}{sharpish corners, boxrule = 0pt, rightrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 
 \newcommand{\linebreaks}{\vspace*{0.5em}}
 
@@ -254,35 +255,84 @@ Recent work by Moosavi-Dezfooli et al.\ \cite{moosavi2017universal} have demonst
 
 \section{Mental Models}
 
-The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}:
+The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}, among others:
 
 \begin{itemize}
+	\setlength\itemsep{0em}
 	\item What are adversarial examples?
 	\item Why are the adversarial examples so close to the original images?
 	\item Why don't the adversarial perturbations resemble the target class?
-	\item Why do robustness and accuracy trade-off~\cite{zhang2019theoretically}?
-	\item Why do adversarial examples transfer between models~\cite{szegedy2013intriguing}?
+	\item Why do robustness and accuracy trade-off~\cite{zhang2019theoretically}\footnote{Should adversarial examples be misalignments from a converged model of reality, then there should not be a trade-off between robustness and accuracy.}?
+	\item Why do adversarial examples transfer between models, even on disjoint training sets~\cite{szegedy2013intriguing}?
 	\item Why do adversarial examples transfer between models and time-limited humans~\cite{elsayed2018adversarial}?
 \end{itemize}
 
-There have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory\footnote{For a more comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.\ \cite{ilyas2019adversarial}}.
+There have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory~\cite{ilyas2019adversarial}.
 
-\paragraph{Initial Idea} Initially~\cite{szegedy2013intriguing}, adversarial examples were thought to be a result of the high-dimensional, non-linear decision boundaries of neural networks. The idea was that the decision boundaries were so complex that they could be easily perturbed to cause misclassification. This explanation was supported by the fact that adversarial examples were found to be highly transferable between different models, even those trained on different datasets~\cite{szegedy2013intriguing}.
+\begin{highlightbox}
+	\textbf{Definition:} Manifold \\
+	
+	At the discovery of adversarial examples the concept of a manifold was introduced to explain the phenomenon:
+	
+	\begin{flushright}
+		\textit{``In some sense, what we describe is a way to traverse the manifold represented by the network [...]. The adversarial examples represent low-probability (high-dimensional) `pockets' in the manifold [...].''}
+		
+		\textemdash{} Szegedy et al., 2013~\cite{szegedy2013intriguing}
+	\end{flushright}	
+		
+	A manifold can be thought of as a low-dimensional structure embedded in a high-dimensional space, representing the set of valid data points (e.g., natural images) that the neural network is trained to classify. Mathematically, if the input data lies on a manifold $\mathcal{M} \subset \mathbb{R}^m$, then $\mathcal{M}$ represents the subset of the high-dimensional input space $\mathbb{R}^m$ that corresponds to meaningful or real-world data. \\
+
+	Szegedy et al.\ suggest that adversarial examples exploit the structure of this manifold and its surrounding space. Specifically, adversarial examples are small perturbations $r$ added to an input $x \in \mathcal{M}$, such that the perturbed input $x' = x + r$ lies off the data manifold but still within the high-dimensional input space.
+	
+	Formally, given a classifier $f: \mathbb{R}^m \to \{1, ..., k\}$ and its associated loss function $\text{Loss}_f(x, y)$, an adversarial example $x'$ for an input $x$ with true label $y$ can be found by solving:
+	
+	$$
+	\min_{r} \|r\|_2 \quad \text{subject to } f(x + r) \neq y, \; x + r \in [0, 1]^m,
+	$$
+	
+	where $r$ is constrained to be small (e.g., in terms of its $L_2$-norm). This optimization problem effectively traverses the space near $x$, moving off the manifold $\mathcal{M}$, to find regions where the classifier's decision boundary behaves unexpectedly.
+	
+	The paper suggests that these adversarial examples expose ``blind spots'' in the learned representation of the manifold by the neural network. The network's decision boundary may extend into regions near $\mathcal{M}$ in ways that are not semantically meaningful, allowing adversarial perturbations to exploit these regions. This phenomenon arises due to the high dimensionality of the input space and the discontinuous mappings learned by deep networks, which can fail to generalize smoothly beyond the manifold~\cite{khoury2018geometry, Jha2018DetectingAE, Sha2020ADA, dube2018high, shamir2021dimpled}.
+	
+	A more rigorous definition of the manifold hypothesis is provided by Khoury et al.\ in 2018~\cite{khoury2018geometry}.
+\end{highlightbox}
+
+\begin{highlightbox}
+	\textbf{Digression:} Manifolds 
+
+	When discussing manifolds we are referring to the low-dimensional structures that data, such as images, are thought to lie on within the high-dimensional input space. In deep learning, these manifolds represent the regions of meaningful data that neural networks are trained to classify.  \\
+
+	In the context of adversarial examples and high-dimensional spaces of realistic images, a "realistic subspace" or "subdimension" can be understood as a subset of the data manifold where the images appear plausible according to human perception or a given distribution $P$. This concept is crucial in understanding how adversarial perturbations exploit vulnerabilities in models by moving data points outside this realistic subspace. \\
+
+	A simple formula that encapsulates this idea is derived from the notion of randomness deficiency in algorithmic information theory~\cite{theis2024makes}. The formula for quantifying realism is: \\
+
+	$$
+	U(x) = -\log P(x) - K(x),
+	$$
+
+	where $ P(x) $ is the probability density of the image $ x $ under the target distribution, and $ K(x) $ is the Kolmogorov complexity of $ x $, representing the shortest description of $ x $ in a universal programming language. This measure, called a "universal critic," captures how well $ x $ aligns with both the statistical properties of $ P $ and its compressibility. A low value of $ U(x) $ indicates that $ x $ is realistic, while a high value suggests it is unrealistic. \\
+
+	This approach generalizes prior methods by integrating both probabilistic and structural aspects of realism. It highlights that realism depends not only on adherence to statistical patterns (e.g., probabilities or divergences) but also on whether an image can be plausibly generated within the constraints of $ P $. While directly computing $ K(x) $ is infeasible due to its uncomputability, practical approximations (e.g., compression algorithms or neural network-based critics) can serve as proxies. \\
+
+	The distinction between realistic and unrealistic perturbations is crucial for practical applications, as some adversarial examples may be mathematically valid but physically impossible to realize in real-world scenarios~\cite{dyrmishi2023empirical}. \\
+	
+	The challenge of quantifying realism remains a fundamental problem in machine learning, particularly because the boundary between realistic and unrealistic images can only be roughly approximated through information-theoretic measures~\cite{theis2024makes}.
+
+\end{highlightbox}
+
+The initial hypothesis by Szegedy et al.\ \cite{szegedy2013intriguing} suggests that adversarial examples are a result of (1) latents in higher layers only being meaningful in relation to themselves, not the input, and (2) the smoothness assumption that underlies many kernel methods not holding for deep neural networks.
+
+% https://arxiv.org/pdf/2404.13631v1 --> validate the first assumption, they say they found a way to have robustness and accuracy
+
+% Adversarial examples exploit the fact that neural networks are highly sensitive to small perturbations in input data, which can push an input off this manifold or into regions where the network's decision boundaries behave unpredictably.
+	
 
 
 
-% In their groundbreaking 2013 paper, Szegedy and colleagues discovered two fundamental properties of deep neural networks while investigating their behavior. First, they found that the semantic information in higher layers of neural networks exists in the space itself rather than in individual units, meaning there was no meaningful distinction between single units and random combinations of units[1][2].
 
-% The second and more striking discovery was that neural networks exhibit significant discontinuities in their input-output mappings. This led to the identification of what we now call adversarial examples - inputs created by adding small, imperceptible perturbations that cause the network to misclassify images[1][2]. The researchers found these perturbations by maximizing the network's prediction error through optimization techniques.
 
-% A particularly intriguing aspect of their discovery was that these adversarial examples demonstrated a surprising transferability property. The same perturbation could cause different networks, even those trained on different datasets, to misclassify the same input[2]. This universal nature of adversarial examples suggested they weren't simply artifacts of overfitting or specific model architectures, but rather represented a fundamental property of deep neural networks[1][3].
 
-% This discovery revealed a paradox: while neural networks achieve impressive generalization performance on natural inputs, they remain highly vulnerable to these carefully crafted perturbations that humans can barely perceive[1]. These findings challenged the common assumption about the smoothness of neural network mappings and revealed inherent blind spots in their decision boundaries.
 
-% Citations:
-% [1] https://cybersecurity.springeropen.com/articles/10.1186/s42400-018-0012-9
-% [2] https://arxiv.org/abs/1312.6199
-% [3] https://static.googleusercontent.com/media/research.google.com/en/pubs/archive/45471.pdf
 
 
 % comments: https://distill.pub/2019/advex-bugs-discussion/
@@ -315,11 +365,13 @@ There have been many attempts at finding a cohesive narrative to explain these c
 
 \chapter{Methodology}
 
-\begin{flushright}
-	``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''
-	
-	\textit{\textemdash{} James Mickens, USENIX Security 18~\cite{218395}}
-\end{flushright}
+\begin{quotebox}
+	\begin{flushright}
+		\textit{``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
+		
+		\textemdash{} James Mickens, USENIX Security 18 Opening Keynote~\cite{218395}
+	\end{flushright}
+\end{quotebox}
 
 % hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
 

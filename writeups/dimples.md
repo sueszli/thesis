@@ -1,4 +1,3 @@
-
 > Shamir, A., Melamed, O., & BenShmuel, O. (2021). The dimpled manifold model of adversarial examples in machine learning. https://arxiv.org/pdf/2106.10151
 
 *adversarial examples*
