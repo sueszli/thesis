@@ -271,7 +271,7 @@ The question discussed in the previous section is just one of many that remain o
 Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term they proposed that adversarial examples are caused by (1) neural networks developing internal representations that become increasingly disconnected from the input features as they progress through deeper layers, and (2) that these networks fail to maintain the smoothness properties typically assumed in traditional machine learning approaches. The idea was that this lack of smoothness gives them their expressive power, but also makes them vulnerable to these attacks.
 
 \begin{highlightbox}
-	\textbf{Definition:} Manifold \\
+	\textbf{Definition:} Data Submanifold \\
 	
 	The first attempt to explain adversarial examples used the term ``manifold''.
 	
@@ -322,11 +322,13 @@ Since then there have been many attempts at finding a cohesive narrative to expl
 
 \paragraph{Insufficient data.} Schmidt et al. argue~\cite{schmidt2018adversarially} that adversarial vulnerabilities are intrinsic to statistical learning in high-dimensional spaces and not merely due to flaws in specific algorithms or architectures. This is a natural consequence of the mental model proposed by Ilyas et al.\ \cite{ilyas2019adversarial}. They also argue that due to information loss in a robust dataset, significantly more data is required during training in order to achieve comparable performance.
 
-\paragraph{Boundary Tilting.}
+\paragraph{Boundary Tilting.} A competing view by Tanay and Kim et al.\ \cite{tanay2016boundary,kim2019bridging} suggests that adversarial examples exist because decision boundaries extend beyond the actual data manifold and can lie uncomfortably close to it, essentially viewing adversarial examples as a consequence of overfitting. This observation can be quantified through the concept of adversarial strength, which relates to the angular deviation between the classifier and the nearest centroid classifier. The authors also argue that this vulnerability can be addressed through proper regularization techniques.
 
-\paragraph{Test Error in Noise.}
+\paragraph{Test Error in Noise.} There might be a link between robustness to random noise and adversarial attacks~\cite{fawzi2016robustness, ford2019adversarial, lecuyer2019certified, cohen2019certified, ford2019adversarial}. This might imply that adversarial examples exploit inherent weaknesses in how models generalize under noisy or perturbed conditions.
 
 \paragraph{Local Linearity.}
+
+\cite{goodfellow2014explaining, madry2017towards, athalye2018obfuscated}
 
 \paragraph{Piecewise-linear decision boundaries.}
 
