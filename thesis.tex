@@ -290,11 +290,9 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 
 	Szegedy et al.\ suggest that adversarial examples exploit the structure of this manifold and its surrounding space. Specifically, adversarial examples are small perturbations $r$ added to an input $x \in \mathcal{M}$, such that the perturbed input $x' = x + r$ lies off the data manifold but still within the high-dimensional input space. \\
 	
-	Formally, given a classifier $f: \mathbb{R}^m \to \{1, ..., k\}$ and its associated loss function $\text{Loss}_f(x, y)$, an adversarial example $x'$ for an input $x$ with true label $y$ can be found by solving: \\
+	Formally, given a classifier $f: \mathbb{R}^m \to \{1, ..., k\}$ and its associated loss function $\text{Loss}_f(x, y)$, an adversarial example $x'$ for an input $x$ with true label $y$ can be found by solving:
 	
-	$$
-	\min_{r} \|r\|_2 \quad \text{subject to } f(x + r) \neq y, \; x + r \in [0, 1]^m,
-	$$
+	$$\min_{r} \|r\|_2 \quad \text{subject to } f(x + r) \neq y, \; x + r \in [0, 1]^m$$
 	
 	where $r$ is constrained to be small (e.g., in terms of its $L_2$-norm). This optimization problem effectively traverses the space near $x$, moving off the manifold $\mathcal{M}$, to find regions where the classifier's decision boundary behaves unexpectedly. \\
 	
@@ -308,9 +306,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 
 	A ``realistic subspace'' can be understood as a subset of the data manifold where the images appear plausible according to human perception or a given distribution $P$. A simple formula that expresses this idea elegantly to quantify realism is derived from the notion of randomness deficiency in algorithmic information theory~\cite{theis2024makes}:
 
-	$$
-	U(x) = -\log P(x) - K(x),
-	$$
+	$$U(x) = -\log P(x) - K(x)$$
 
 	where $P(x)$ is the probability density of the image $x$ under the target distribution, and $K(x)$ is the Kolmogorov complexity of $x$, representing the shortest description of $x$ in a universal programming language. This measure, called a ``universal critic'', captures how well $x$ aligns with both the statistical properties of $P$ and its compressibility. A low value of $U(x)$ indicates that $x$ is realistic, while a high value suggests it is unrealistic~\cite{theis2024makes}. \\
 
