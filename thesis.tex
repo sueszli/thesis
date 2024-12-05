@@ -260,17 +260,28 @@ The question discussed in the previous section is just one of many that remain o
 	\item What are adversarial examples?
 	\item Why are the adversarial examples so close to the original images?
 	\item Why don't the adversarial perturbations resemble the target class?
-	\item Why do robustness and accuracy trade-off?
+	\item Why do robustness and accuracy trade-off~\cite{zhang2019theoretically}?
+	\item Why do adversarial examples transfer between models (and time-limited humans~\cite{elsayed2018adversarial})?
 \end{itemize}
 
-There have been many attempts at finding a cohesive narrative to explain these properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory\footnote{For a more comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.\ \cite{ilyas2019adversarial}}.
+There have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory\footnote{For a more comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.\ \cite{ilyas2019adversarial}}.
 
-\begin{itemize}
-	\item \textit{Hi}:
-	\item \textit{Hi}:
-	\item \textit{Hi}:
-\end{itemize}
+\paragraph{Initial Idea} Initially~\cite{szegedy2013intriguing}, adversarial examples were thought to be a result of the high-dimensional, non-linear decision boundaries of neural networks. The idea was that the decision boundaries were so complex that they could be easily perturbed to cause misclassification. This explanation was supported by the fact that adversarial examples were found to be highly transferable between different models, even those trained on different datasets~\cite{szegedy2013intriguing}.
 
+
+
+% In their groundbreaking 2013 paper, Szegedy and colleagues discovered two fundamental properties of deep neural networks while investigating their behavior. First, they found that the semantic information in higher layers of neural networks exists in the space itself rather than in individual units, meaning there was no meaningful distinction between single units and random combinations of units[1][2].
+
+% The second and more striking discovery was that neural networks exhibit significant discontinuities in their input-output mappings. This led to the identification of what we now call adversarial examples - inputs created by adding small, imperceptible perturbations that cause the network to misclassify images[1][2]. The researchers found these perturbations by maximizing the network's prediction error through optimization techniques.
+
+% A particularly intriguing aspect of their discovery was that these adversarial examples demonstrated a surprising transferability property. The same perturbation could cause different networks, even those trained on different datasets, to misclassify the same input[2]. This universal nature of adversarial examples suggested they weren't simply artifacts of overfitting or specific model architectures, but rather represented a fundamental property of deep neural networks[1][3].
+
+% This discovery revealed a paradox: while neural networks achieve impressive generalization performance on natural inputs, they remain highly vulnerable to these carefully crafted perturbations that humans can barely perceive[1]. These findings challenged the common assumption about the smoothness of neural network mappings and revealed inherent blind spots in their decision boundaries.
+
+% Citations:
+% [1] https://cybersecurity.springeropen.com/articles/10.1186/s42400-018-0012-9
+% [2] https://arxiv.org/abs/1312.6199
+% [3] https://static.googleusercontent.com/media/research.google.com/en/pubs/archive/45471.pdf
 
 
 % comments: https://distill.pub/2019/advex-bugs-discussion/
