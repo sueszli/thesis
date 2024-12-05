@@ -1,16 +1,1 @@
-https://sueszli.github.io/thesis/thesis.pdf
-
-contributions:
-
-- code:
-    - https://github.com/ETH-DISCO/self-ensembling
-    - https://github.com/ETH-DISCO/advx-bench
-    - https://github.com/ETH-DISCO/captcha-the-flag
-    - https://github.com/ETH-DISCO/cluster-tutorial
-    - https://github.com/sueszli/python-template/blob/main/makefile (nohup implementation)
-- pull requests:
-    - https://github.com/pytorch/vision/pull/8652
-    - https://github.com/stanislavfort/ensemble-everything-everywhere/pull/2
-- models:
-    - https://huggingface.co/sueszli/robustified_clip_vit
-    - https://huggingface.co/sueszli/self-ensembling-resnet152
+check it out: https://sueszli.github.io/thesis/thesis.pdf

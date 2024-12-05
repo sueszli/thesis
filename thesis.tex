@@ -24,16 +24,11 @@
 
 \date{\today}
 
-%
-% extended config
-%
-
-\usepackage{mathtools}
-
 \setlength\parindent{0pt}
 
 % example boxes
 % https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+\usepackage{mathtools}
 \usepackage[many]{tcolorbox}
 \usepackage{mathspec}
 \usepackage{setspace}
@@ -41,13 +36,21 @@
 \tcbset{sharp corners, colback = white, before skip = 0.5cm, after skip = 0.5cm, breakable}
 \newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 
-%
-% content
-%
+\newcommand{\linebreaks}{\vspace*{0.5em}}
+
+\usepackage{anyfontsize}
+\usepackage{hyperref}
+\hypersetup{colorlinks = true, linkcolor = black, urlcolor = black, citecolor = black,}
+\urlstyle{same}
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+\urlstyle{leo}
 
 \begin{document}
 
-\frontmatter % do not remove this line
+\frontmatter
 \maketitle
 
 \cleardoublepage
@@ -69,19 +72,86 @@
 	...
 \end{abstract}
 
+\chapter*{Originality}
+% good style: https://arxiv.org/pdf/2202.02435
+
+The material in this thesis is original work, except where due reference is made.
+
+\section*{Papers}
+
+\textbf{Seeing Through the Mask: Rethinking Adversarial Examples for CAPTCHAs} \\
+Yahya Jabary, Andreas Plesner, Turlan Kuzhagaliyev, Roger Wattenhofer \\
+\textit{ArXiv: 2409.05558}
+
+\section*{Open source software}
+
+The majority of time working on this thesis, was spent on developing a reproducible research pipeline for experiments in a compute and GPU memory constrained, containerized environment with compiled dependencies.
+
+The following projects were developed as part of this work (in chronological order, with the most recent first):
+
+\linebreaks
+
+\textbf{self-ensembling} \\
+All experiments related to the Self-Ensembling algorithm by Fort et al. \\
+\url{https://github.com/ETH-DISCO/self-ensembling} \\
+\url{https://huggingface.co/sueszli/self-ensembling-resnet152}
+
+\linebreaks
+
+\textbf{ensemble-everything-everywhere} \\
+Pull Request: Optimizing the official Self-Ensembler repository by Fort et al. \\
+\url{https://github.com/stanislavfort/ensemble-everything-everywhere/pull/2}
+
+\linebreaks
+
+\textbf{vision} \\
+Pull Request: Containerizing TorchVision to recompile ResNet-50 from scratch. \\
+\url{https://github.com/pytorch/vision/pull/8652}
+
+\linebreaks
+
+\textbf{advx-bench} \\
+All experiments related to the geometric masks from the paper. \\
+\url{https://github.com/ETH-DISCO/advx-bench} \\
+\url{https://huggingface.co/sueszli/robustified_clip_vit}
+
+\linebreaks
+
+\textbf{cluster-tutorial} \\
+Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the terminal to an interactive SLURM job, run an Apptainer to enable admin privileges and redirect all filepointers to the EXT4 filesystem to avoid out-of-memory limits. A Jupyter notebook is then hosted on a public IP address. \\
+\url{https://github.com/ETH-DISCO/cluster-tutorial}
+
+\linebreaks
+
+\textbf{python-template} \\
+Short scripts to \texttt{pip-compile} dependencies, containerize the environment and translate back and forth between Conda and Docker for different job submission systems. \\
+\url{https://github.com/sueszli/python-template/}
+
+\linebreaks
+
+\textbf{captcha-the-flag} \\
+Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHAv2 and a scraper used to evaluate challenges against solvers. \\
+\url{https://github.com/ETH-DISCO/captcha-the-flag}
+
+\section*{Breakdown of contributions}
+
+For the paper, Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments, Andreas and me writing the majority of the text, and Turlan providing experimental results and feedback. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet-50 model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
+
+Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet-50 model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
+
+Andreas Plesner diligently proofread this manuscript for errors. As is traditional, any errors that remain are of course mine alone.
+
 \tableofcontents
 
-\mainmatter % do not remove
+\mainmatter
 
 \chapter{Introduction}
-
-% good style: https://arxiv.org/pdf/2202.02435
 
 We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning to a broader audience, with fewer technical prerequisites. We hope it will be valuable to those interested.
 
 \section{Definition}
 
-Adversarial examples are closely related to the concept of perturbation methods\footnote{Thanks to Prof.\ Wattenhofer for sharing this piece of unorthodox history.}.
+Adversarial examples are closely related to the concept of perturbation methods\footnote{Thanks to Prof.\ Roger Wattenhofer for sharing this piece of unorthodox history.}.
 
 The origin of perturbations can be traced back to the early days of computational geometry by Seidel et al. in 1998~\cite{seidel1998nature}. Perturbation techniques in computational geometry address a fundamental challenge: handling ``degeneracies'' in geometric algorithms. These are special cases that occur when geometric primitives align in ways that break the general position assumptions the algorithms rely on.
 
@@ -184,7 +254,16 @@ Recent work by Moosavi-Dezfooli et al. \cite{moosavi2017universal} have demonstr
 
 \section{Counterintuitive Properties \& Mental Models}
 
-The question discussed in the previous section is just one of many that remain open. In fact, there are several counterintuitive properties of adversarial examples that have yet to be fully explained:
+The question discussed in the previous section is just one of many that remain open. In fact, there are several properties of adversarial examples that have yet to be fully explained~\cite{shamir2021dimpled}:
+
+\begin{itemize}
+	\item What are these adversarial examples?
+	\item Why are the adversarial examples so close to the original images?
+	\item Why don't the adversarial perturbations resemble the target class?
+	\item Why do robustness and accuracy trade-off?
+\end{itemize}
+
+There have been many attempts at finding a cohesive narrative to explain these properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory\footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.\ \cite{ilyas2019adversarial}}:
 
 \begin{itemize}
 	\item \textit{Hi}:
@@ -192,10 +271,6 @@ The question discussed in the previous section is just one of many that remain o
 	\item \textit{Hi}:
 \end{itemize}
 
-
-
-
-% There have been many attempts at finding a cohesive narrative to explain these properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory\footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al. \cite{ilyas2019adversarial}}.
 
 
 % comments: https://distill.pub/2019/advex-bugs-discussion/
