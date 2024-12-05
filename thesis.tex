@@ -57,7 +57,7 @@
 
 	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian, and my family, for their unwavering support, even when I took risks and turned down financial opportunities to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and got me through many long nights.
 	
-	I owe much to those who made this work possible. Prof.\ Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision. Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie.
+	I owe much to those who made this work possible. Prof.\ Roger Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision. Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie.
 	
 	Thanks also to those whose paths have diverged from mine but whose impact remains with me: Prof.\ Schahram Dustdar, who enabled my studies abroad, and Prof.\ Ali Mashtizadeh, who introduced me to operating systems research.
 	
@@ -121,11 +121,9 @@ Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2
 
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. One particularly entertaining example is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
-\section{Types of Adversarial Examples}
+\section{Threat Modeling}
 
-% this is for the authors that said we don't have a threat model
-
-Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}.
+Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}. This is particularly important in threat modeling, where the goal is to anticipate and defend against potential attacks.
 
 We can differentiate between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
 
@@ -138,8 +136,6 @@ The extent to which adversarial examples are transferable \textendash{} meaning 
 Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
 
 \section{Imperceptible $\not=$ Semantics Preserving}
-
-% this is for the authors that said we don't conduct experiments on humans
 
 Adversarial examples are traditionally expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}.
 
@@ -166,11 +162,9 @@ Recent research has shifted towards more nuanced concepts like ``semantic preser
 
 The challenge of defining semantics remains central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
 
-\section{The Human-Machine Vision Gap}
+\section{Inner Representations}
 
-% this is to try to explain self-ensembling and intermediate representations
-
-The internal latent representations of neural networks, their alignment with human understanding and the resuling gap between the two is a central theme in adversarial machine learning research. This gap has many practical implications for the robustness and interpretability of machine learning models.
+The internal latent representations of neural networks, their alignment with human understanding and the resuling gap between the two (the human-machine vision gap~\cite{geirhos2021partial}) is a central theme in adversarial machine learning research. This gap has many practical implications for the robustness and interpretability of machine learning models.
 
 Neural networks trained with topological features develop substantially different internal representations compared to those trained on raw data, though these differences can sometimes be reconciled through simple affine transformations~\cite{mcguire2023neural}. This finding suggests that while the structural representations may differ, the underlying semantic understanding might be preserved across different training approaches.
 
@@ -182,64 +176,28 @@ The choice of objective function significantly influences how networks represent
 
 Recent research~\cite{bansal2021revisiting} has demonstrated that neural networks with strong performance tend to learn similar internal representations, regardless of their training methodology. Networks trained through different approaches, such as supervised or self-supervised learning, can be effectively ``stitched'' together without significant performance degradation. This suggests a convergence in how successful neural networks represent information.
 
-This aligns with the ``Platonic Representation Hypothesis'', which suggests that neural networks are converging toward a shared statistical model of reality, regardless of their training objectives or architectures. As models become larger and are trained on more diverse tasks and data, their internal representations increasingly align with each other, even across different modalities like vision and language. This convergence appears to be driven by the fundamental constraints of modeling the underlying structure of the real world, similar to Plato's concept of an ideal reality that exists beyond our sensory perceptions. The hypothesis proposes that this convergence is not coincidental but rather a natural consequence of different models attempting to capture the same underlying statistical patterns and relationships that exist in reality~\cite{huh2024platonic}. 
+This aligns with the ``Platonic Representation Hypothesis''~\cite{huh2024platonic}, which suggests that neural networks are converging toward a shared statistical model of reality, regardless of their training objectives or architectures. As models become larger and are trained on more diverse tasks and data, their internal representations increasingly align with each other, even across different modalities like vision and language. This convergence appears to be driven by the fundamental constraints of modeling the underlying structure of the real world, similar to Plato's concept of an ideal reality that exists beyond our sensory perceptions. The hypothesis proposes that this convergence is not coincidental but rather a natural consequence of different models attempting to capture the same underlying statistical patterns and relationships that exist in reality~\cite{huh2024platonic}. 
 
-
-
-
-
-
-
-
-
-% a) there are universarl adversarial examples 
-% b) there are no adversarial examples anymore (because there are no misalignments, just optical illusions that would fool humans too ???)
-
-Should the Platonic Representation Hypothesis hold true, it would mean (WOULD IT THOUGHHHH??????) that by converging to a shared model of reality (not that of the human perception), ultimately, a single adversarial example could fool all models, regardless of their architecture, training data or objective function. Moosavi-Dezfooli et al.\ have demonstrated the existence of a single perturbation on most models for all naturally occurring images, adding weight to this possibility~\cite{moosavi2017universal}.
+Should the ``Platonic Representation Hypothesis'' hold true, this would either mean that (a) adversarial examples as we know them are misalignments from a converged model of reality, or (b) that there exist a universal adversarial example that can fool any model, regardless of its architecture, training data or objective function, converging to a single and shared model of reality. Recent work by Moosavi-Dezfooli et al. \cite{moosavi2017universal} have demonstrated the existence of a single perturbation that can fool most models for all naturally occurring images, adding weight to the latter interpretation, though the question remains open.
 
 \section{Counterintuitive Properties \& Mental Models}
 
-% dimples dude
+The question discussed in the previous section is just one of many that remain open. In fact, there are several counterintuitive properties of adversarial examples that have yet to be fully explained:
 
-Dimple manifold dude is also kind of talking about universal representations and behavior etc.
+\begin{itemize}
+	\item \textit{Hi}:
+	\item \textit{Hi}:
+	\item \textit{Hi}:
+\end{itemize}
 
-Understanding the human-machine vision gap provides a foundation for exploring the mysteries of adversarial examples.
+There have been many attempts at finding a cohesive narrative to explain these properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory\footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al. \cite{ilyas2019adversarial}}.
 
-
-
-
-
-
-% There are a bunch of stuff we don't know about them
-
-% unsolved mysteries:
-% - https://arxiv.org/pdf/1610.08401
-
-% ---> people tried a bunch of different ways to explain adversarial examples
-
-% Today, we recognize that adversarial examples are not random noise but rather carefully crafted perturbations that exploit the model's learned features. This understanding has led to the development of various defense mechanisms, including adversarial training and robust optimization techniques.
-
-% The field has evolved from simple linear classifiers to complex scenarios involving physical-world attacks, demonstrating that adversarial examples are not merely theoretical constructs but practical concerns in machine learning systems.
 
 % https://github.com/sueszli/tu-wien-data-science-summaries-archive/blob/main/research/not%20bugs%20features.md
 
-% In 2013 Szegedy et al.~\cite{cubuk2017intriguing} discovered that deep neural networks are vulnerable to adversarial examples \textendash{} inputs with imperceptible perturbations that cause misclassification, revealing blind spots where the models' decision boundaries are brittle, despite appearing to generalize well on normal inputs. Since then we have made a lot of progress in both finding attack vectors \cite{goodfellow2014explaining} \cite{madry2017towards} \cite{papernot2016limitations} and adversarially training models to be more robust \cite{shafahi2019adversarial} \cite{madry2017towards} \cite{papernot2016distillation} to these attacks.
-
-% However, despite the progress, we still don't fully understand:
-
-% \begin{itemize}
-%     \item What they are, why they exist and how they work.
-%     \item How to defend against them without sacrificing accuracy (robustness vs accuracy trade-off).
-%     \item Why they transfer between different models, datasets, architectures, training procedures and even to the human visual system \cite{elsayed2018adversarial}.
-% \end{itemize}
-
-% There have been many attempts at explaining adversarial examples, each with limitations and assumptions \textendash{} some complementary, some contradictory  \footnote{For a comprehensive overview of the hypotheses, see the Addendum of Ilyas et al.~\cite{ilyas2019adversarial}}.
-
 % For example, the \textit{dimpled manifold hypothesis} \cite{shamir2021dimpled}  suggests that the decision boundary of deep neural networks is close to the data manifold, making it easy to find adversarial examples, while the \textit{non-robust features hypothesis} \cite{ilyas2019adversarial} suggests that models exploit non-robust features that are imperceptible to humans, leading to a vulnerability against small perturbations
 
-% The \textit{dimpled manifold hypothesis} is a particularly controversial one, as it was criticized by Yannik Kilcher \cite{kilcher2021dimpled} in 2021, who also provided a counterexample in less than 100 lines of code \cite{kilcher2021dimpledcode}. Despite the lack of generalizability, a master's student from the University of Vienna, Lukas Karner, successfully verified and replicated all experiments detailed in the dimples paper \cite{karner2023dimpled} in 2023. Lukas allowed me to use his results in my work. He mentioned that there is currently no paper or thesis based on his work and that he would be happy to see his results being used in a meaningful way.
-
-% This leaves us with the possibility that the experiments carried out are correct in themselves, but that the chain of reasoning is inconclusive and therefore doesn't generalize. Investigating this further would require more rigor by formalizing falsifiable hypotheses based on the paper and conducting experiments to test them.
+% The \textit{dimpled manifold hypothesis} is a particularly controversial one, as it was criticized by Yannik Kilcher~\cite{kilcher2021dimpled} in 2021, who also provided a counterexample in less than 100 lines of code~\cite{kilcher2021dimpledcode}. Despite the lack of generalizability Lukas Karner successfully verified and replicated all experiments detailed in the dimples paper~\cite{karner2023dimpled} in 2023. This leaves us with the possibility that the experiments carried out are correct in themselves, but that the chain of reasoning is inconclusive and therefore doesn't generalize. Investigating this further would require more rigor.
 
 % Another aspect of the \textit{dimpled manifold hypothesis} worth exploring is the idea of projecting the perturbations on the data manifold before applying them to the input space. Reducing the dimensionality of the perturbations or compressing them makes them visible to the human eye and interpretable as demonstrated by Karner \cite{karner2023dimpled}.
 
@@ -249,22 +207,31 @@ Understanding the human-machine vision gap provides a foundation for exploring t
 
 
 
-\chapter{Methodology}
 
-% hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
 
-\chapter{Results}
 
-\chapter{Stuff}
+
+
+
+
+
 
 
 \newpage
+
+\chapter{Methodology}
 
 \begin{flushright}
 	``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''
 	
 	\textit{\textemdash{} James Mickens, USENIX Security 18~\cite{218395}}
 \end{flushright}
+
+% hcaptcha-v2: don't mention "hcaptcha", mention "geometric masks inspired by hcaptcha" instead, the reviewers didn't like it
+
+\chapter{Results}
+
+\chapter{Stuff}
 
 \bigskip
 
@@ -298,11 +265,9 @@ And here we cite some external documents~\cite{TestReference, TestReference2}.
 An example of an included graphic can be found in Figure~\ref{fig:example_figure}.
 Note that in \LaTeX, ``quotes'' do not use the usual double quote characters.
 
-% This displays the bibliography for all cited external documents. All references have to be defined in the file references.bib and can then be cited from within this document.
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 
-% This creates an appendix chapter, comment if not needed.
 \appendix
 \chapter{First Appendix Chapter Title}
 
