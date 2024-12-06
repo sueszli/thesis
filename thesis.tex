@@ -21,7 +21,7 @@
 
 \supervisors{Prof.\ Dr.\ Roger Wattenhofer\\[2pt] Prof.\ Dr.\ Schahram Dustdar}
 
-\keywords{Robustness, Reliability, Security, Algorithmic Models}
+\keywords{Reliability, Robustness, Security, Algorithmic Models}
 % \categories{ACM categories go here.}
 
 \date{\today}
@@ -50,6 +50,8 @@
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
 \makeatother
 \urlstyle{leo}
+
+\newcommand{\hr}{\noindent\makebox[\linewidth]{\rule{0.5\textwidth}{0.4pt}}}
 
 \begin{document}
 
@@ -375,7 +377,11 @@ Several effective strategies have been developed. This collection is by no means
 
 The countermeasures discussed so far provide a diverse array of techniques to mitigate the impact of adversarial examples. Each method addresses specific aspects of the problem, ranging from input preprocessing to model architecture adjustments and training methodologies. Notably, hybrid strategies that combine multiple techniques often yield the best results, with some implementations achieving reliable performance even under sophisticated attack benchmarks~\cite{ji2023benchmarking}.
 
-Assuming that robustness and generalizability are not competing objectives but complementary goals, the ultimate defense lies in designing architectures that inherently integrate robustness and interpretability. By prioritizing these attributes at the core of model development, we can create systems that not only withstand adversarial attacks but also offer more trustworthy and transparent decision-making.
+\vspace{1em}
+\hr{}
+\vspace{0.5em}
+
+Assuming that robustness and generalizability are not competing objectives but complementary goals, the ultimate defense lies in designing architectures that inherently integrate robustness and interpretability. By prioritizing these objectives at the core of model development, we can create systems that not only withstand adversarial attacks but also offer more trustworthy and transparent decision-making.
 
 \paragraph{Fermi-Bose Machine.} One noteworthy example is the Fermi-Bose Machine~\cite{xie2024fermi}. Unlike traditional neural networks that rely on backpropagation, this method introduces a local contrastive learning mechanism inspired by quantum mechanics principles. The system works by making representations of inputs with identical labels cluster together (like bosons), while representations of different labels repel each other (like fermions). This layer-wise learning approach is considered more biologically plausible than traditional backpropagation~\cite{xie2024fermi}. The researchers demonstrated the effectiveness of their method on the MNIST dataset, showing that by adjusting the target fermion-pair-distance parameter, they could significantly reduce the susceptibility to adversarial attacks that typically disturb standard perceptrons~\cite{xie2024fermi}. The key innovation lies in controlling the geometric separation of prototype manifolds through the target distance parameter, as revealed by statistical mechanics analysis~\cite{xie2024fermi}.
 
@@ -387,13 +393,13 @@ An interesting secondary outcome of this research was the discovery that gradien
 
 \section{Key Takeaways}
 
-Perhaps we should be \underline{rethinking adversarial examples} not as attacks but as indicators of insufficient generalization.
+Perhaps we should be rethinking adversarial examples not as attacks but as indicators of insufficient generalization.
 
 The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with interpretability and robustness as core design principles.
 
 This perspective suggests that the key to improving adversarial robustness lies not in patching existing systems, but in developing new architectures from the ground up that naturally exhibit both robust and interpretable behavior.
 
-The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this direction we will be exploring in this thesis, in combination with primitive attacks in order to understand the underlying mechanisms of adversarial examples and how they can be mitigated.
+The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this direction we will be exploring in this thesis. Additionally, we will make use of primitive geometric masks as attacks, to study the underlying mechanisms of vision models.
 
 \chapter{Methodology}
 
