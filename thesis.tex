@@ -297,6 +297,12 @@ One particularly entertaining example of an adversarial attack is the subversion
 But adversarial attacks are not limited to academia. They're also a growing concern in industry, where they can have serious consequences for safety critical systems~\cite{9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM}.
 
 
+
+
+% Microsoft, Google, and Hugging Face are leading companies investing in AI security testing and adversarial example detection. Microsoft has established a dedicated AI Red Team to proactively identify and mitigate AI system vulnerabilities. Google has developed comprehensive AI red teaming procedures documented in their security framework.
+
+
+
 % find motivation to use adversarial examples in safety critical systems.
 
 % use names of companies for each example. try to find the amount of money they're spending for each example.
@@ -326,6 +332,9 @@ But adversarial attacks are not limited to academia. They're also a growing conc
 
 
 
+
+
+
 \section{Threat Modeling}
 
 Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}. This is particularly important in threat modeling, where the goal is to anticipate and defend against potential attacks.
@@ -339,7 +348,6 @@ The method used to generate adversarial examples can be gradient-based, optimiza
 The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models, or the human vision system\cite{elsayed2018adversarial} \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
 
 Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
-
 
 \section{Inner Representations}
 
@@ -476,7 +484,16 @@ The method achieved impressive results without requiring adversarial training or
 
 An interesting secondary outcome of this research was the discovery that gradient-based attacks against their model produced human-interpretable images of target classes~\cite{fort2024ensemble}. Additionally, the multi-resolution approach enabled the researchers to transform pre-trained classifiers and CLIP models into controllable image generators, while also developing successful transferable attacks on large vision language models~\cite{fort2024ensemble}.
 
+
+
+
+
+
+
+
 \section{Research Questions}
+
+% unrestricted advx
 
 Perhaps we should be rethinking adversarial examples not as attacks but as indicators of insufficient generalization.
 
@@ -498,6 +515,11 @@ This leads us to the following research questions:
 % - copy motivation from paper
 % - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
 % - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
+
+
+
+
+
 
 \chapter{Methodology}
 
