@@ -225,7 +225,7 @@ However, the concept of ``imperceptibility [to humans]'' as originally proposed 
 \begin{enumerate}
 	\item \textit{Changing many pixels doesn't necessarily change semantics}: For instance, changes in lighting, exposure, sharpness, field of view or even the the orientation of an animal's fur~\cite{kilcher2021dimpled} does not necessarily alter the semantic content of an image, despite involving many pixel-space changes. The figure~\ref{fig:latentspace} serves to illustrate this point, assuming that the latent representations are perfectly aligned with the human judgement function.
 
-	\item \textit{Changing few pixels doesn't necessarily preserve semantics}: The assumption that minimal pixel-space changes ensure semantic preservation is also flawed. This is because humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain\footnote{Invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}}. Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}\footnote{It's debatable whether this is a good argument, since we might not be fitting the human judgemnet function but a converging model of reality, as discussed later.}.
+	\item \textit{Changing few pixels doesn't necessarily preserve semantics}: The assumption that minimal pixel-space changes ensure semantic preservation is also flawed. This is because humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain\footnote{Invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}.}. Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}\footnote{It's debatable whether this is a good argument, since we might not be fitting the human judgement function but a converging model of reality, as discussed later.}.
 \end{enumerate}
 
 In conclusion, the number of pixels changed is not a reliable indicator of imperceptibility, which itself is just a proxy for semantic preservation.
@@ -233,8 +233,10 @@ In conclusion, the number of pixels changed is not a reliable indicator of imper
 Recent research has shifted towards more nuanced concepts like ``semantic preservation''~\cite{careil2023towards} acknowledging that the relationship between perturbation size and semantic change is not straightforward. This shift has led to the development of new methods for generating adversarial examples that focus on preserving semantic information rather than relying on pixel-space constraints~\cite{lee2020semantics}.
 
 
-% google challenge
+% https://research.google/blog/introducing-the-unrestricted-adversarial-examples-challenge/
 
+% - https://research.google/blog/introducing-the-unrestricted-adversarial-examples-challenge/ -> semantics, not pixels / perceptibility -> we can use masks
+% - https://imgur.com/a/deep-learning-training-set-K4RWn
 
 
 The challenge of defining semantics remains central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
@@ -260,7 +262,6 @@ The method used to generate adversarial examples can be gradient-based, optimiza
 The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models, or the human vision system\cite{elsayed2018adversarial} \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
 
 Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
-
 
 
 \section{Inner Representations}
@@ -420,9 +421,6 @@ This leads us to the following research questions:
 % - copy motivation from paper
 % - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
 % - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
-% - https://research.google/blog/introducing-the-unrestricted-adversarial-examples-challenge/ -> semantics, not pixels / perceptibility -> we can use masks
-% - https://www.reddit.com/r/MachineLearning/comments/49wrt4/adversarial_images_for_deep_learning/?rdt=48134
-% - https://www.reddit.com/r/threebodyproblem/comments/1da3bk8/there_is_no_evidence_humans_cant_be_adversarially/
 
 \chapter{Methodology}
 
