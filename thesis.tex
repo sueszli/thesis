@@ -205,48 +205,107 @@ Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2
 	In the untargeted version, the perturbation is designed to increase the loss for the correct class. In the targeted version the perturbation is designed to minimize the loss with respect to the adversary's chosen target class, making the model predict it deliberately.
 \end{highlightbox}
 
+\begin{highlightbox}
+	\textbf{Digression:} Pixel-space constraints don't guarantee imperceptibility \\
+
+	Traditionally, adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}. \\
+
+	However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ning2023hflic}. \\
+
+	Humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain. It's worth mentioning that invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}. \\
+	
+	Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}.
+\end{highlightbox}
+
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
 \subsection{Semantics Preserving Adversarial Examples}
 
-Imperceptible adversarial exampels (assuming they are defined correctly, as discussed below) are a subset of the broader category of semantics preserving~\cite{browne2020semantics} adversarial examples.
+Imperceptible noise is just one of many semantics preserving adversarial examples. For instance, rotating an image by a few degrees or capturing it from a different angle can also cause misclassification. These superset of adversarial examples are often referred to as ``unrestricted''~\cite{brown2018unrestricted} or ``semantics preserving''~\cite{browne2020semantics, careil2023towards, lee2020semantics} adversarial examples. The comparison in Fig.~\ref{fig:unrestricted} and the illustration in Fig.~\ref{fig:latentspace} serve to highlight the differences between the different kinds of adversarial examples. Fig.~\ref{fig:adversarial_dogs} shows a collection of naturally occurring adversarial examples, also known as ``natural adversarial examples''~\cite{hendrycks2021natural, teenybiscuittweet}.
 
-Traditionally, adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}.
+This shift in how we define adversarial examples, first popularized through the ``Unrestricted Adversarial Examples Challenge''~\cite{brown2018unrestricted} by Google in 2018, has led to a more nuanced understanding of the phenomenon. It acknowledges that real-world applications, especially in safety-critical contexts, are subject to a broader range of adversarial attacks than previously assumed and do not always adhere to the ``small perturbation'' constraint that was initially proposed~\cite{brown2018unrestricted}.
 
-However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ning2023hflic}:
+This paradigm shift to a search for more meaningful adversarial examples and ``spacial robustness'' was first proposed by Gilmer et al. in 2018~\cite{gilmer2018motivating} and Engstrom et al. in 2019~\cite{engstrom2019exploring}. It lays the theoretical foundation for our work and we believe it to be the future of adversarial machine learning research.
 
 \begin{figure}
-    \centering
-    \includegraphics[width=1\columnwidth]{figures/latentspace.pdf}
-    \caption{Semantics preserving/changing perturbations in pixel/latent-space.}
-    \label{fig:latentspace}
+	\centering
+	\includegraphics[width=0.75\columnwidth]{figures/unrestricted-advx.png}
+	\caption{Unrestricted adversarial examples~\cite{brown2018unrestricted}.}
+	\label{fig:unrestricted}
 \end{figure}
 
-\begin{enumerate}
-	\item \textit{Changing many pixels doesn't necessarily change semantics}: For instance, changes in lighting, exposure, sharpness, field of view or even the the orientation of an animal's fur~\cite{kilcher2021dimpled} does not necessarily alter the semantic content of an image, despite involving many pixel-space changes. The figure~\ref{fig:latentspace} serves to illustrate this point, assuming that the latent representations are perfectly aligned with the human judgement function.
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{figures/latentspace.pdf}
+	\caption{Semantics preserving/changing perturbations in pixel/latent-space (assuming full accuracy).}
+	\label{fig:latentspace}
+\end{figure}
 
-	\item \textit{Changing few pixels doesn't necessarily preserve semantics}: The assumption that minimal pixel-space changes ensure semantic preservation is also flawed. This is because humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain\footnote{Invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}.}. Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}\footnote{It's debatable whether this is a good argument, since we might not be fitting the human judgement function but a converging model of reality, as discussed later.}.
-\end{enumerate}
+\begin{figure}[h]
+	\centering
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-bagel.jpeg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-bear.jpeg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-chicken.jpeg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-crossaint.jpeg}
+	\end{minipage}
+	
+	\vspace{0.5cm}
 
-In conclusion, the number of pixels changed is not a reliable indicator of imperceptibility, which itself is just a proxy for semantic preservation.
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-loaf.jpeg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-mop.jpeg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-muffin.jpeg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.24\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/dog-vs-towel.jpeg}
+	\end{minipage}
+	\caption{Natural adversarial examples~\cite{teenybiscuittweet}.}
+	\label{fig:adversarial_dogs}
+\end{figure}
 
-Recent research has shifted towards more nuanced concepts like ``semantic preservation''~\cite{careil2023towards} acknowledging that the relationship between perturbation size and semantic change is not straightforward. This shift has led to the development of new methods for generating adversarial examples that focus on preserving semantic information rather than relying on pixel-space constraints~\cite{lee2020semantics}.
-
-
-% https://research.google/blog/introducing-the-unrestricted-adversarial-examples-challenge/
-
-% - https://research.google/blog/introducing-the-unrestricted-adversarial-examples-challenge/ -> semantics, not pixels / perceptibility -> we can use masks
-% - https://imgur.com/a/deep-learning-training-set-K4RWn
-
-
-The challenge of defining semantics remains central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
+The challenge of defining semantics is central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
 
 \section{Motivation}
 
 One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
 
-But adversarial attacks are not limited to academia. They're also a growing concern in industry, where they can have serious consequences for safety critical systems~\cite{9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, Kumar2020AdversarialAI}.
+But adversarial attacks are not limited to academia. They're also a growing concern in industry, where they can have serious consequences for safety critical systems~\cite{9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM}.
 
+% *mlsec in the industry*
+
+% - https://www.robustintelligence.com/ai-application-security
+% - https://huggingface.co/blog/hugging-face-wiz-security-blog
+% - https://learn.microsoft.com/en-us/security/ai-red-team/
+% 	- https://www.microsoft.com/en-us/security/blog/2023/08/07/microsoft-ai-red-team-building-future-of-safer-ai/
+% 	- https://learn.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning
+% - https://services.google.com/fh/files/blogs/google_ai_red_team_digital_final.pdf
+% - https://owaspai.org/docs/ai_security_overview/
+% - there is no proper cve system yet (see: https://arxiv.org/pdf/2101.10865)
 
 
 \section{Threat Modeling}
