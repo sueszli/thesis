@@ -209,11 +209,11 @@ While initially discovered in computer vision applications, the attack can be cr
 
 \subsection{Semantics Preserving Adversarial Examples}
 
-Traditionally adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}.
+Imperceptible adversarial exampels (assuming they are defined correctly, as discussed below) are a subset of the broader category of semantics preserving~\cite{browne2020semantics} adversarial examples.
 
-Imperceptible adversarial examples are a subset of the broader category of semantics preserving~\cite{browne2020semantics} adversarial examples.
+Traditionally, adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}.
 
-However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ ning2023hflic}:
+However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ning2023hflic}:
 
 \begin{figure}
     \centering
@@ -225,7 +225,7 @@ However, the concept of ``imperceptibility [to humans]'' as originally proposed 
 \begin{enumerate}
 	\item \textit{Changing many pixels doesn't necessarily change semantics}: For instance, changes in lighting, exposure, sharpness, field of view or even the the orientation of an animal's fur~\cite{kilcher2021dimpled} does not necessarily alter the semantic content of an image, despite involving many pixel-space changes. The figure~\ref{fig:latentspace} serves to illustrate this point, assuming that the latent representations are perfectly aligned with the human judgement function.
 
-	\item \textit{Changing few pixels doesn't necessarily preserve semantics}: The assumption that minimal pixel-space changes ensure semantic preservation is also flawed. This is because small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}. Even more interestingly, humans detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain. Invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}.
+	\item \textit{Changing few pixels doesn't necessarily preserve semantics}: The assumption that minimal pixel-space changes ensure semantic preservation is also flawed. This is because humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain\footnote{Invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}}. Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}\footnote{It's debatable whether this is a good argument, since we might not be fitting the human judgemnet function but a converging model of reality, as discussed later.}.
 \end{enumerate}
 
 In conclusion, the number of pixels changed is not a reliable indicator of imperceptibility, which itself is just a proxy for semantic preservation.
