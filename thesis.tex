@@ -61,13 +61,17 @@
 \cleardoublepage
 
 \begin{acknowledgements}
-	This thesis comes from working on a problem that truly matters to me, in an environment where curiosity and passion were shared, and I felt a sense of belonging. The topic of adversarial examples reflects my journey well, highlighting how subtle differences in perspective can lead to vastly different interpretations and outcomes.
+	The most rewarding part of this project was working on a problem that truly matters to me, alongside people who genuinely care. For the first time, I felt a sense of belonging.
 
-	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian, and my family, for their unwavering support, even when I took risks and turned down financial opportunities to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and got me through many long nights.
+	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian, and my family, for their unwavering support \textendash{} even when I quit my job and turned down financial opportunities to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and carried me through many long nights.
 	
-	I owe much to those who made this work possible. Prof.\ Roger Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision. Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie.
-	
-	Thanks also to those whose paths have diverged from mine but whose impact remains with me: Prof.\ Schahram Dustdar, who enabled my studies abroad, and Prof.\ Ali Mashtizadeh, who introduced me to operating systems research.
+	I owe much to those who made this work possible. Prof.\ Roger Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision.
+
+	I also value the friendships I made throughout this journey. Prof.\ Nils Lukas, who first introduced me to ML-Security and was always there to discuss ideas. Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie and support.
+
+	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar, who first inspired me to pursue research and enabled me to study in Canada.
+
+	To me, adversarial examples are also a metaphor for having a strong character, and being open-minded. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
 	
 	I hope to continue this journey with the same spirit that brought me here.
 \end{acknowledgements}
@@ -81,7 +85,7 @@
 \chapter*{Originality}
 % good style: https://arxiv.org/pdf/2202.02435
 
-I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work - including tables, maps and figures - which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
+I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work \textendash{} including tables, maps and figures \textendash{} which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
 
 \section*{Papers}
 
@@ -161,6 +165,8 @@ We have two goals in writing this document. One: fulfilling the requirements for
 
 Adversarial examples are closely related to the concept of perturbation methods\footnote{Thanks to Prof.\ Roger Wattenhofer for sharing this piece of unorthodox history.}.
 
+\subsection{Perturbation Methods}
+
 The origin of perturbations can be traced back to the early days of computational geometry by Seidel et al. in 1998~\cite{seidel1998nature}. Perturbation techniques in computational geometry address a fundamental challenge: handling ``degeneracies'' in geometric algorithms. These are special cases that occur when geometric primitives align in ways that break the general position assumptions the algorithms rely on.
 
 \begin{highlightbox}
@@ -178,6 +184,8 @@ The origin of perturbations can be traced back to the early days of computationa
 \end{highlightbox}
 
 The beauty of perturbation methods lies in their ability to handle degeneracies without explicitly detecting them, making geometric algorithms both simpler and more robust.
+
+\subsection{Imperceptible Adversarial Examples}
 
 Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
 
@@ -199,33 +207,11 @@ Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2
 
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
 
-\section{Motivation}
+\subsection{Semantics Preserving Adversarial Examples}
 
-One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
+Traditionally adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}.
 
-But adversarial attacks are not limited to academia. They're also a growing concern in industry, where they can have serious consequences for safety critical systems~\cite{9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM}. Companies like Google, IBM, Facebook and Microsoft have made significant investments in securing their machine learning systems against potential attacks~\cite{apruzzese2023real}.
-
-A particularly critical application area is autonomous vehicles, where adversarial attacks could cause misclassifications leading to dangerous situations on the road~\cite{9099439}. Smart meters and utility systems represent another crucial domain, with utilities worldwide investing approximately \$30 billion in smart meter deployments that need protection against privacy violations and adversarial attacks~\cite{yilmaz2021privacy}.
-
-The space industry has also become increasingly concerned about adversarial machine learning, especially in critical applications like spacecraft docking systems where incorrect pose estimation due to adversarial attacks could result in costly collisions and damage to space assets~\cite{Khadka2022ResilientML}. While specific company implementations are often not publicly disclosed, these vulnerabilities have become so significant that CERT, a federally funded research center, has issued a broad vulnerability notice warning about the susceptibility of most ML classifiers to adversarial manipulation~\cite{apruzzese2023real}.
-
-\section{Threat Modeling}
-
-Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}. This is particularly important in threat modeling, where the goal is to anticipate and defend against potential attacks.
-
-We can differentiate between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
-
-An attack can be targeted or untargeted. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
-
-The method used to generate adversarial examples can be gradient-based, optimization-based or search-based strategies. For example, some text-based attacks leverage language models to generate alternatives for masked tokens, ensuring grammatical correctness and semantic coherence~\cite{garg2020bae}.
-
-The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
-
-Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
-
-\section{Imperceptible $\not=$ Semantics Preserving}
-
-Adversarial examples are traditionally expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}.
+Imperceptible adversarial examples are a subset of the broader category of semantics preserving~\cite{browne2020semantics} adversarial examples.
 
 However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ ning2023hflic}:
 
@@ -242,13 +228,40 @@ However, the concept of ``imperceptibility [to humans]'' as originally proposed 
 	\item \textit{Changing few pixels doesn't necessarily preserve semantics}: The assumption that minimal pixel-space changes ensure semantic preservation is also flawed. This is because small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}. Even more interestingly, humans detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain. Invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}.
 \end{enumerate}
 
-\begin{highlightbox}
-	\textbf{Open Question:} If imperceptibility is not a reliable indicator of semantic preservation, then what are the true properties of adversarial examples?
-\end{highlightbox}
+In conclusion, the number of pixels changed is not a reliable indicator of imperceptibility, which itself is just a proxy for semantic preservation.
 
 Recent research has shifted towards more nuanced concepts like ``semantic preservation''~\cite{careil2023towards} acknowledging that the relationship between perturbation size and semantic change is not straightforward. This shift has led to the development of new methods for generating adversarial examples that focus on preserving semantic information rather than relying on pixel-space constraints~\cite{lee2020semantics}.
 
+
+% google challenge
+
+
+
 The challenge of defining semantics remains central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
+
+\section{Motivation}
+
+One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
+
+But adversarial attacks are not limited to academia. They're also a growing concern in industry, where they can have serious consequences for safety critical systems~\cite{9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, Kumar2020AdversarialAI}.
+
+
+
+\section{Threat Modeling}
+
+Having established the general concept of adversarial examples, we can now explore the various ways they can be categorized. Our system is not exhaustive: The field continues to evolve, with new attack vectors emerging regularly~\cite{Khaleel2024AdversarialAI}. This is particularly important in threat modeling, where the goal is to anticipate and defend against potential attacks.
+
+We can differentiate between white-box and black-box attacks. White-box attacks assume complete knowledge of and access to the target model, while black-box attacks operate with limited or no access to the model's internal workings~\cite{capozzi2024adversarial}. Interestingly, research has shown that in some cases, black-box attacks can be more effective than white-box approaches at compromising model security~\cite{capozzi2024adversarial}.
+
+An attack can be targeted or untargeted. Targeted attacks aim to manipulate the model into producing a specific, predetermined output, whereas untargeted attacks simply seek to cause any misclassification or erroneous output~\cite{capozzi2024adversarial, Kashyap2024AdversarialAA}. This distinction is particularly relevant in security-critical applications, where the attacker's goals may vary from causing general disruption to achieving specific malicious outcomes.
+
+The method used to generate adversarial examples can be gradient-based, optimization-based or search-based strategies. For example, some text-based attacks leverage language models to generate alternatives for masked tokens, ensuring grammatical correctness and semantic coherence~\cite{garg2020bae}.
+
+The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models, or the human vision system\cite{elsayed2018adversarial} \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
+
+Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
+
+
 
 \section{Inner Representations}
 
@@ -270,7 +283,7 @@ Should the ``Platonic Representation Hypothesis'' hold true, this would either m
 
 Recent work by Moosavi-Dezfooli et al.\ \cite{moosavi2017universal} have demonstrated the existence of a single perturbation that can fool most models for all naturally occurring images, adding weight to the latter interpretation, though the question remains open.
 
-\section{Open Questions \& Mental Models}
+\section{Mental Models}
 
 The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}. Among them are:
 
@@ -291,13 +304,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 	\textbf{Definition:} Manifold \\
 	
 	The first attempt to explain adversarial examples used the term ``manifold''. It refers to a data submanifold.
-	
-	\begin{flushright}
-		\textit{``In some sense, what we describe is a way to traverse the manifold represented by the network [...]. The adversarial examples represent low-probability (high-dimensional) `pockets' in the manifold [...].''}
 		
-		\textemdash{} Szegedy et al., 2013~\cite{szegedy2013intriguing}
-	\end{flushright}	
-	
 	A manifold can be thought of as a low-dimensional structure embedded in a high-dimensional space, representing the set of valid data points (e.g., natural images) that the neural network is trained to classify. Mathematically, if the input data lies on a manifold $\mathcal{M} \subset \mathbb{R}^m$, then $\mathcal{M}$ represents the subset of the high-dimensional input space $\mathbb{R}^m$ that corresponds to meaningful or real-world data. \\
 
 	Szegedy et al.\ suggest that adversarial examples exploit the structure of this manifold and its surrounding space. Specifically, adversarial examples are small perturbations $r$ added to an input $x \in \mathcal{M}$, such that the perturbed input $x' = x + r$ lies off the data manifold but still within the high-dimensional input space. \\
