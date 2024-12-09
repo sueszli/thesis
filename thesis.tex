@@ -485,11 +485,9 @@ When studying unrestricted adversarial examples in computer vision, we're essent
 
 To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques, and (2) leveraging intermediary layers of neural networks to enhance interpretability.
 
-
-
 \subsection{HCaptcha Inspired Geometric Masks}
 
-% Firstly, we found that there is very little research on the human-targeting adversarial attacks by CAPTCHA providers, such as reCAPTCHA, hCaptcha, and others. These are the most widely used CAPTCHAs on the internet, and they are used to protect against bots. Given that they're already widely used by large companies, we believe that they are a starting point, proven to be effective, since otherwise they wouldn't be used. This makes hCaptcha inspired geometric masks a good starting point for our research.
+Firstly, we noticed a gap in research when it comes to human-targeting adversarial attacks by popular CAPTCHA providers like reCAPTCHA and hCaptcha. These CAPTCHAs are widely used across the internet to fend off bots, and their effectiveness is backed by their adoption by major companies. Given their proven track record, we thought it would be interesting to explore geometric masks inspired by hCaptcha as a starting point for our research. This approach leverages existing, effective techniques and applies them in a new context to see how well they hold up.
 
 % copy motivation from paper
 % - https://arxiv.org/pdf/2409.05558
@@ -497,7 +495,7 @@ To address this challenge, we've adopted two guiding principles: (1) keeping it 
 
 \subsection{Self-Ensembling Algorithm}
 
-% Secondly, the self-ensembling algorithm~\cite{fort2024ensemble} both performs exceptionally well and is a great architectual approach to increase both reliability and robustness of a model. The recency of the paper and the lack of follow-up research and reproducibility studies makes it a good candidate for further research.
+Secondly, the self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
 
 
 
