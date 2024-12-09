@@ -118,7 +118,7 @@ Pull Request: Optimizing the official Self-Ensembler repository by Fort et al. \
 \linebreaks
 
 \textbf{vision} \\
-Pull Request: Containerizing TorchVision to recompile ResNet-50 from scratch. \\
+Pull Request: Containerizing TorchVision to build ResNet from scratch. \\
 \url{https://github.com/pytorch/vision/pull/8652}
 
 \linebreaks
@@ -148,9 +148,9 @@ Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHA
 
 \section*{Breakdown of contributions}
 
-For the paper andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments andreas and me writing the majority of the text and Turlan providing experimental results and feedback. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet-50 model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
+For the paper andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments andreas and me writing the majority of the text and Turlan providing experimental results and feedback. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
 
-Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet-50 model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
+Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
 
 Andreas Plesner diligently proofread this manuscript for errors. As is traditional, any errors that remain are of course mine alone.
 
@@ -498,21 +498,19 @@ The biggest advantage of using CAPTCHAs for adversarial research is their proven
 	\label{fig:ctf}
 \end{figure}
 
-A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for penetration testing purposes.
+A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for penetration testing purposes. It is composed of two containers responsible for the challenger and the solver, respectively.
 
 The first step in this direction was studying the effectiveness of CAPTCHA solvers for each provider, in the order of their market share.
 
 Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}.
 
-HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several dedicated open-source communities collaborating on building a solver for hCaptcha report low success rates~\cite{hcaptcha2024base64, hcaptcha_challenger}. This is coupled with our observation on sophisticated defenses being rolled out by hCaptcha on an almost weekly basis. Within the last 6 months we were studying hCaptcha, we observed the obfuscation of metadata and payloads, the introduction of new reasoning-based challenges through question answering and the introduction of new classification and segmentation challenges.
+HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several dedicated open-source communities collaborating on building a solver for hCaptcha report low success rates~\cite{hcaptcha2024base64, hcaptcha_challenger}. This is coupled with our observation on sophisticated defenses being rolled out by hCaptcha on an almost weekly basis. Within the last 6 months we were studying hCaptcha, we observed the obfuscation of metadata and payloads, the introduction of new reasoning-based challenges through question answering and the introduction of new classification and segmentation challenges. This leads us to believe that hCaptcha is the most robust CAPTCHA provider on the market today.
 
-We drew significant inspiration from hCaptcha's classification and segmentation challenges, which overlay images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). Interestingly, these straightforward patterns can lead state-of-the-art models to misclassify or entirely overlook key objects in the image. Our preliminary experiments, detailed in the following sections, show a notable drop in accuracy when these patterns are applied.
+Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The segmentation challenge works by overlaying images with more complex patterns, such as a grid of colored geometric shapes with varying sizes and rotations. These challenges are designed to be easily solvable by humans, but difficult for machines to classify accurately.
 
 \subsection{Self-Ensembling Algorithm}
 
-% explain how many other models we looked at
-
-The self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
+The ResNet model self-ensembled on intermediary layers~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
 
 By plotting decisions from intermediary layers of the network, we gain one additional dimension of interpretability. This allows us to visualize the decision-making process of the model and potentially identify patterns that could explain its behavior.
 
@@ -523,16 +521,23 @@ By plotting decisions from intermediary layers of the network, we gain one addit
 % 3. choosing attacks
 % 4. running experiments
 
-% - https://gitlab.ethz.ch/disco-students/fs24/adversarial-examples-and-captcha/-/blob/main/timelog.md
-% - https://arxiv.org/pdf/2409.05558
+% explain how many other models we looked at
+
+% Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The classification task being previously solved by Plesner et al.~\cite{plesner2024breaking} with 100\% accuracy on reCAPTCHAv2, we were interested in how well their geometric masks perform. The segmentation challenge work 
+
+
+% We drew significant inspiration from hCaptcha's classification and segmentation challenges, which overlay images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). Interestingly, these straightforward patterns can lead state-of-the-art models to misclassify or entirely overlook key objects in the image. Our preliminary experiments, detailed in the following sections, show a notable drop in accuracy when these patterns are applied.
 
 % also generate the word mask to show all the words that are generated
+
+% - https://arxiv.org/pdf/2409.05558
 % - https://github.com/ETH-DISCO/advx-bench/blob/main/src/demo.ipynb
 % - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
 
 
 
 \section{Experiment: Self-Ensembled ResNet-50}
+
 
 \section{Experimental Setup}
 
