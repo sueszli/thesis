@@ -552,11 +552,6 @@ masks = segment_sam1(img, boxes)
 
 \section{Experiments: HCaptcha Inspired Geometric Masks}
 
-The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. We specifically targeted a single type of challenge: the classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
-
-
-% copy input and content
-
 \begin{figure}[th]
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-circle.png}\caption{``Circle'' mask}\label{fig:subfig1}\end{subfigure}
 	\hfill
@@ -582,6 +577,9 @@ The first series of experiments focused on evaluating the performance of state-o
 	\label{fig:hcaptcha-combined}
 \end{figure}
 
+The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. We specifically targeted a single type of challenge: the classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
+
+% word mask was also generated
 
 \begin{figure}[th]
 	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg.png}\caption{Segmentation Challenge.}\end{minipage}
