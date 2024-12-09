@@ -8,6 +8,7 @@
 \usepackage{epstopdf}
 \usepackage{epigraph}
 \usepackage{amsmath}
+% \usepackage{minted}
 
 \thesistype{Master's Thesis}
 \title{Rethinking Adversarial Examples}
@@ -148,7 +149,7 @@ Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHA
 
 \section*{Breakdown of contributions}
 
-For the paper Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments, Andreas and me writing the majority of the text and Turlan and me conducting all experiments. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
+For the paper Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments andreas and me writing the majority of the text and Turlan and me conducting all experiments. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
 
 Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
 
@@ -226,7 +227,7 @@ Imperceptible noise-based adversarial examples are just one type of semantics-pr
 
 This shift in defining adversarial examples, popularized by the ``Unrestricted Adversarial Examples Challenge''~\cite{brown2018unrestricted} by Google in 2018, has led to a more nuanced understanding of the phenomenon. It acknowledges that real-world applications, especially in safety-critical contexts, are subject to a broader range of adversarial attacks than previously assumed and do not always adhere to the ``small perturbation'' constraint initially proposed~\cite{brown2018unrestricted}.
 
-This paradigm shift towards seeking more meaningful adversarial examples and ``spatial robustness'' was first proposed by Gilmer et al.\ in 2018~\cite{gilmer2018motivating} and further explored by Engstrom et al.\ in 2019~\cite{engstrom2019exploring}. These works lay the theoretical foundation for our research, and we believe this approach to to be the most promising for future research in adversarial machine learning.
+This paradigm shift towards seeking more meaningful adversarial examples and ``spatial robustness'' was first proposed by Gilmer et al.\ in 2018~\cite{gilmer2018motivating} and further explored by Engstrom et al.\ in 2019~\cite{engstrom2019exploring}. These works lay the theoretical foundation for our research and we believe this approach to to be the most promising for future research in adversarial machine learning.
 
 The challenge of defining semantics is central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders or semantics preservation metrics~\cite{engstrom2019exploring, herel2023preserving} as proxies. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
 
@@ -304,7 +305,7 @@ Open Philanthropy has provided \$330,000 and \$343,235~\cite{openphil2024adversa
 The MITRE corporation is now cooperating with Microsoft, Bosch, IBM, NVIDIA, Airbus, Deep Instinct and PricewaterhouseCoopers to develop the Adversarial Machine Learning Threat Matrix~\cite{mitre2024ml} for threat modeling and risk assessment.
 
 The Defense Advanced Research Projects Agency (DARPA) has granted nearly \$1 million to the CV AdvX team at UC Riverside~\cite{roy2020darpa}.
-Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, invested in HiddenLayer, Robust Intelligence~\cite{robustintelligence2024, cai2020robust} Shift5, Credo, Hidden Level, Latent, Synthetaic, and Reveal Technology~\cite{boozallen2023adversarial, boozallen2023adversarialother}, all of which are dedicated to machine learning security and robustness research.
+Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, invested in HiddenLayer, Robust Intelligence~\cite{robustintelligence2024, cai2020robust} Shift5, Credo, Hidden Level, Latent, Synthetaic and Reveal Technology~\cite{boozallen2023adversarial, boozallen2023adversarialother}, all of which are dedicated to machine learning security and robustness research.
 
 These investments demonstrate the growing recognition of the importance of protecting machine learning systems from adversarial attacks.
 
@@ -461,7 +462,7 @@ An interesting secondary outcome of this research was the discovery that gradien
 
 Perhaps we should be rethinking unrestricted adversarial examples not as attacks but as indicators of insufficient generalization, which can not always be measured by accuracy on a predefined test set alone.
 
-The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with reliability, robustness, and interpretability as core design principles. This way, robustness becomes a natural byproduct of the model's structure, at no additional cost.
+The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with reliability, robustness and interpretability as core design principles. This way, robustness becomes a natural byproduct of the model's structure, at no additional cost.
 
 This perspective suggests that enhancing adversarial robustness requires developing new architectures from the ground up that inherently exhibit these properties, rather than patching existing systems.
 
@@ -483,7 +484,7 @@ This perspective suggests that enhancing adversarial robustness requires develop
 
 When studying unrestricted adversarial examples in computer vision, we're essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can't easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
 
-To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques, and (2) leveraging intermediary layers of neural networks to enhance interpretability.
+To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques and (2) leveraging intermediary layers of neural networks to enhance interpretability.
 
 \subsection{HCaptcha Inspired Geometric Masks}
 
@@ -516,42 +517,49 @@ Architecturally, what makes this approach special is its ability to use a single
 
 We noticed a gap in reproducibility studies for this model, due to its recency and complexity. This lead us to choose this model as an alternative to the standard models used in adversarial research.
 
-\section{Experiment: Standard Models}
+To ensure the reproducibility of our experiments, we meticulously documented every detail. This included specifying the exact Python version, the \texttt{pip-compile}d the versions of all libraries used and creating a containerized Docker environment. Additionally, we provided conversion scripts to Conda, making it straightforward to replicate our experiments on any machine and platform with minimal effort.
+
+\subsection{Hello}
+
+% \begin{minted}{python}
+% def hello():
+%     return "Hello World"
+% \end{minted}
+
+
+\section{Experiments: Geometric masks}
+
+The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. We specifically targeted two types of challenges: the classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares) and the segmentation challenge, which embeds images within a perlin-noise-like pattern, smoothes the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge.
+
 
 % 1. choosing models (was a full sidequest of its own, you can make tables)
 % 2. choosing datasets
 % 3. choosing attacks
 % 4. running experiments
 
-% explain how many other models we looked at
-
-% Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The classification task being previously solved by Plesner et al.~\cite{plesner2024breaking} with 100\% accuracy on reCAPTCHAv2, we were interested in how well their geometric masks perform. The segmentation challenge work 
-
-
-% We drew significant inspiration from hCaptcha's classification and segmentation challenges, which overlay images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). Interestingly, these straightforward patterns can lead state-of-the-art models to misclassify or entirely overlook key objects in the image. Our preliminary experiments, detailed in the following sections, show a notable drop in accuracy when these patterns are applied.
+% - https://github.com/ETH-DISCO/advx-bench
+% - https://arxiv.org/pdf/2409.05558
 
 % also generate the word mask to show all the words that are generated
 
-% - https://arxiv.org/pdf/2409.05558
 % - https://github.com/ETH-DISCO/advx-bench/blob/main/src/demo.ipynb
 % - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
 
 
 
-\section{Experiment: Self-Ensembled ResNet-50}
 
 
-\section{Experimental Setup}
 
-% methodology: how experiments were conducted
-% copy all stuff from paper
-% - https://github.com/ETH-DISCO/captcha-the-flag
-% - find the models
-% - https://github.com/ETH-DISCO/advx-bench (Geometric masks inspired by hCaptcha)
+
+
+
+
+
+
+
+\section{Experiment: Self-Ensembled ResNet}
+
 % - https://github.com/ETH-DISCO/self-ensembling
-
-% add new stuff
-% add stuff you still want to add
 
 
 
@@ -582,16 +590,13 @@ We noticed a gap in reproducibility studies for this model, due to its recency a
 % \chapter{Appendix: Overview of Generative AI Tools Used}
 
 % Note: This appendix is a mandatory part of the thesis.
-
 % Generative language models were used to assist in the writing of this thesis. The following tools were used to generate text, which was then manually reviewed and edited for clarity and coherence:
-
 % \begin{itemize}
 % 	\item JetBrains Grazie (version: 16 October 2024) - Spell and grammar checking
 % 	\item Google Translate (latest version as of December 2024) - Translations
 % 	\item GitHub Copilot (latest version as of December 2024) - Text completion
 % 	\item Perplexity.AI (latest version as of December 2024) - Retrieval Augmented Generation, combined with Claude Sonnet 3.5 and OpenAI o1
 % \end{itemize}
-
 % The exact prompts used for each tool are not available, as they were generated interactively during the writing process.
 
 \end{document}
