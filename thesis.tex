@@ -28,7 +28,7 @@
 
 \setlength\parindent{0pt}
 
-% example boxes
+% highlight boxes
 % - https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
 % - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
 % - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
@@ -52,8 +52,6 @@
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
 \makeatother
 \urlstyle{leo}
-
-\newcommand{\hr}{\noindent\makebox[\linewidth]{\rule{0.5\textwidth}{0.4pt}}}
 
 \begin{document}
 
@@ -139,7 +137,7 @@ Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the t
 \linebreaks
 
 \textbf{python-template} \\
-Short scripts to \texttt{pip-compile} dependencies, containerize the environment and translate back and forth between Conda and Docker for different job submission systems. \\
+Short scripts to \texttt{pip-compile} dependencies, containerize the environment and translate back and forth between Conda and Docker for different job submission systems. Also a simple job watchdog for long-running processes. \\ 
 \url{https://github.com/sueszli/python-template/}
 
 \linebreaks
@@ -268,6 +266,18 @@ The challenge of defining semantics is central to this discussion. Without perfe
 \end{figure}
 
 \section{Motivation}
+
+\begin{quotebox}
+	\begin{flushright}
+		\textit{``The [...] mistake is that you connect that inscrutable thing to important real life things like financial markets or criminal justice systems.''}
+		\vspace{1em}
+
+		\textit{``So did you know that AI is being used to perform risk assessments of criminal defendants to decide things like bond amounts or whether somebody gets parole instead of jail? Did you know that machine learning is being used to determine whether people qualify for loans or for mortgages? Did you know that people are using AI to screen job applicants and to match buyers and sellers in equities markets? And of course, as everyone in this room knows, AI is also being used to detect anomalies in cybersecurity settings.''}
+		\vspace{1em}
+
+		\textemdash{} James Mickens, USENIX'18~\cite{218395}
+	\end{flushright}
+\end{quotebox}
 
 One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
 
@@ -447,6 +457,32 @@ An interesting secondary outcome of this research was the discovery that gradien
 
 \chapter{Research Motivation}
 
+\begin{quotebox}
+	\begin{flushright}
+		\textit{``Well, at a high level, I think that the goal of computer security is to ensure that systems do the right thing, even in the presence of malicious inputs. Now, achieving this goal in the context of machine learning is exceptionally challenging for two reasons. [...] So first of all, computer scientists lack a deep mathematical understanding of how machine learning actually learns and predicts. [...] And second, many people who deploy machine learning don't actually care about the first problem.''}
+		\vspace{1em}
+
+		\textit{``And if somebody asks you why the stuff worked, you just say the stuff is what the stuff is brother, accept the mystery. Okay. And so basically machine learning is like this, right? So we've invented, invented a bunch of techniques that kind of work, like in some cases, but we're not really sure what's going on. [...] We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
+		\vspace{1em}
+
+		\textemdash{} James Mickens, USENIX'18~\cite{218395}
+	\end{flushright}
+\end{quotebox}
+
+% When studying unrestricted adversarial examples we're essentially trying to study the behavior of a black box, as the majority of deep learning computer vision model do not provide any interpretability.
+
+% This means we have to break it down into the smallest most managable pieces in order to gain real insights.
+
+
+
+
+
+% Few machine learning models provide interpretability. 
+
+% This whole field is based on a lot of recent research.
+
+% Adversarial examples were first discussed in 2013. We still don't quite know 
+
 % \section{Guiding Principles}
 
 % \section{Novelty of Approach}
@@ -509,11 +545,6 @@ An interesting secondary outcome of this research was the discovery that gradien
 
 \chapter{Conclusion}
 
-\begin{flushright}
-	\textit{``The stuff is what the stuff is, brother. Okay. We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
-	
-	\textemdash{} James Mickens, USENIX'18~\cite{218395}
-\end{flushright}
 
 \bigskip
 
