@@ -491,11 +491,15 @@ We noticed a gap in research when it comes to unrestricted adversarial examples 
 
 The biggest advantage of using CAPTCHAs, next to their simplicity, is their proven effectiveness. Top providers like reCAPTCHA and hCaptcha have demonstrated the power of adversarial examples in this context. This allows us to focus on the adversarial aspect of the problem, rather than the image generation process itself, providing a proven starting point for further research.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.75\columnwidth]{figures/ctf-advx.png}
+	\caption{Captcha the Flag: the reCAPTCHAv2 cybersecurity emulation framework \\ \url{https://github.com/ETH-DISCO/captcha-the-flag}}
+	\label{fig:ctf}
+\end{figure}
+
 Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}. HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several pentesting communities have failed to break hCaptcha, with new challenges and layers of security measures being added on an almost monthly basis~\cite{hcaptcha2024base64, hcaptcha_challenger}.
 
-% We were inspired by hCaptcha, a new CAPTCHA system that overlays images with predictable patterns, like grids. Because although reCAPTCHA has been broken, hCaptcha remains undefeated in the ongoing attack-defense arms race and has recently added multiple new challenges and layers of security measures.
-
-% - https://arxiv.org/pdf/2409.05558
 
 
 
@@ -506,11 +510,18 @@ The self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptio
 
 
 
+% We were inspired by hCaptcha, a new CAPTCHA system that overlays images with predictable patterns, like grids.
+
+% - https://arxiv.org/pdf/2409.05558
+
+
 
 \section{Experimental Setup}
 
 % methodology: how experiments were conducted
 % copy all stuff from paper
+% - https://github.com/ETH-DISCO/captcha-the-flag
+% - find the models
 % - https://github.com/ETH-DISCO/advx-bench (Geometric masks inspired by hCaptcha)
 % - https://github.com/ETH-DISCO/self-ensembling
 
