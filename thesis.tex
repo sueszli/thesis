@@ -487,23 +487,30 @@ To address this challenge, we've adopted two guiding principles: (1) keeping it 
 
 \subsection{HCaptcha Inspired Geometric Masks}
 
-Firstly, we noticed a gap in research when it comes to human-targeting adversarial attacks by popular CAPTCHA providers like reCAPTCHA and hCaptcha. These CAPTCHAs are widely used across the internet to fend off bots, and their effectiveness is backed by their adoption by major companies. Given their proven track record, we thought it would be interesting to explore geometric masks inspired by hCaptcha as a starting point for our research. This approach leverages existing, effective techniques and applies them in a new context to see how well they hold up.
+We noticed a gap in research when it comes to unrestricted adversarial examples that exploit the human-machine vision gap. One practical application for these types of attacks is in developing robust CAPTCHAs\footnote{Completely Automated Public Turing test to tell Computers and Humans Apart}, which are widely used to differentiate between humans and bots. The aim is to create images that machines struggle or ideally fail to recognize, while remaining easily solvable by humans.
 
-% copy motivation from paper
+The biggest advantage of using CAPTCHAs, next to their simplicity, is their proven effectiveness. Top providers like reCAPTCHA and hCaptcha have demonstrated the power of adversarial examples in this context. This allows us to focus on the adversarial aspect of the problem, rather than the image generation process itself, providing a proven starting point for further research.
+
+Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}. HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several pentesting communities have failed to break hCaptcha, with new challenges and layers of security measures being added on an almost monthly basis~\cite{hcaptcha2024base64, hcaptcha_challenger}.
+
+% We were inspired by hCaptcha, a new CAPTCHA system that overlays images with predictable patterns, like grids. Because although reCAPTCHA has been broken, hCaptcha remains undefeated in the ongoing attack-defense arms race and has recently added multiple new challenges and layers of security measures.
+
 % - https://arxiv.org/pdf/2409.05558
+
+
 
 
 \subsection{Self-Ensembling Algorithm}
 
-Secondly, the self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
+The self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
 
 
 
 
+\section{Experimental Setup}
 
 % methodology: how experiments were conducted
 % copy all stuff from paper
-% - https://github.com/ETH-DISCO/captcha-the-flag
 % - https://github.com/ETH-DISCO/advx-bench (Geometric masks inspired by hCaptcha)
 % - https://github.com/ETH-DISCO/self-ensembling
 
@@ -528,8 +535,6 @@ Secondly, the self-ensembling algorithm~\cite{fort2024ensemble} not only perform
 % 		{\frac {\mathrm d}{\mathrm dx}}\arctan(\sin({x}^{2}))=-2 \cdot {\frac {\cos({x}^{2})x}{-2+\left (\cos({x}^{2})\right )^{2}}}
 % 	\end{equation}	
 % \end{proof}
-
-\chapter{Conclusion}
 
 
 \bigskip
