@@ -160,10 +160,6 @@ Andreas Plesner diligently proofread this manuscript for errors. As is tradition
 
 \mainmatter
 
-% 
-% introduction
-% 
-
 \chapter{Introduction}
 
 We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning to a broader audience, with fewer technical prerequisites. We hope it will be valuable to those interested.
@@ -252,47 +248,21 @@ The challenge of defining semantics is central to this discussion. Without perfe
 
 \begin{figure}[h]
 	\centering
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-bagel.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-bagel.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-bear.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-bear.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-chicken.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-chicken.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-crossaint.jpeg}
-	\end{minipage}
-	
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-crossaint.jpeg}\end{minipage}
 	\vspace{0.5cm}
-
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-loaf.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-loaf.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-mop.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-mop.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-muffin.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-muffin.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/dog-vs-towel.jpeg}
-	\end{minipage}
+	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-towel.jpeg}\end{minipage}
 	\caption{Natural adversarial examples~\cite{teenybiscuittweet}.}
 	\label{fig:adversarial_dogs}
 \end{figure}
@@ -445,7 +415,7 @@ To summarize, there is no consensus on the root cause of adversarial examples an
 
 Having discussed the various theories and approaches in explaining adversarial examples, we can now turn our attention to the countermeasures that have been proposed to mitigate their impact.
 
-\subsection{Train- and Test-time Defenses}
+\subsection{Train- and Test-time defenses}
 
 A leaderboard of adversarial robustness can be found on the RobustBench platform~\cite{croce2021robustbench}, which provides a standardized evaluation of adversarial robustness across a wide range of models and datasets. The platform includes a variety of metrics for evaluating robustness, such as the $\ell_\infty$ and $\ell_2$ adversarial perturbation sizes, as well as the robust accuracy under different attack settings.
 
@@ -475,21 +445,23 @@ The method achieved impressive results without requiring adversarial training or
 
 An interesting secondary outcome of this research was the discovery that gradient-based attacks against their model produced human-interpretable images of target classes~\cite{fort2024ensemble}. Additionally, the multi-resolution approach enabled the researchers to transform pre-trained classifiers and CLIP models into controllable image generators, while also developing successful transferable attacks on large vision language models~\cite{fort2024ensemble}.
 
-% 
-% ...
-% 
+\chapter{Research Motivation}
 
-\chapter{Research Questions}
+% \section{Guiding Principles}
+
+% \section{Novelty of Approach}
+
+% copy stuff from paper
 
 % unrestricted advx
 
-Perhaps we should be rethinking adversarial examples not as attacks but as indicators of insufficient generalization.
+% Perhaps we should be rethinking adversarial examples not as attacks but as indicators of insufficient generalization.
 
-The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with interpretability and robustness as core design principles.
+% The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with interpretability and robustness as core design principles.
 
-This perspective suggests that the key to improving adversarial robustness lies not in patching existing systems, but in developing new architectures from the ground up that naturally exhibit both robust and interpretable behavior.
+% This perspective suggests that the key to improving adversarial robustness lies not in patching existing systems, but in developing new architectures from the ground up that naturally exhibit both robust and interpretable behavior.
 
-The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this direction we explore in this thesis. Additionally, we make use of primitive geometric masks as attacks, to study the underlying mechanisms of adversarial examples.
+% The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this direction we explore in this thesis. Additionally, we make use of primitive geometric masks as attacks, to study the underlying mechanisms of adversarial examples.
 
 % This leads us to the following research questions:
 
@@ -498,9 +470,6 @@ The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this directio
 % 	\item[\textbf{RQ2}] ...
 % 	\item[\textbf{RQ3}] ...
 % \end{enumerate}
-
-% intro:
-% - copy motivation from paper
 
 
 
