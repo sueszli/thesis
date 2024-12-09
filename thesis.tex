@@ -493,28 +493,39 @@ The biggest advantage of using CAPTCHAs, next to their simplicity, is their prov
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.75\columnwidth]{figures/ctf-advx.png}
-	\caption{Captcha the Flag: the reCAPTCHAv2 cybersecurity emulation framework \\ \url{https://github.com/ETH-DISCO/captcha-the-flag}}
+	\includegraphics[width=1\columnwidth]{figures/ctf.png}
+	\caption{ReCAPTCHAv2 cybersecurity emulation framework \\ \url{https://github.com/ETH-DISCO/captcha-the-flag}}
 	\label{fig:ctf}
 \end{figure}
 
+A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for benchmarking.
+
 Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}. HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several pentesting communities have failed to break hCaptcha, with new challenges and layers of security measures being added on an almost monthly basis~\cite{hcaptcha2024base64, hcaptcha_challenger}.
 
-
-
-
+We drew significant inspiration from hCaptcha's classification and segmentation challenges, which overlay images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). Interestingly, these straightforward patterns can lead state-of-the-art models to misclassify or entirely overlook key objects in the image. Our preliminary experiments, detailed in the following sections, show a notable drop in accuracy when these patterns are applied.
 
 \subsection{Self-Ensembling Algorithm}
 
 The self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
 
+By plotting decisions from intermediary layers of the network, we gain one additional dimension of interpretability. This allows us to visualize the decision-making process of the model and potentially identify patterns that could explain its behavior.
 
+\section{Experiment: Standard Models}
 
-% We were inspired by hCaptcha, a new CAPTCHA system that overlays images with predictable patterns, like grids.
+% 1. choosing models (was a full sidequest of its own, you can make tables)
+% 2. choosing datasets
+% 3. choosing attacks
+% 4. running experiments
 
 % - https://arxiv.org/pdf/2409.05558
 
+% also generate the word mask to show all the words that are generated
+% - https://github.com/ETH-DISCO/advx-bench/blob/main/src/demo.ipynb
+% - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
 
+
+
+\section{Experiment: Self-Ensembled ResNet-50}
 
 \section{Experimental Setup}
 
