@@ -489,7 +489,7 @@ To address this challenge, we've adopted two guiding principles: (1) keeping it 
 
 We noticed a gap in research when it comes to unrestricted adversarial examples that exploit the human-machine vision gap. One practical application for these types of attacks is in developing robust CAPTCHAs\footnote{Completely Automated Public Turing test to tell Computers and Humans Apart}, which are widely used to differentiate between humans and bots. The aim is to create images that machines struggle or ideally fail to recognize, while remaining easily solvable by humans.
 
-The biggest advantage of using CAPTCHAs, next to their simplicity, is their proven effectiveness. Top providers like reCAPTCHA and hCaptcha have demonstrated the power of adversarial examples in this context. This allows us to focus on the adversarial aspect of the problem, rather than the image generation process itself, providing a proven starting point for further research.
+The biggest advantage of using CAPTCHAs for adversarial research is their proven effectiveness. By studying the challenges of top providers like Google's reCAPTCHA and hCaptcha, we can start off with a strong baseline \textendash{} with a proven track record of robustness \textendash{} to build upon. This saves us from having to reinvent the wheel. Additionally a CAPTCHA challenge is a well-defined problem with clear success criteria and would enable future studies to conduct adversarial research and their transferability to humans on a large scale with significantly fewer ethical, legal and financial constraints.
 
 \begin{figure}
 	\centering
@@ -498,7 +498,7 @@ The biggest advantage of using CAPTCHAs, next to their simplicity, is their prov
 	\label{fig:ctf}
 \end{figure}
 
-A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for benchmarking.
+A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for 
 
 Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}. HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several pentesting communities have failed to break hCaptcha, with new challenges and layers of security measures being added on an almost monthly basis~\cite{hcaptcha2024base64, hcaptcha_challenger}.
 
