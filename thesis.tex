@@ -552,6 +552,19 @@ masks = segment_sam1(img, boxes)
 
 \section{Experiments: HCaptcha Inspired Geometric Masks}
 
+The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. The goal was to assess the effectiveness of these models in solving hCaptcha challenges and identify potential vulnerabilities that could be exploited to generate adversarial examples. We targeted a single type of challenge: The classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
+
+We also took a look at the segmentation challenge, which embeds images within a Perlin-noise-like pattern, smooths the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge on either individual segments or the entire image. Although we didn't use this challenge in our experiments, we noticed through manual inspection using SAM1 and SAM2 that it was significantly more difficult to solve than the classification challenge.
+
+\paragraph{Mask Generation.}
+
+We developed a sublibrary that allows for the parametrizable reconstruction of geometric masks used in the classification task using the rendering engine \texttt{pycairo}. We created four distinct masks to overlay on images at varying intensities: ``Circle'', ``Diamond'', ``Square'', and ``Knit'' (the ``Word'' mask was also reconstructed, but omitted due to complexity).
+These masks were chosen based on an experiment where we hand-labeled 1600 images from hCaptcha\footnote{Credits to Turlan Kuzhagaliyev.}. The opacities for these masks were determined through an initial hyperparameter search, which we'll discuss later. Figure~\ref{fig:hcaptchacombined} showcases the optimized reconstructions we used to benchmark the models.
+
+For the segmentation task, we experimented with various background textures, including Perlin noise and color-encoded multivariate Gaussian distributions. Figure~\ref{fig:segchallenge} shows both a selected example and its reconstruction.
+
+Additionally, we implemented FGSM attacks for the top models we selected, various programmatic image rendering and manipulation functions and a simple adversarial training pipeline. However, given the number of variables involved, we decided to focus on the classification challenge for our initial experiments and leave the other tasks for future work. Our goal was to establish a reliable baseline, not to exhaustively explore all possibilities.
+
 \begin{figure}[th]
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-circle.png}\caption{``Circle'' mask}\label{fig:subfig1}\end{subfigure}
 	\hfill
@@ -574,23 +587,29 @@ masks = segment_sam1(img, boxes)
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-original.png}\caption{Original image\\(for reconstructions)}\label{fig:subfig9}\end{subfigure}
 
 	\caption{Selected examples by hCAPTCHA and their optimized reconstructions. The ``Word'' overlay was ommited and replaced with a custom ``Knit'' mask.}
-	\label{fig:hcaptcha-combined}
+	\label{fig:hcaptchacombined}
 \end{figure}
-
-The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. We specifically targeted a single type of challenge: the classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
-
-% word mask was also generated
 
 \begin{figure}[th]
-	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg.png}\caption{Segmentation Challenge.}\end{minipage}
+	\centering
+	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg.png}\caption{Segmentation Challenge.}\label{fig:segchallenge}\end{minipage}
 	\hfill
-	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg-baiba.png}\caption{Our Reconstruction.}\end{minipage}
-	\label{fig:segchallenge}
+	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg-baiba.png}\caption{Reconstruction (arbitrary parameters).}\label{fig:segreconstruction}\end{minipage}
 \end{figure}
 
-We also inspected the segmentation challenge, which embeds images within a perlin-noise-like pattern, smoothes the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge. An example is shown in Figure~\ref{fig:segchallenge}. We reconstructed this challenge with a variety of background textures, including perlin noise and color-encoded multivariate gaussian distributions. However due to the number of variables involved, we decided to focus on the classification challenge for our initial experiments.
 
+
+
+
+% - https://github.com/ETH-DISCO/advx-bench
+% - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
+
+% 
 % find models
+% 
+
+% We selected several models to evaluate the performance of, namely: ``ConvNeXt\_XXLarge''~\citep{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\citep{Fang_2023_CVPR} and ``EVA02-L-14''~\citep{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \citep{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\citep{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\citep{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\citep{conneau2020unsupervisedcrosslingualrepresentationlearning}; the RoBERTa models are selected as they are supposed to be robust against adversarial attacks.\footnote{We highlight results for a subset of these, namely ConvNeXt, EVA02, ViT-H-14, ResNet50, and RoBERTa-L, and leave the rest for the appendix.} Due to time constraints, we were not able to test the method presented recently by~\citet{fort2024ensembleeverywheremultiscaleaggregation}; we leave this for future work. The models were selected to represent landmark architectures in both convolutional and transformer-based approaches. This selection allows us to evaluate the effectiveness of our masks across different model paradigms. %, providing an assessment of its generalizability to various state-of-the-art models.
+
 
 \begin{figure}
 	\centering
@@ -600,18 +619,13 @@ We also inspected the segmentation challenge, which embeds images within a perli
 \end{figure}
 
 
-% 1. choosing models (was a full sidequest of its own, you can make tables)
-% 2. choosing datasets
-% 3. choosing attacks
-% 4. running experiments
 
-% - https://github.com/ETH-DISCO/advx-bench
-% - https://arxiv.org/pdf/2409.05558
 
-% also generate the word mask to show all the words that are generated
 
-% - https://github.com/ETH-DISCO/advx-bench/blob/main/src/demo.ipynb
-% - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
+
+
+
+
 
 
 
@@ -627,12 +641,19 @@ We also inspected the segmentation challenge, which embeds images within a perli
 
 \chapter{Results}
 
+\section{Results: HCaptcha Inspired Geometric Masks}
+
+In our experiments, we aimed to achieve three main objectives. First, we quantified the drop in top-1 and top-5 accuracy when various filters were applied to input images. Second, we compared the resilience of different model architectures to these adversarial examples. Finally, we assessed whether models specifically designed for robustness offered significant advantages in this context.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth]{figures/eval_cls_generalizability.pdf}
 	\caption{Yo.}
 	\label{fig:yo}
 \end{figure}
+
+\section{Results: Self-Ensembled ResNet}
+
 
 
 
