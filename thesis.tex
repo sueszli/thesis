@@ -63,15 +63,15 @@
 \begin{acknowledgements}
 	The most rewarding part of this project was working on a problem that truly matters to me, alongside people who genuinely care. For the first time, I felt a sense of belonging.
 
-	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian, and my family, for their unwavering support \textendash{} even when I quit my job and turned down financial opportunities to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and carried me through many long nights.
+	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian and my family, for their unwavering support \textendash{} even when I quit my job and turned down financial opportunities to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and carried me through many long nights.
 	
 	I owe much to those who made this work possible. Prof.\ Roger Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision.
 
 	I also value the friendships I made throughout this journey. Prof.\ Nils Lukas, who first introduced me to ML-Security and was always there to discuss ideas. Turlan Kuzhagaliyev and Alireza Furutanpey, for their camaraderie and support.
 
-	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar, who first inspired me to pursue research and enabled me to study in Canada.
+	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar, who first inspired me to pursue research and enabled me to study abroad.
 
-	To me, adversarial examples are also a metaphor for having a strong character, and being open-minded. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
+	To me, adversarial examples are also a metaphor for having a strong character and being open-minded. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
 	
 	I hope to continue this journey with the same spirit that brought me here.
 \end{acknowledgements}
@@ -90,14 +90,14 @@ I hereby declare that I have written this thesis independently, that I have comp
 \section*{Papers}
 
 \textbf{Seeing Through the Mask: Rethinking Adversarial Examples for CAPTCHAs} \\
-Yahya Jabary, Andreas Plesner, Turlan Kuzhagaliyev, Roger Wattenhofer \\
+Yahya Jabary andreas Plesner, Turlan Kuzhagaliyev, Roger Wattenhofer \\
 \textit{ArXiv: 2409.05558}
 
 \section*{Open source software}
 
 The majority of time working on this thesis, was spent on developing a reproducible research pipeline for experiments in a compute and GPU memory constrained, containerized environment with compiled dependencies.
 
-Due to the exploratory nature of the work, many of the software built and experiments conducted were not directly related to the final paper.
+Due to the exploratory nature of the work many of the software built and experiments conducted had to be discarded.
 
 The following projects were developed as part of this work (in chronological order, with the most recent first):
 
@@ -147,7 +147,7 @@ Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHA
 
 \section*{Breakdown of contributions}
 
-For the paper, Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments, Andreas and me writing the majority of the text, and Turlan providing experimental results and feedback. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet-50 model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
+For the paper andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments andreas and me writing the majority of the text and Turlan providing experimental results and feedback. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet-50 model, which unfortunately did not make it into the final version of the paper. Additionally, Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
 
 Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet-50 model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
 
@@ -172,7 +172,7 @@ The origin of perturbations can be traced back to the early days of computationa
 \begin{highlightbox}
 	\textbf{Example:} Perturbation scheme for a Linear Classifier \\
 
-	Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant, and $\delta(x)$ is the perturbation function to break degeneracies. \\
+	Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant and $\delta(x)$ is the perturbation function to break degeneracies. \\
 
 	A perturbation scheme should be (1) consistent, meaning that the same input always produces the same perturbed output (2) infinitesimal, such that perturbations are small enough not to affect non-degenerate cases and (3) effective, in breaking all possible degeneracies. \\
 
@@ -187,16 +187,16 @@ The beauty of perturbation methods lies in their ability to handle degeneracies 
 
 \subsection{Imperceptible Adversarial Examples}
 
-Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
+Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
 
 \begin{highlightbox}
 	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
 
 	FGSM is one of the earliest and most widely recognized adversarial attack techniques, introduced by Goodfellow et al.~\cite{goodfellow2014explaining} in the context of visual recognition tasks. Given an input image $x$, FGSM generates an adversarial example $x'$ by perturbing the input in the direction of the gradient of the loss function with respect to the input.\\
 
-	The perturbation is controlled by a parameter $\varepsilon > 0$~\footnote{Commonly $\varepsilon = 8/255$ for 8-bit images, so it stays within the precision constraints of the pixel values.}, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function denoted by $J$, $\theta$ represents the model's parameters, and $y$ is the true target label. \\
+	The perturbation is controlled by a parameter $\varepsilon > 0$~\footnote{Commonly $\varepsilon = 8/255$ for 8-bit images, so it stays within the precision constraints of the pixel values.}, which determines the magnitude of the change based on the direction of change for each pixel or feature in the input $x$. The model's loss function denoted by $J$, $\theta$ represents the model's parameters and $y$ is the true target label. \\
 	
-	It works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$, and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains ``imperceptible'' to human observers~\cite{goodfellow2014explaining, zhang2019adversarial}. More on the concept of imperceptibility later.\\
+	It works by calculating the gradient of the loss function with respect to the input, $\nabla_x J(\theta, x, y)$ and then adjusting the input in the direction of this gradient. The sign of the gradient, $\text{sign}(\nabla_x J(\theta, x, y))$, is used to ensure that the perturbation is small, while the $\ell_\infty$-norm constraint ensures that the change to the input remains ``imperceptible'' to human observers~\cite{goodfellow2014explaining, zhang2019adversarial}. More on the concept of imperceptibility later.\\
 	
 	The process for generating an adversarial example with FGSM can be expressed as:
 	
@@ -208,7 +208,7 @@ Adversarial examples on the other hand, first introduced by Szegedy et al.\ in 2
 \begin{highlightbox}
 	\textbf{Digression:} Pixel-space constraints don't guarantee imperceptibility \\
 
-	Traditionally, adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in machine learning models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}. \\
+	Traditionally adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in targeted models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}. \\
 
 	However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ning2023hflic}. \\
 
@@ -221,11 +221,13 @@ While initially discovered in computer vision applications, the attack can be cr
 
 \subsection{Semantics Preserving Adversarial Examples}
 
-Imperceptible noise is just one of many semantics preserving adversarial examples. For instance, rotating an image by a few degrees or capturing it from a different angle can also cause misclassification. These superset of adversarial examples are often referred to as ``unrestricted''~\cite{brown2018unrestricted} or ``semantics preserving''~\cite{browne2020semantics, careil2023towards, lee2020semantics} adversarial examples. The comparison in Fig.~\ref{fig:unrestricted} and the illustration in Fig.~\ref{fig:latentspace} serve to highlight the differences between the different kinds of adversarial examples. Fig.~\ref{fig:adversarial_dogs} shows a collection of naturally occurring adversarial examples, also known as ``natural adversarial examples''~\cite{hendrycks2021natural, teenybiscuittweet}.
+Imperceptible noise-based adversarial examples are just one type of semantics-preserving adversarial examples. Other examples include rotating an image by a few degrees or capturing it from a different angle, which can also cause misclassification. These broader categories of adversarial examples are often referred to as ``unrestricted''~\cite{fazlija2024real, brown2018unrestricted} or ``semantics-preserving''~\cite{browne2020semantics, careil2023towards, lee2020semantics}. The comparison in Fig.~\ref{fig:unrestricted} and the illustration in Fig.~\ref{fig:latentspace} highlight the differences between various kinds of adversarial examples. Fig.~\ref{fig:adversarial_dogs} shows a collection of naturally occurring adversarial examples, also known as ``natural adversarial examples''~\cite{hendrycks2021natural, teenybiscuittweet}.
 
-This shift in how we define adversarial examples, first popularized through the ``Unrestricted Adversarial Examples Challenge''~\cite{brown2018unrestricted} by Google in 2018, has led to a more nuanced understanding of the phenomenon. It acknowledges that real-world applications, especially in safety-critical contexts, are subject to a broader range of adversarial attacks than previously assumed and do not always adhere to the ``small perturbation'' constraint that was initially proposed~\cite{brown2018unrestricted}.
+This shift in defining adversarial examples, popularized by the ``Unrestricted Adversarial Examples Challenge''~\cite{brown2018unrestricted} by Google in 2018, has led to a more nuanced understanding of the phenomenon. It acknowledges that real-world applications, especially in safety-critical contexts, are subject to a broader range of adversarial attacks than previously assumed and do not always adhere to the ``small perturbation'' constraint initially proposed~\cite{brown2018unrestricted}.
 
-This paradigm shift to a search for more meaningful adversarial examples and ``spacial robustness'' was first proposed by Gilmer et al. in 2018~\cite{gilmer2018motivating} and Engstrom et al. in 2019~\cite{engstrom2019exploring}. It lays the theoretical foundation for our work and we believe it to be the future of adversarial machine learning research.
+This paradigm shift towards seeking more meaningful adversarial examples and ``spatial robustness'' was first proposed by Gilmer et al.\ in 2018~\cite{gilmer2018motivating} and further explored by Engstrom et al.\ in 2019~\cite{engstrom2019exploring}. These works lay the theoretical foundation for our research, and we believe this approach to to be the most promising for future research in adversarial machine learning.
+
+The challenge of defining semantics is central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders or semantics preservation metrics~\cite{engstrom2019exploring, herel2023preserving} as proxies. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
 
 \begin{figure}
 	\centering
@@ -288,52 +290,37 @@ This paradigm shift to a search for more meaningful adversarial examples and ``s
 	\label{fig:adversarial_dogs}
 \end{figure}
 
-The challenge of defining semantics is central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders as proxies for semantic preservation~\cite{herel2023preserving}. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
-
 \section{Motivation}
 
 One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
 
-But adversarial attacks are not limited to academia. They're also a growing concern in industry, where they can have serious consequences for safety critical systems~\cite{9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM}.
+But adversarial attacks are not limited to academia. Machine learning security has become particularly critical as models are deployed in increasingly sensitive and safety-critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM}.
 
+National infrastructure and cyber-physical systems are commonly use machine learning-based protection systems, which can be compromised~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}. A single failure in a nuclear power plant or a water treatment facility or any other critical infrastructure can have catastrophic consequences.
 
+Adversarial attacks can also compromise credit card fraud detection systems, potentially leading to billions in annual losses~\cite{Gu2022DeepLT, Agarwal2021BlackBoxAE, Tsai2024EffectiveAE}.
 
+In healthcare, malicious actors can manipulate medical imaging systems used for diagnosing conditions like skin cancer and Alzheimer's disease, potentially leading to incorrect diagnoses and treatment decisions~\cite{jogani2022analysis, najafi2024dft}. The vulnerability extends to pandemic management systems, where deep learning algorithms processing data from medical IoT devices, including CT scans and thermal cameras, can be compromised through perturbations~\cite{9154468}.
 
-% Microsoft, Google, and Hugging Face are leading companies investing in AI security testing and adversarial example detection. Microsoft has established a dedicated AI Red Team to proactively identify and mitigate AI system vulnerabilities. Google has developed comprehensive AI red teaming procedures documented in their security framework.
+In autonomous vehicles roadside billboards can be weaponized to display specially crafted videos that manipulate vehicle controllers into performing dangerous maneuvers, such as unexpected lane changes or road departures~\cite{Patel2019AdaptiveAV}. Even more concerning, acoustic attacks can exploit image stabilization hardware to create blurred images that cause object detection systems to misclassify or completely miss critical obstacles~\cite{Ji2021PoltergeistAA}. These vulnerabilities are increasing in sophistication~\cite{Axelrod2017CybersecurityCO}.
 
+This risk is also demonstrated in cybersecurity applications, where phishing website detectors face degradation of 3-10\% from realistic evasion attempts that are both cheap and practical to implement~\cite{Yuan2023MultiSpacePhishET}. In the domain of malware detection mutation systems that combine generative networks with reinforcement learning to create metamorphic malware capable of evading detection systems~\cite{to2023effectiveness}.
 
+This has lead to major companies investing heavily in adversarial machine learning research and security. Microsoft has taken a leading position, spending over \$20 billion on cybersecurity initiatives, with a significant portion dedicated to machine learning security research and their specialized red team operations~\cite{coursera_adversarial_2024}.
 
-% find motivation to use adversarial examples in safety critical systems.
+Robust Intelligence~\cite{robustintelligence2024}, has raised \$14 million in funding to develop a platform trained to detect more than 100 types of adversarial attacks~\cite{cai2020robust}. Their platform includes both a firewall and a ``red team'' offering to test customer systems against potential threats.
 
-% use names of companies for each example. try to find the amount of money they're spending for each example.
+The Defense Advanced Research Projects Agency (DARPA) has granted nearly \$1 million to a research team at UC Riverside, focusing on understanding the vulnerability of computer vision systems to adversarial attacks~\cite{roy2020darpa}.
 
+Open Philanthropy has provided \$330,000 in funding to Carnegie Mellon University to support research on adversarial examples~\cite{openphil2024adversarial}. They have also extended additional funding of \$343,235~\cite{openphil2024adversarial}.
 
-% *mlsec in the industry*
+MITRE has formed a significant partnership with Microsoft, collaborating with numerous organizations including Bosch, IBM, NVIDIA, Airbus, Deep Instinct, and PricewaterhouseCoopers to develop the Adversarial Machine Learning Threat Matrix~\cite{mitre2024ml}. This framework helps security analysts detect and respond to threats against machine learning systems.
 
-% - https://www.robustintelligence.com/ai-application-security
-% - https://huggingface.co/blog/hugging-face-wiz-security-blog
-% - https://learn.microsoft.com/en-us/security/ai-red-team/
-% 	- https://www.microsoft.com/en-us/security/blog/2023/08/07/microsoft-ai-red-team-building-future-of-safer-ai/
-% 	- https://learn.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning
-% - https://services.google.com/fh/files/blogs/google_ai_red_team_digital_final.pdf
-% - https://owaspai.org/docs/ai_security_overview/
+Hugging Face has partnered with Wiz Research to enhance their platform security, implementing comprehensive vulnerability management and cloud security posture management~\cite{huggingface2024security}. They have also collaborated with Microsoft to develop Picklescan and worked with Trail of Bits to audit their security tools~\cite{huggingface2024security}.
 
+Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, has recently invested in HiddenLayer, a security platform that safeguards machine learning models~\cite{boozallen2023adversarial}. They have developed what they call "the first security platform for machine learning," which uses the MITRE ATLAS framework to help organizations align their security practices with adversarial threats~\cite{boozallen2023adversarialother}. Their platform provides real-time protection against attacks and includes model scanning capabilities to identify vulnerabilities.
 
-% *mlsec in the industry*
-
-% - https://www.robustintelligence.com/ai-application-security
-% - https://huggingface.co/blog/hugging-face-wiz-security-blog
-% - https://learn.microsoft.com/en-us/security/ai-red-team/
-% 	- https://www.microsoft.com/en-us/security/blog/2023/08/07/microsoft-ai-red-team-building-future-of-safer-ai/
-% 	- https://learn.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning
-% - https://services.google.com/fh/files/blogs/google_ai_red_team_digital_final.pdf
-% - https://owaspai.org/docs/ai_security_overview/
-% - there is no proper cve system yet (see: https://arxiv.org/pdf/2101.10865)
-
-
-
-
-
+The investment trend continues as Booz Allen has also made strategic investments in several other companies working on security, including Shift5, Credo, Hidden Level, Latent, Synthetaic, and Reveal Technology~\cite{boozallen2023adversarialother}. These investments demonstrate the growing recognition of the importance of protecting machine learning systems from adversarial attacks.
 
 \section{Threat Modeling}
 
@@ -349,7 +336,10 @@ The extent to which adversarial examples are transferable \textendash{} meaning 
 
 Finally, the attacks can be either focused on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation provides~\cite{browne2020semantics}.
 
-\section{Latents \& Shared Models of Reality}
+
+
+
+\section{Latent Representations}
 
 The internal latent representations of neural networks, their alignment with human understanding and the resuling gap between the two (the human-machine vision gap~\cite{geirhos2021partial}) is a central theme in adversarial machine learning research. This gap has many practical implications for the robustness and interpretability of machine learning models.
 
@@ -369,7 +359,9 @@ Should the ``Platonic Representation Hypothesis'' hold true, this would either m
 
 Recent work by Moosavi-Dezfooli et al.\ \cite{moosavi2017universal} have demonstrated the existence of a single perturbation that can fool most models for all naturally occurring images, adding weight to the latter interpretation, though the question remains open.
 
-\section{Open Questions \& Mental Models}
+
+
+\section{Mental Models}
 
 The question discussed in the previous section is just one of many that remain open and yet have to be fully explained~\cite{shamir2021dimpled}. Among them are:
 
@@ -384,7 +376,7 @@ The question discussed in the previous section is just one of many that remain o
 	\item Why do adversarial examples transfer between models and time-limited humans~\cite{elsayed2018adversarial}?
 \end{itemize}
 
-Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term they proposed that adversarial examples are caused by (1) neural networks developing internal representations that become increasingly disconnected from the input features as they progress through deeper layers, and (2) that these networks fail to maintain the smoothness properties typically assumed in traditional machine learning approaches. The idea was that this lack of smoothness gives them their expressive power, but also makes them vulnerable to these attacks.
+Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term they proposed that adversarial examples are caused by (1) neural networks developing internal representations that become increasingly disconnected from the input features as they progress through deeper layers and (2) that these networks fail to maintain the smoothness properties typically assumed in traditional machine learning approaches. The idea was that this lack of smoothness gives them their expressive power, but also makes them vulnerable to these attacks.
 
 \begin{highlightbox}
 	\textbf{Definition:} Manifold \\
@@ -413,7 +405,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 
 	$$U(x) = -\log P(x) - K(x)$$
 
-	where $P(x)$ is the probability density of the image $x$ under the target distribution, and $K(x)$ is the Kolmogorov complexity of $x$, representing the shortest description of $x$ in a universal programming language. This measure, called a ``universal critic'', captures how well $x$ aligns with both the statistical properties of $P$ and its compressibility. A low value of $U(x)$ indicates that $x$ is realistic, while a high value suggests it is unrealistic~\cite{theis2024makes}. \\
+	where $P(x)$ is the probability density of the image $x$ under the target distribution and $K(x)$ is the Kolmogorov complexity of $x$, representing the shortest description of $x$ in a universal programming language. This measure, called a ``universal critic'', captures how well $x$ aligns with both the statistical properties of $P$ and its compressibility. A low value of $U(x)$ indicates that $x$ is realistic, while a high value suggests it is unrealistic~\cite{theis2024makes}. \\
 
 	This approach generalizes prior methods by integrating both probabilistic and structural aspects of realism. It highlights that realism depends not only on adherence to statistical patterns (e.g., probabilities or divergences) but also on whether an image can be plausibly generated within the constraints of $P$. While directly computing $K(x)$ is infeasible due to its uncomputability, practical approximations (e.g., compression algorithms or neural network-based critics) can serve as proxies~\cite{theis2024makes}. \\
 
@@ -424,7 +416,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 
 Since then there have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory~\cite{ilyas2019adversarial}.
 
-\paragraph{Non-robust features \& concentration of measure in high-dimensions.} Most popularly, Ilyas et al.\ \cite{ilyas2019adversarial} proposed that features that models learn from can be divided in 3 categories: (1) useless featurs, to be discarded by the feature extractor, (2) robust features, which are comprehensible to humans, generalize across multiple datasets and remain stable under small adversarial perturbations, and (3) non-robust features, which are incomprehensible to humans, learned by the supervised model to exploit patterns in the data distribution which are highly effective for the task at hand but also brittle and easily manipulated by adversarial perturbations. The authors suggest that the vulnerability of deep neural networks to adversarial examples is due to their reliance on non-robust features, and inherent to how the models are optimized to minimize the loss function. In essence, the authors argue that adversarial vulnerability is a property of the dataset, not the algorithm and by removing these non-robust features from the training data although the adversarial robustness of the model can be improved, due to information loss of the most predictive features, the model's overall accuracy will decrease. This view is also shared among~\cite{engstrom2019a, raghunathan2018certified, wong2018provable, xiao2018training, cohen2019certified, fawzi2018adversarial, mahloujifar2019curse, shafahi2018adversarial, gilmer2018adversarial, madry2017towards}.
+\paragraph{Non-robust features \& concentration of measure in high-dimensions.} Most popularly, Ilyas et al.\ \cite{ilyas2019adversarial} proposed that features that models learn from can be divided in 3 categories: (1) useless featurs, to be discarded by the feature extractor, (2) robust features, which are comprehensible to humans, generalize across multiple datasets and remain stable under small adversarial perturbations and (3) non-robust features, which are incomprehensible to humans, learned by the supervised model to exploit patterns in the data distribution which are highly effective for the task at hand but also brittle and easily manipulated by adversarial perturbations. The authors suggest that the vulnerability of deep neural networks to adversarial examples is due to their reliance on non-robust features and inherent to how the models are optimized to minimize the loss function. In essence, the authors argue that adversarial vulnerability is a property of the dataset, not the algorithm and by removing these non-robust features from the training data although the adversarial robustness of the model can be improved, due to information loss of the most predictive features, the model's overall accuracy will decrease. This view is also shared among~\cite{engstrom2019a, raghunathan2018certified, wong2018provable, xiao2018training, cohen2019certified, fawzi2018adversarial, mahloujifar2019curse, shafahi2018adversarial, gilmer2018adversarial, madry2017towards}.
 
 \paragraph{Theoretical constructions which incidentally exploit non-robust features.} A complimenting hypothesis is that because models trained to maximize accuracy will naturally utilize non-robust data, regardless of whether it aligns with human perception~\cite{ilyas2019adversarial} they add a low-magnitude weight to sensitive variables that can get overamplified by adversarial examples~\cite{bubeck2019adversarial, nakkiran2019adversarial}. The assumption is that this happens due to computational constraints or model complexity.
 
@@ -434,7 +426,7 @@ Since then there have been many attempts at finding a cohesive narrative to expl
 
 \paragraph{Test Error in Noise.} There might be a link between robustness to random noise and adversarial attacks~\cite{fawzi2016robustness, lecuyer2019certified, cohen2019certified, ford2019adversarial}. This might imply that adversarial examples exploit inherent weaknesses in how models generalize under noisy or perturbed conditions.
 
-\paragraph{Local Linearity.} Goodfellow, Shlens, and Szegedy et al.\ \cite{goodfellow2014explaining, madry2017towards} argue that even though DNNs are highly nonlinear overall, their behavior in high-dimensional spaces often resembles that of linear models. This makes the models vulnerable to small, targeted perturbations similar to how they're computed by FGSM. However some adversarial examples are successful all while defying the assumption of local linearity and reducing a model's linearity does not necessarily improve its robustness either~\cite{athalye2018obfuscated}.
+\paragraph{Local Linearity.} Goodfellow, Shlens and Szegedy et al.\ \cite{goodfellow2014explaining, madry2017towards} argue that even though DNNs are highly nonlinear overall, their behavior in high-dimensional spaces often resembles that of linear models. This makes the models vulnerable to small, targeted perturbations similar to how they're computed by FGSM. However some adversarial examples are successful all while defying the assumption of local linearity and reducing a model's linearity does not necessarily improve its robustness either~\cite{athalye2018obfuscated}.
 
 \paragraph{Piecewise-linear decision boundaries.} In the ``dimpled manifold hypothesis''~\cite{shamir2021dimpled} the central claim is that adversarial examples emerge because we attempt to fit high $n-1$ dimensional decision boundaries to inherently low-dimensional data like images (which can be losslessly projected to $k \ll n$ dimensions). This leaves redundant dimensions on which adversarial examples won't be judged, which enables them exist roughly perpendicularly from the true location of the low-dimensional natural image, by using large gradients. In this mental model adversarial examples can be on-manifold or off-manifold, based on the angle of the gradients relative to the data manifold.
 
@@ -448,7 +440,7 @@ Lukas Karner successfully was able to successfully reproduce the experiments fro
 
 However, despite the experiments being carried out correctly themselves, the chain of reasoning might be flawed, as shown by a succinct (<100 LoC) counterexample by Yannik Kilcher in 2021~\cite{kilcher2021dimpledcode, kilcher2021dimpled}. While the ``Dimpled Manifold Hypothesis'' implies a relatively uniform vulnerability across all dimensions the counterexperiment contradicts these assumptions through successful adversarial attacks constructed by perturbing either an arbitrary subset of selected dimensions or their complement. If the decision boundary truly ``clung'' to the data manifold, restricting perturbations to a subset of dimensions would not have produced successful adversarial examples. The ability to generate adversarial examples in complementary subspaces suggests the decision boundary structure is more complex than just simple dimples.
 
-To summarize, there is no consensus on the root cause of adversarial examples and the field remains an active area of research. The mental models proposed by different researchers are not necessarily mutually exclusive, and it is likely that the true explanation involves a combination of these factors.
+To summarize, there is no consensus on the root cause of adversarial examples and the field remains an active area of research. The mental models proposed by different researchers are not necessarily mutually exclusive and it is likely that the true explanation involves a combination of these factors.
 
 \section{Defenses}
 
