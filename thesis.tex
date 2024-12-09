@@ -253,7 +253,9 @@ The challenge of defining semantics is central to this discussion. Without perfe
 	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-chicken.jpeg}\end{minipage}
 	\hfill
 	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-crossaint.jpeg}\end{minipage}
-	\vspace{0.5cm}
+	
+	\vspace{1em}
+
 	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-loaf.jpeg}\end{minipage}
 	\hfill
 	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-mop.jpeg}\end{minipage}
@@ -455,7 +457,17 @@ The method achieved impressive results without requiring adversarial training or
 
 An interesting secondary outcome of this research was the discovery that gradient-based attacks against their model produced human-interpretable images of target classes~\cite{fort2024ensemble}. Additionally, the multi-resolution approach enabled the researchers to transform pre-trained classifiers and CLIP models into controllable image generators, while also developing successful transferable attacks on large vision language models~\cite{fort2024ensemble}.
 
-\chapter{Research Motivation}
+\section{Future Directions}
+
+Perhaps we should be rethinking unrestricted adversarial examples not as attacks but as indicators of insufficient generalization, which can not always be measured by accuracy on a predefined test set alone.
+
+The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with reliability, robustness, and interpretability as core design principles. This way, robustness becomes a natural byproduct of the model's structure, at no additional cost.
+
+This perspective suggests that enhancing adversarial robustness requires developing new architectures from the ground up that inherently exhibit these properties, rather than patching existing systems.
+
+\chapter{Methodology}
+
+\section{Research Motivation}
 
 \begin{quotebox}
 	\begin{flushright}
@@ -469,60 +481,36 @@ An interesting secondary outcome of this research was the discovery that gradien
 	\end{flushright}
 \end{quotebox}
 
-% When studying unrestricted adversarial examples we're essentially trying to study the behavior of a black box, as the majority of deep learning computer vision model do not provide any interpretability.
+When studying unrestricted adversarial examples in computer vision, we're essentially dealing with a black box. Most top-performing models are deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can't easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
 
-% This means we have to break it down into the smallest most managable pieces in order to gain real insights.
-
-
+To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques, and (2) leveraging intermediary layers of neural networks to enhance interpretability.
 
 
 
-% Few machine learning models provide interpretability. 
+\subsection{HCaptcha Inspired Geometric Masks}
 
-% This whole field is based on a lot of recent research.
+% Firstly, we found that there is very little research on the human-targeting adversarial attacks by CAPTCHA providers, such as reCAPTCHA, hCaptcha, and others. These are the most widely used CAPTCHAs on the internet, and they are used to protect against bots. Given that they're already widely used by large companies, we believe that they are a starting point, proven to be effective, since otherwise they wouldn't be used. This makes hCaptcha inspired geometric masks a good starting point for our research.
 
-% Adversarial examples were first discussed in 2013. We still don't quite know 
+% copy motivation from paper
+% - https://arxiv.org/pdf/2409.05558
 
-% \section{Guiding Principles}
 
-% \section{Novelty of Approach}
+\subsection{Self-Ensembling Algorithm}
 
-% copy stuff from paper
-
-% unrestricted advx
-
-% Perhaps we should be rethinking adversarial examples not as attacks but as indicators of insufficient generalization.
-
-% The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with interpretability and robustness as core design principles.
-
-% This perspective suggests that the key to improving adversarial robustness lies not in patching existing systems, but in developing new architectures from the ground up that naturally exhibit both robust and interpretable behavior.
-
-% The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this direction we explore in this thesis. Additionally, we make use of primitive geometric masks as attacks, to study the underlying mechanisms of adversarial examples.
-
-% This leads us to the following research questions:
-
-% \begin{enumerate}
-% 	\item[\textbf{RQ1}] ...
-% 	\item[\textbf{RQ2}] ...
-% 	\item[\textbf{RQ3}] ...
-% \end{enumerate}
+% Secondly, the self-ensembling algorithm~\cite{fort2024ensemble} both performs exceptionally well and is a great architectual approach to increase both reliability and robustness of a model. The recency of the paper and the lack of follow-up research and reproducibility studies makes it a good candidate for further research.
 
 
 
 
-
-
-
-
-
-\chapter{Methodology}
 
 % methodology: how experiments were conducted
-% - copy all stuff from paper
+% copy all stuff from paper
 % - https://github.com/ETH-DISCO/captcha-the-flag
 % - https://github.com/ETH-DISCO/advx-bench (Geometric masks inspired by hCaptcha)
 % - https://github.com/ETH-DISCO/self-ensembling
 
+% add new stuff
+% add stuff you still want to add
 
 
 
