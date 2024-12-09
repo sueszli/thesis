@@ -294,7 +294,7 @@ The challenge of defining semantics is central to this discussion. Without perfe
 
 One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
 
-But adversarial attacks are not limited to academia. Machine learning security has become particularly critical as models are deployed in increasingly sensitive and safety-critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM}.
+But adversarial attacks are not limited to academia. Machine learning security has become particularly critical as models are deployed in increasingly sensitive and safety-critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, huggingface2024security}.
 
 National infrastructure and cyber-physical systems are commonly use machine learning-based protection systems, which can be compromised~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}. A single failure in a nuclear power plant or a water treatment facility or any other critical infrastructure can have catastrophic consequences.
 
@@ -306,21 +306,17 @@ In autonomous vehicles roadside billboards can be weaponized to display speciall
 
 This risk is also demonstrated in cybersecurity applications, where phishing website detectors face degradation of 3-10\% from realistic evasion attempts that are both cheap and practical to implement~\cite{Yuan2023MultiSpacePhishET}. In the domain of malware detection mutation systems that combine generative networks with reinforcement learning to create metamorphic malware capable of evading detection systems~\cite{to2023effectiveness}.
 
-This has lead to major companies investing heavily in adversarial machine learning research and security. Microsoft has taken a leading position, spending over \$20 billion on cybersecurity initiatives, with a significant portion dedicated to machine learning security research and their specialized red team operations~\cite{coursera_adversarial_2024}.
+This has lead to major companies investing heavily in adversarial machine learning research and security.
 
-Robust Intelligence~\cite{robustintelligence2024}, has raised \$14 million in funding to develop a platform trained to detect more than 100 types of adversarial attacks~\cite{cai2020robust}. Their platform includes both a firewall and a ``red team'' offering to test customer systems against potential threats.
+Microsoft has taken a leading position, spending over \$20 billion on cybersecurity initiatives, with a significant portion dedicated to machine learning security research and their specialized ML red team operations~\cite{coursera_adversarial_2024}.
 
-The Defense Advanced Research Projects Agency (DARPA) has granted nearly \$1 million to a research team at UC Riverside, focusing on understanding the vulnerability of computer vision systems to adversarial attacks~\cite{roy2020darpa}.
+Open Philanthropy has provided combined \$330,000 and \$343,235~\cite{openphil2024adversarial} in funding to Carnegie Mellon University dedicated to AdvX research.
 
-Open Philanthropy has provided \$330,000 in funding to Carnegie Mellon University to support research on adversarial examples~\cite{openphil2024adversarial}. They have also extended additional funding of \$343,235~\cite{openphil2024adversarial}.
+The MITRE corporation is now cooperating with Microsoft, Bosch, IBM, NVIDIA, Airbus, Deep Instinct and PricewaterhouseCoopers to develop the Adversarial Machine Learning Threat Matrix~\cite{mitre2024ml} for threat modeling and risk assessment.
 
-MITRE has formed a significant partnership with Microsoft, collaborating with numerous organizations including Bosch, IBM, NVIDIA, Airbus, Deep Instinct, and PricewaterhouseCoopers to develop the Adversarial Machine Learning Threat Matrix~\cite{mitre2024ml}. This framework helps security analysts detect and respond to threats against machine learning systems.
+The Defense Advanced Research Projects Agency (DARPA) has granted nearly \$1 million to the CV AdvX team at UC Riverside~\cite{roy2020darpa}.Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, has now invested in a variety of startups. Some of the most notable include HiddenLayer, Robust Intelligence~\cite{robustintelligence2024, cai2020robust} Shift5, Credo, Hidden Level, Latent, Synthetaic, and Reveal Technology~\cite{boozallen2023adversarial, boozallen2023adversarialother}.
 
-Hugging Face has partnered with Wiz Research to enhance their platform security, implementing comprehensive vulnerability management and cloud security posture management~\cite{huggingface2024security}. They have also collaborated with Microsoft to develop Picklescan and worked with Trail of Bits to audit their security tools~\cite{huggingface2024security}.
-
-Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, has recently invested in HiddenLayer, a security platform that safeguards machine learning models~\cite{boozallen2023adversarial}. They have developed what they call "the first security platform for machine learning," which uses the MITRE ATLAS framework to help organizations align their security practices with adversarial threats~\cite{boozallen2023adversarialother}. Their platform provides real-time protection against attacks and includes model scanning capabilities to identify vulnerabilities.
-
-The investment trend continues as Booz Allen has also made strategic investments in several other companies working on security, including Shift5, Credo, Hidden Level, Latent, Synthetaic, and Reveal Technology~\cite{boozallen2023adversarialother}. These investments demonstrate the growing recognition of the importance of protecting machine learning systems from adversarial attacks.
+These investments demonstrate the growing recognition of the importance of protecting machine learning systems from adversarial attacks.
 
 \section{Threat Modeling}
 
