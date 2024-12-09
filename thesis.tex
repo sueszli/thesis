@@ -498,13 +498,19 @@ The biggest advantage of using CAPTCHAs for adversarial research is their proven
 	\label{fig:ctf}
 \end{figure}
 
-A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for 
+A demo, shown in Figure~\ref{fig:ctf}, was built to showcase the potential of adversarial examples in CAPTCHAs and provide an emulation framework of reCAPTCHAv2 for penetration testing purposes.
 
-Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}. HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several pentesting communities have failed to break hCaptcha, with new challenges and layers of security measures being added on an almost monthly basis~\cite{hcaptcha2024base64, hcaptcha_challenger}.
+The first step in this direction was studying the effectiveness of CAPTCHA solvers for each provider, in the order of their market share.
+
+Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{authkong2024recaptcha}, they have been shown to be solvable with 100\% accuracy using publicly available computer vision models on consumer hardware, by Plesner et al.~\cite{plesner2024breaking}.
+
+HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several dedicated open-source communities collaborating on building a solver for hCaptcha report low success rates~\cite{hcaptcha2024base64, hcaptcha_challenger}. This is coupled with our observation on sophisticated defenses being rolled out by hCaptcha on an almost weekly basis. Within the last 6 months we were studying hCaptcha, we observed the obfuscation of metadata and payloads, the introduction of new reasoning-based challenges through question answering and the introduction of new classification and segmentation challenges.
 
 We drew significant inspiration from hCaptcha's classification and segmentation challenges, which overlay images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). Interestingly, these straightforward patterns can lead state-of-the-art models to misclassify or entirely overlook key objects in the image. Our preliminary experiments, detailed in the following sections, show a notable drop in accuracy when these patterns are applied.
 
 \subsection{Self-Ensembling Algorithm}
+
+% explain how many other models we looked at
 
 The self-ensembling algorithm~\cite{fort2024ensemble} not only performs exceptionally well but also represents a promising architectural approach to enhance both the reliability and robustness of a model. Given the recency of the paper and the current lack of follow-up research and reproducibility studies, it stands out as a great candidate for further investigation.
 
