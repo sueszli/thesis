@@ -29,7 +29,9 @@
 \setlength\parindent{0pt}
 
 % example boxes
-% https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+% - https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+% - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
+% - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
 \usepackage{mathtools}
 \usepackage[many]{tcolorbox}
 \usepackage{mathspec}
@@ -443,6 +445,8 @@ To summarize, there is no consensus on the root cause of adversarial examples an
 
 Having discussed the various theories and approaches in explaining adversarial examples, we can now turn our attention to the countermeasures that have been proposed to mitigate their impact.
 
+\subsection{Train- and Test-time Defenses}
+
 A leaderboard of adversarial robustness can be found on the RobustBench platform~\cite{croce2021robustbench}, which provides a standardized evaluation of adversarial robustness across a wide range of models and datasets. The platform includes a variety of metrics for evaluating robustness, such as the $\ell_\infty$ and $\ell_2$ adversarial perturbation sizes, as well as the robust accuracy under different attack settings.
 
 Several effective strategies have been developed. This collection is by no means exhaustive.
@@ -459,9 +463,7 @@ Several effective strategies have been developed. This collection is by no means
 
 The countermeasures discussed so far provide a diverse array of techniques to mitigate the impact of adversarial examples. Each method addresses specific aspects of the problem, ranging from input preprocessing to model architecture adjustments and training methodologies. Notably, hybrid strategies that combine multiple techniques often yield the best results, with some implementations achieving reliable performance even under sophisticated attack benchmarks~\cite{ji2023benchmarking}.
 
-\vspace{1em}
-\hr{}
-\vspace{0.5em}
+\subsection{Architectural Defenses}
 
 Assuming that robustness and generalizability are not competing objectives but complementary goals, the ultimate defense lies in designing architectures that inherently integrate robustness and interpretability. By prioritizing these objectives at the core of model development, we can create systems that not only withstand adversarial attacks but also offer more trustworthy and transparent decision-making.
 
@@ -472,6 +474,10 @@ Assuming that robustness and generalizability are not competing objectives but c
 The method achieved impressive results without requiring adversarial training or additional data, reaching approximately 72\% adversarial accuracy on CIFAR-10 and 48\% on CIFAR-100 using the RobustBench AutoAttack suite~\cite{fort2024ensemble}. When combined with simple adversarial training, the performance improved further to 78\% on CIFAR-10 and 51\% on CIFAR-100, surpassing the current state-of-the-art by 5\% and 9\% respectively~\cite{fort2024ensemble}.
 
 An interesting secondary outcome of this research was the discovery that gradient-based attacks against their model produced human-interpretable images of target classes~\cite{fort2024ensemble}. Additionally, the multi-resolution approach enabled the researchers to transform pre-trained classifiers and CLIP models into controllable image generators, while also developing successful transferable attacks on large vision language models~\cite{fort2024ensemble}.
+
+% 
+% ...
+% 
 
 \chapter{Research Questions}
 
@@ -495,8 +501,6 @@ The self-ensembling algorithm~\cite{fort2024ensemble} is a step in this directio
 
 % intro:
 % - copy motivation from paper
-% - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
-% - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
 
 
 
