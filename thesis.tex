@@ -1,7 +1,6 @@
 % submission dates: https://informatics.tuwien.ac.at/study-services/dates/
 
 \documentclass[a4paper, oneside]{discothesis}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
@@ -9,6 +8,48 @@
 \usepackage{epigraph}
 \usepackage{amsmath}
 \usepackage{minted}
+\usepackage{anyfontsize}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage[many]{tcolorbox}
+\usepackage{mathspec}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{cleveref}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% make subcaption tiny for 2x8 grid
+\captionsetup[subfigure]{labelsep=none}
+\subcaptionsetup{font=tiny}
+
+% make urls small, drop underline
+\hypersetup{colorlinks = true, linkcolor = black, urlcolor = black, citecolor = black,}
+\urlstyle{same}
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother  
+\urlstyle{leo}
+
+% highlight boxes
+% - https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
+% - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
+% - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
+\tcbset{sharp corners, colback = white, before skip = 0.5cm, after skip = 0.5cm, breakable}
+\newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
+\newtcolorbox{quotebox}{sharpish corners, boxrule = 0pt, rightrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
+
+% drop indent
+\setlength\parindent{0pt}
+
+% custom shortcuts
+\newcommand{\linebreaks}{\vspace*{0.5em}}
+
+% 
+% content
+% 
 
 \thesistype{Master's Thesis}
 \title{Rethinking Adversarial Examples}
@@ -26,33 +67,6 @@
 % \categories{ACM categories go here.}
 
 \date{\today}
-
-\setlength\parindent{0pt}
-
-% highlight boxes
-% - https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
-% - https://tex.stackexchange.com/questions/66820/how-to-create-highlight-boxes-in-latex
-% - https://tex.stackexchange.com/questions/141569/highlight-textcolor-and-boldface-simultaneously
-\usepackage{mathtools}
-\usepackage[many]{tcolorbox}
-\usepackage{mathspec}
-\usepackage{setspace}
-\usepackage{multicol}
-\tcbset{sharp corners, colback = white, before skip = 0.5cm, after skip = 0.5cm, breakable}
-\newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
-\newtcolorbox{quotebox}{sharpish corners, boxrule = 0pt, rightrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
-
-\newcommand{\linebreaks}{\vspace*{0.5em}}
-
-\usepackage{anyfontsize}
-\usepackage{hyperref}
-\hypersetup{colorlinks = true, linkcolor = black, urlcolor = black, citecolor = black,}
-\urlstyle{same}
-\makeatletter
-\def\url@leostyle{%
-  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
-\makeatother
-\urlstyle{leo}
 
 \begin{document}
 
@@ -245,26 +259,26 @@ The challenge of defining semantics is central to this discussion. Without perfe
 	\label{fig:latentspace}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[th]
 	\centering
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-bagel.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-bagel.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-bear.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-mop.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-chicken.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-chicken.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-crossaint.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-muffin.jpeg}\end{minipage}
 	
 	\vspace{1em}
 
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-loaf.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-loaf.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-mop.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-crossaint.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-muffin.jpeg}\end{minipage}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-bear.jpeg}\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-towel.jpeg}\end{minipage}
-	\caption{Natural adversarial examples~\cite{teenybiscuittweet}.}
+	\begin{minipage}[t]{0.24\textwidth}\centering\includegraphics[width=\textwidth]{figures/dog-vs-towel.jpeg}\end{minipage}
+	\caption{Natural adversarial examples~\cite{teenybiscuittweet}: Dog vs. Similar looking objects.}
 	\label{fig:adversarial_dogs}
 \end{figure}
 
@@ -509,9 +523,7 @@ HCaptchas, on the other hand, have remained undefeated in the ongoing attack-def
 
 Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The segmentation challenge works by overlaying images with more complex patterns, such as a grid of colored geometric shapes with varying sizes and rotations. These challenges are designed to be easily solvable by humans, but difficult for machines to classify accurately.
 
-The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. We specifically targeted two types of challenges: the classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares) and the segmentation challenge, which embeds images within a perlin-noise-like pattern, smoothes the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge.
-
-\subsection{Self-Ensembling Algorithm}
+\subsection{Self-Ensembled ResNet}
 
 The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the previous chapter, is a novel approach to enhancing adversarial robustness in deep learning models. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a robust method called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers.
 
@@ -538,7 +550,56 @@ boxes, scores, labels = detect_vit(img, query, 0.1)
 masks = segment_sam1(img, boxes)
 \end{minted}
 
-\section{Experiments: Geometric masks}
+\section{Experiments: HCaptcha Inspired Geometric Masks}
+
+The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. We specifically targeted a single type of challenge: the classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
+
+
+% copy input and content
+
+\begin{figure}[th]
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-circle.png}\caption{``Circle'' mask}\label{fig:subfig1}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-diamond.png}\caption{``Diamond'' mask}\label{fig:subfig2}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-square.png}\caption{``Square'' mask}\label{fig:subfig3}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-word.png}\caption{``Word'' mask}\label{fig:subfig4}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\phantom{\includegraphics[width=\linewidth]{figures/hcaptcha-word.png}}\end{subfigure}
+	
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-circle.png}\caption{``Circle'' mask\\(reconstructed)}\label{fig:subfig5}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-diamond.png}\caption{``Diamond'' mask\\(reconstructed)}\label{fig:subfig6}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-square.png}\caption{``Square'' mask\\(reconstructed)}\label{fig:subfig7}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-knit.png}\caption{``Knit'' mask\\(custom)}\label{fig:subfig8}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-original.png}\caption{Original image\\(for reconstructions)}\label{fig:subfig9}\end{subfigure}
+
+	\caption{Selected examples by hCAPTCHA and their optimized reconstructions. The ``Word'' overlay was ommited and replaced with a custom ``Knit'' mask.}
+	\label{fig:hcaptcha-combined}
+\end{figure}
+
+
+\begin{figure}[th]
+	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg.png}\caption{Segmentation Challenge.}\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg-baiba.png}\caption{Our Reconstruction.}\end{minipage}
+	\label{fig:segchallenge}
+\end{figure}
+
+We also inspected the segmentation challenge, which embeds images within a perlin-noise-like pattern, smoothes the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge. An example is shown in Figure~\ref{fig:segchallenge}. We reconstructed this challenge with a variety of background textures, including perlin noise and color-encoded multivariate gaussian distributions. However due to the number of variables involved, we decided to focus on the classification challenge for our initial experiments.
+
+% find models
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figures/eval-families.png}
+	\caption{Plot on performance trends of CV model families, inspired by Jeremy Howard.}
+	\label{fig:families}
+\end{figure}
 
 
 % 1. choosing models (was a full sidequest of its own, you can make tables)
@@ -556,16 +617,6 @@ masks = segment_sam1(img, boxes)
 
 
 
-
-
-
-
-
-
-
-
-
-
 \section{Experiment: Self-Ensembled ResNet}
 
 % - https://github.com/ETH-DISCO/self-ensembling
@@ -577,6 +628,15 @@ masks = segment_sam1(img, boxes)
 
 
 \chapter{Results}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{figures/eval_cls_generalizability.pdf}
+	\caption{Yo.}
+	\label{fig:yo}
+\end{figure}
+
+
 
 % \begin{theorem}[First Theorem] \label{thm:first theorem}
 % 	This is our first theorem.
