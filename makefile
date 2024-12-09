@@ -1,9 +1,9 @@
 .PHONY: pdf
 pdf:
-	xelatex thesis.tex
+	xelatex -shell-escape thesis.tex
 	bibtex thesis.aux
-	xelatex thesis.tex
-	xelatex thesis.tex
+	xelatex -shell-escape thesis.tex
+	xelatex -shell-escape thesis.tex
 	rm -f *.aux *.log *.out *.synctex.gz *.bcf *.bbl *.blg *.run.xml
 
 .PHONY: up
