@@ -597,9 +597,20 @@ Additionally, we implemented FGSM attacks for the top models we selected, variou
 	\begin{minipage}[t]{0.49\textwidth}\centering\includegraphics[width=\textwidth]{figures/hcaptcha-seg-baiba.png}\caption{Reconstruction (arbitrary parameters).}\label{fig:segreconstruction}\end{minipage}
 \end{figure}
 
+\paragraph{Model Selection.}
 
+To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on a consumer device (like our 16GB MacBook Pro M2), we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
 
+After the literature review we clustered the models by their family and task and plotted their performance trends. An example of one such plot is shown in Figure~\ref{fig:families}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they're publicly available.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\columnwidth]{figures/eval-families.png}
+	\caption{Plot on performance trends of CV model families, inspired by Jeremy Howard~\cite{howard_image_models}.}
+	\label{fig:families}
+\end{figure}
+
+We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \cite{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\cite{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\cite{conneau2020unsupervisedcrosslingualrepresentationlearning}. The RoBERTa models were included because they are known for their robustness against adversarial attacks. We highlight results for a subset of these models, specifically ConvNeXt, EVA02, ViT-H-14, ResNet50, and RoBERTa-L. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families.
 
 % - https://github.com/ETH-DISCO/advx-bench
 % - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
@@ -608,15 +619,7 @@ Additionally, we implemented FGSM attacks for the top models we selected, variou
 % find models
 % 
 
-% We selected several models to evaluate the performance of, namely: ``ConvNeXt\_XXLarge''~\citep{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\citep{Fang_2023_CVPR} and ``EVA02-L-14''~\citep{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \citep{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\citep{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\citep{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\citep{conneau2020unsupervisedcrosslingualrepresentationlearning}; the RoBERTa models are selected as they are supposed to be robust against adversarial attacks.\footnote{We highlight results for a subset of these, namely ConvNeXt, EVA02, ViT-H-14, ResNet50, and RoBERTa-L, and leave the rest for the appendix.} Due to time constraints, we were not able to test the method presented recently by~\citet{fort2024ensembleeverywheremultiscaleaggregation}; we leave this for future work. The models were selected to represent landmark architectures in both convolutional and transformer-based approaches. This selection allows us to evaluate the effectiveness of our masks across different model paradigms. %, providing an assessment of its generalizability to various state-of-the-art models.
 
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.3\columnwidth]{figures/eval-families.png}
-	\caption{Plot on performance trends of CV model families, inspired by Jeremy Howard.}
-	\label{fig:families}
-\end{figure}
 
 
 
