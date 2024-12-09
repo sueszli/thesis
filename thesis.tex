@@ -531,15 +531,10 @@ One interesting idea we explored but ultimately set aside was the use of synthet
 \end{figure}
 
 \begin{minted}[fontsize=\footnotesize]{python}
-# 1. generate an image
 img = gen_stable_diffusion("an austronaut on mars riding a horse")
-
-# 2. caption it
-text_queries = caption_gpt2(img)
-
-# 3. eval cls, det, seg models
-probs = classify_clip(img, text_queries)
-boxes, scores, labels = detect_vit(img, text_queries, 0.1)
+query = caption_gpt2(img)
+probs = classify_clip(img, query)
+boxes, scores, labels = detect_vit(img, query, 0.1)
 masks = segment_sam1(img, boxes)
 \end{minted}
 
