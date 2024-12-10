@@ -19,6 +19,7 @@
 \usepackage{cleveref}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{booktabs}
 
 % make subcaption tiny for 2x8 grid
 \captionsetup[subfigure]{labelsep=none}
@@ -41,15 +42,10 @@
 \newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 \newtcolorbox{quotebox}{sharpish corners, boxrule = 0pt, rightrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 
-% drop indent
-\setlength\parindent{0pt}
+\setlength\parindent{0pt} % drop indent
+\newcommand{\linebreaks}{\vspace*{0.5em}} % custom shortcuts
 
-% custom shortcuts
-\newcommand{\linebreaks}{\vspace*{0.5em}}
-
-% 
-% content
-% 
+% ----
 
 \thesistype{Master's Thesis}
 \title{Rethinking Adversarial Examples}
@@ -480,7 +476,11 @@ The most promising path forward may not lie in defending against these examples,
 
 This perspective suggests that enhancing adversarial robustness requires developing new architectures from the ground up that inherently exhibit these properties, rather than patching existing systems.
 
-\chapter{Methodology}
+% 
+% methodology
+% 
+
+\chapter{Methodology \& Results}
 
 \section{Research Motivation}
 
@@ -550,21 +550,23 @@ boxes, scores, labels = detect_vit(img, query, 0.1)
 masks = segment_sam1(img, boxes)
 \end{minted}
 
+% 
+% hcaptcha experiments
+% 
+
 \section{Experiments: HCaptcha Inspired Geometric Masks}
 
-The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. The goal was to assess the effectiveness of these models in solving hCaptcha challenges and identify potential vulnerabilities that could be exploited to generate adversarial examples. We targeted a single type of challenge: The classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
+The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. The goal was to assess the performance of solvers and identify potential vulnerabilities that could be exploited to generate CAPTCHA based adversarial examples. We targeted a single type of challenge: The classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
 
-We also took a look at the segmentation challenge, which embeds images within a Perlin-noise-like pattern, smooths the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge on either individual segments or the entire image. Although we didn't use this challenge in our experiments, we noticed through manual inspection using SAM1 and SAM2 that it was significantly more difficult to solve than the classification challenge.
+We also studied and reconstructed the segmentation challenge, which embeds images within a Perlin-noise-like pattern, smooths the edges, adds a slight blur and sometimes incorporates the geometric masks from the classification challenge on either individual segments or the entire image. However, given the number of variables involved, we decided to focus on the classification challenge for our initial experiments and leave the other tasks for future work. Our goal was to establish a reliable baseline, not to exhaustively explore all possibilities. However, we noticed through small-scale experiments using SAM1 and SAM2 that it was significantly more difficult to solve than the classification challenge.
 
 \paragraph{Mask Generation.}
 
 We developed a sublibrary that allows for the parametrizable reconstruction of geometric masks used in the classification task using the rendering engine \texttt{pycairo}. We created four distinct masks to overlay on images at varying intensities: ``Circle'', ``Diamond'', ``Square'', and ``Knit'' (the ``Word'' mask was also reconstructed, but omitted as they have been proven to be easy to mitigate~\cite{zhang2023text,dong2023robust,shayegani2023plug}).
 
-These masks were chosen based on an experiment where we hand-labeled 1600 images from hCaptcha\footnote{Credits to Turlan Kuzhagaliyev.}. The opacities (alpha values) for these masks were determined through an initial hyperparameter search, which we'll discuss later. Figure~\ref{fig:hcaptchacombined} showcases the optimized reconstructions we used to benchmark the models.
+These masks were chosen based on an experiment where we hand-labeled 1600 images from hCaptcha\footnote{Credits to Turlan Kuzhagaliyev.}. The opacities (alpha values) and densities of these masks were determined through an initial hyperparameter search, which we'll discuss later. Figure~\ref{fig:hcaptchacombined} showcases the optimized reconstructions we used to benchmark the models.
 
-For the segmentation task, we experimented with various background textures, including Perlin noise and color-encoded multivariate Gaussian distributions. Figure~\ref{fig:segchallenge} shows both a selected example and its reconstruction.
-
-Additionally, we implemented FGSM attacks for the top models we selected, various programmatic image rendering and manipulation functions and a simple adversarial training pipeline. However, given the number of variables involved, we decided to focus on the classification challenge for our initial experiments and leave the other tasks for future work. Our goal was to establish a reliable baseline, not to exhaustively explore all possibilities.
+For the segmentation task, we experimented with various background textures, including Perlin noise and color-encoded multivariate Gaussian distributions. Figure~\ref{fig:segchallenge} shows both a selected example and its reconstruction. But as mentioned earlier, we decided to focus on the classification challenge for our initial experiments.
 
 \begin{figure}[th]
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-circle.png}\caption{``Circle'' mask}\label{fig:subfig1}\end{subfigure}
@@ -600,18 +602,20 @@ Additionally, we implemented FGSM attacks for the top models we selected, variou
 
 \paragraph{Model Selection.}
 
-To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on a consumer device (like our 16GB MacBook Pro M2), we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
+To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on a consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
 
 After the literature review we clustered the models by their family and task and plotted their performance trends. An example of one such plot is shown in Figure~\ref{fig:families}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they're publicly available.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\columnwidth]{figures/eval-families.png}
+	\includegraphics[width=1\columnwidth]{figures/eval-families.png}
 	\caption{Scatter plot on model performance, clustered by family. Inspired by~\cite{howard_image_models}.}
 	\label{fig:families}
 \end{figure}
 
 We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \cite{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\cite{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\cite{conneau2020unsupervisedcrosslingualrepresentationlearning}. The RoBERTa models were included because they are known for their robustness against adversarial attacks. We highlight results for a subset of these models, specifically ConvNeXt, EVA02, ViT-H-14, ResNet50, and RoBERTa-L. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families.
+
+We also evaluated a custom adversarially trained ResNet-50, but due to its poor performance, we decided to exclude it from the final results.
 
 \paragraph{Dataset Selection.}
 
@@ -619,7 +623,7 @@ For our experiments, we used the enriched ImageNet dataset with 1,000 entries fr
 
 \paragraph{Evaluation Metrics.}
 
-For our evaluation, we focused on two main aspects: perceptual quality and model accuracy. 
+To evaluate, we focused on two main aspects: perceptual quality and model accuracy.
 
 Perceptual quality is all about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image}, and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We also used the Fréchet Inception Distance (FID), however it was omitted from the final metric due to its high computational cost. Overall, we want this number to be as high as possible.
 
@@ -629,7 +633,9 @@ On the accuracy front, we looked at how well the models performed in predicting 
 
 Having determined our evaluation metrics, dataset and models, we moved on to the hyperparameter search to find the optimal adversarial masks to benchmark with. We parameterized three variables: ``opacity'' (alpha value of the overlay), ``density'' (shapes per row/column and nesting, ranging from 0-100), and ``epsilon'' (for white-box FGSM attacks with CLIP-ViT on ImageNet). Using a grid search, we aimed to find the optimal values for these parameters.
 
-We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we picked the CLIP ViT model because of its strong adversarial robustness, as highlighted by~\cite{wang2024roz}. Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
+We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we picked the CLIP ViT model because of its strong adversarial robustness, as highlighted by~\cite{wang2024roz}.
+
+Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
 
 Our initial grid search revealed some interesting patterns. We found that achieving high perceptual quality generally required a combination of low opacity and high density. Specifically, the optimal opacity range appeared to be between 50 and 200. Additionally, higher density values consistently yielded better results. Among the various masks we tested, the diamond mask stood out as offering the best balance between effectiveness and perceptual quality. Based on these findings, the diamond mask seemed most promising for the subsequent steps of our experiments. Figure \ref{fig:tradeoff-1} shows the trade-off between accuracy and perceptual quality for the strongest masks, where masks are visually encoded through shapes, opacities through alpha values and densities through the size of the shapes. A linear regression line is shown to highlight the areas of interest.
 
@@ -640,7 +646,7 @@ Our initial grid search revealed some interesting patterns. We found that achiev
 	\label{fig:tradeoff-1}
 \end{figure}
 
-Our second grid search, which combined FGSM perturbations with the masks, revealed some interesting insights. We found that combining perturbations (\texttt{perturb=True}) with the masks generally led to worse results. The best results were obtained using the diamond mask with \texttt{perturb=False}, a density of 50, and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
+Our second grid search, which combined FGSM perturbations with the masks, revealed some interesting insights. We found that combining perturbations with the masks generally led to worse results. The best results were obtained using the diamond mask with FGSM disabled, a density of 50, and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
 
 \begin{figure}
 	\centering
@@ -649,16 +655,106 @@ Our second grid search, which combined FGSM perturbations with the masks, reveal
 	\label{fig:tradeoff-2}
 \end{figure}
 
-While these results are not representative of either the entire dataset or the entire model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks.
+While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
 
-These initial experiments also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are showin in figure \ref{fig:hcaptchacombined}.
+\section{Results: HCaptcha Inspired Geometric Masks}
 
-% - https://github.com/ETH-DISCO/advx-bench
-% - https://www.overleaf.com/project/66bccd697dc15c128b9eb8f9
+In our first set of experiments, we aimed to achieve three main objectives. First, we quantified the drop in top-1 and top-5 accuracy when various filters were applied to input images. Second, we compared the resilience of different model architectures to these adversarial examples. Finally, we assessed whether models specifically designed for robustness offered significant advantages in this context.
 
-% 
-% find models
-% 
+
+
+% Details and tables for individual expd
+% \cite{jabary2024seeing}
+
+% generalizability
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{figures/eval_cls_generalizability.pdf}
+	\caption{Accuracy vs. Perceptual Quality Trade-off}
+	\label{fig:accpercept}
+\end{figure}
+
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{rlrrr}
+        \toprule
+        Opacity & Mask & $\Delta$ Acc Rank & Quality & Score \\
+        \midrule
+        \multirow{4}{*}{50}
+            & Circle & -14.57 & 0.45 & 15.02 \\
+            & Diamond & -3.27 & 0.50 & 3.76 \\
+            & Knit & -0.66 & 0.54 & 1.19 \\
+            & Square & -5.04 & 0.49 & 5.54 \\
+        \midrule
+        \multirow{4}{*}{80}
+            & Circle & -52.72 & 0.31 & 53.03 \\
+            & Diamond & -13.72 & 0.36 & 14.08 \\
+            & Knit & -2.03 & 0.41 & 2.44 \\
+            & Square & -22.01 & 0.37 & 22.37 \\
+        \midrule
+        \multirow{4}{*}{110}
+            & Circle & -113.07 & 0.21 & 113.27 \\
+            & Diamond & -39.55 & 0.26 & 39.81 \\
+            & Knit & -3.62 & 0.32 & 3.93 \\
+            & Square & -60.57 & 0.27 & 60.84 \\
+        \midrule
+        \multirow{4}{*}{140}
+            & Circle & -203.89 & 0.12 & 204.01 \\
+            & Diamond & -90.79 & 0.18 & 90.97 \\
+            & Knit & -5.47 & 0.24 & 5.71 \\
+            & Square & -134.75 & 0.18 & 134.94 \\
+        \midrule
+        \multirow{4}{*}{170}
+            & Circle & -310.80 & 0.07 & 310.88 \\
+            & Diamond & -188.92 & 0.12 & 189.04 \\
+            & Knit & -9.21 & 0.18 & 9.39 \\
+            & Square & -264.90 & 0.12 & 265.02 \\
+        \bottomrule
+    \end{tabular}
+    \vspace*{0.1cm}
+    \caption{Generalizability of Masks}
+    \label{tab:generalizability}
+\end{table}
+	
+% model performance
+
+\begin{tabular}{lllllll}
+	\toprule
+	model & mask & 50-change@1 & 80-change@1 & 110-change@1 & 140-change@1 & 170-change@1 \\
+	\midrule
+	convnext & circle & 13.0 (7.6) & 33.6 (29.6) & 51.2 (54.8) & 64.6 (73.4) & 69.2 (85.0) \\
+	convnext & diamond & 4.8 (2.6) & 13.6 (8.8) & 31.8 (24.2) & 49.6 (51.4) & 64.6 (71.6) \\
+	convnext & knit & 2.2 (1.8) & 3.2 (2.2) & 8.0 (4.6) & 11.4 (7.8) & 18.0 (13.2) \\
+	convnext & square & 6.8 (4.8) & 18.4 (13.2) & 36.4 (28.8) & 52.0 (54.8) & 65.6 (76.8) \\
+	eva01 & circle & 7.2 (4.8) & 15.4 (14.0) & 33.0 (27.8) & 49.2 (50.6) & 65.0 (75.4) \\
+	eva01 & diamond & 2.6 (2.4) & 8.6 (6.6) & 19.6 (14.8) & 33.0 (31.0) & 54.8 (57.6) \\
+	eva01 & knit & 1.2 (1.4) & 1.2 (2.8) & 4.4 (4.6) & 6.6 (6.2) & 10.6 (8.0) \\
+	eva01 & square & 4.2 (3.4) & 9.0 (7.0) & 17.4 (12.6) & 31.4 (28.2) & 55.8 (61.0) \\
+	eva02 & circle & 9.4 (4.6) & 19.0 (12.2) & 31.4 (24.4) & 50.4 (44.6) & 63.8 (65.0) \\
+	eva02 & diamond & 2.4 (1.4) & 5.6 (3.6) & 10.6 (6.6) & 19.0 (14.8) & 38.0 (34.8) \\
+	eva02 & knit & 2.8 (0.4) & 4.8 (0.4) & 5.2 (1.8) & 6.8 (3.2) & 8.8 (4.8) \\
+	eva02 & square & 6.8 (2.2) & 12.4 (6.6) & 20.8 (15.0) & 37.4 (31.4) & 61.8 (63.6) \\
+	resnet & circle & 31.0 (34.2) & 54.6 (67.4) & 60.0 (80.4) & 62.4 (85.4) & 63.4 (86.2) \\
+	resnet & diamond & 13.2 (12.2) & 31.6 (28.8) & 50.4 (56.0) & 59.4 (75.6) & 62.2 (85.0) \\
+	resnet & knit & 5.0 (4.4) & 11.2 (8.0) & 14.4 (10.2) & 19.4 (15.0) & 27.6 (20.8) \\
+	resnet & square & 15.2 (15.2) & 38.8 (40.2) & 56.0 (66.4) & 62.2 (82.2) & 63.4 (86.6) \\
+	vit & circle & 5.8 (2.6) & 20.6 (16.2) & 48.2 (46.0) & 70.8 (77.6) & 80.2 (90.8) \\
+	vit & diamond & 2.0 (0.2) & 5.4 (2.2) & 15.2 (10.6) & 34.4 (28.6) & 61.8 (61.2) \\
+	vit & knit & 1.6 (-0.6) & 2.4 (0.6) & 2.8 (1.0) & 6.2 (2.0) & 8.0 (3.2) \\
+	vit & square & 3.2 (1.4) & 9.6 (6.4) & 25.0 (18.6) & 54.2 (50.2) & 77.2 (82.8) \\
+	\bottomrule
+\end{tabular}
+	
+	
+
+% We evaluate how the rank of the correct class changes when applying the masks by measuring the rank (the position after sorting) of the ground-truth class before and after applying a mask to an image. In addition, we measure the perceptual quality of the images. We then look at the mean change in rank across models and images, and report the results for each combination of mask and opacity. 
+
+% The results of our experiment are visualized in \Cref{fig:accpercept}. The figure reveals a clear trend in the trade-off between adversarial effectiveness and perceptual quality. The plot shows a clear inverse relationship between these two factors, as indicated by the polynomial regression curve of degree 2. This relationship suggests that as the effectiveness of the adversarial attack increases (lower $\Delta$ Accuracy Rank), the perceptual quality of adversarial examples tends to decrease. This could be expected, but we noticeably see instances with significant drops in rank (>10) while having a relatively high perceptual quality (>0.4).
+
+% The different mask types (circle, square, diamond, and knit) and opacity levels demonstrate varying performance across this trade-off spectrum. The scatter plot reveals clusters of points corresponding to different mask types, with some masks consistently outperforming others in terms of balancing attack effectiveness and perceptual quality. Most importantly, it shows that these geometric pattern masks generalize across SOTA models.
+
 
 
 
@@ -675,127 +771,21 @@ These initial experiments also helped us identify the best configurations in opa
 
 \section{Experiment: Self-Ensembled ResNet}
 
+% this set of experiments is is the more interesting part.
+
 % - https://github.com/ETH-DISCO/self-ensembling
-
-
-
-
-
-
-
-\chapter{Results}
-
-\section{Results: HCaptcha Inspired Geometric Masks}
-
-In our experiments, we aimed to achieve three main objectives. First, we quantified the drop in top-1 and top-5 accuracy when various filters were applied to input images. Second, we compared the resilience of different model architectures to these adversarial examples. Finally, we assessed whether models specifically designed for robustness offered significant advantages in this context.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=1\columnwidth]{figures/eval_cls_generalizability.pdf}
-	\caption{Accuracy vs. Perceptual Quality Trade-off}
-	\label{fig:accpercept}
-\end{figure}
-
-% generalizability
-
-% \begin{tabular}{rlrrr}
-% 	\toprule
-% 	opacity & mask & acc_rank_delta & quality & final_score \\
-% 	\midrule
-% 	50 & circle & 14.57 & 0.45 & -14.12 \\
-% 	50 & diamond & 3.27 & 0.50 & -2.77 \\
-% 	50 & knit & 0.66 & 0.54 & -0.12 \\
-% 	50 & square & 5.04 & 0.49 & -4.55 \\
-% 	80 & circle & 52.72 & 0.31 & -52.40 \\
-% 	80 & diamond & 13.72 & 0.36 & -13.35 \\
-% 	80 & knit & 2.03 & 0.41 & -1.61 \\
-% 	80 & square & 22.01 & 0.37 & -21.64 \\
-% 	110 & circle & 113.07 & 0.21 & -112.86 \\
-% 	110 & diamond & 39.55 & 0.26 & -39.30 \\
-% 	110 & knit & 3.62 & 0.32 & -3.30 \\
-% 	110 & square & 60.57 & 0.27 & -60.31 \\
-% 	140 & circle & 203.89 & 0.12 & -203.77 \\
-% 	140 & diamond & 90.79 & 0.18 & -90.60 \\
-% 	140 & knit & 5.47 & 0.24 & -5.23 \\
-% 	140 & square & 134.75 & 0.18 & -134.57 \\
-% 	170 & circle & 310.80 & 0.07 & -310.73 \\
-% 	170 & diamond & 188.92 & 0.12 & -188.80 \\
-% 	170 & knit & 9.21 & 0.18 & -9.03 \\
-% 	170 & square & 264.90 & 0.12 & -264.78 \\
-% 	\bottomrule
-% \end{tabular}
-	
-
-% \begin{tabular}{lllllll}
-% 	\toprule
-% 	model & mask & 50-change@1 & 80-change@1 & 110-change@1 & 140-change@1 & 170-change@1 \\
-% 	\midrule
-% 	convnext & circle & 13.0 (7.6) & 33.6 (29.6) & 51.2 (54.8) & 64.6 (73.4) & 69.2 (85.0) \\
-% 	convnext & diamond & 4.8 (2.6) & 13.6 (8.8) & 31.8 (24.2) & 49.6 (51.4) & 64.6 (71.6) \\
-% 	convnext & knit & 2.2 (1.8) & 3.2 (2.2) & 8.0 (4.6) & 11.4 (7.8) & 18.0 (13.2) \\
-% 	convnext & square & 6.8 (4.8) & 18.4 (13.2) & 36.4 (28.8) & 52.0 (54.8) & 65.6 (76.8) \\
-% 	eva01 & circle & 7.2 (4.8) & 15.4 (14.0) & 33.0 (27.8) & 49.2 (50.6) & 65.0 (75.4) \\
-% 	eva01 & diamond & 2.6 (2.4) & 8.6 (6.6) & 19.6 (14.8) & 33.0 (31.0) & 54.8 (57.6) \\
-% 	eva01 & knit & 1.2 (1.4) & 1.2 (2.8) & 4.4 (4.6) & 6.6 (6.2) & 10.6 (8.0) \\
-% 	eva01 & square & 4.2 (3.4) & 9.0 (7.0) & 17.4 (12.6) & 31.4 (28.2) & 55.8 (61.0) \\
-% 	eva02 & circle & 9.4 (4.6) & 19.0 (12.2) & 31.4 (24.4) & 50.4 (44.6) & 63.8 (65.0) \\
-% 	eva02 & diamond & 2.4 (1.4) & 5.6 (3.6) & 10.6 (6.6) & 19.0 (14.8) & 38.0 (34.8) \\
-% 	eva02 & knit & 2.8 (0.4) & 4.8 (0.4) & 5.2 (1.8) & 6.8 (3.2) & 8.8 (4.8) \\
-% 	eva02 & square & 6.8 (2.2) & 12.4 (6.6) & 20.8 (15.0) & 37.4 (31.4) & 61.8 (63.6) \\
-% 	resnet & circle & 31.0 (34.2) & 54.6 (67.4) & 60.0 (80.4) & 62.4 (85.4) & 63.4 (86.2) \\
-% 	resnet & diamond & 13.2 (12.2) & 31.6 (28.8) & 50.4 (56.0) & 59.4 (75.6) & 62.2 (85.0) \\
-% 	resnet & knit & 5.0 (4.4) & 11.2 (8.0) & 14.4 (10.2) & 19.4 (15.0) & 27.6 (20.8) \\
-% 	resnet & square & 15.2 (15.2) & 38.8 (40.2) & 56.0 (66.4) & 62.2 (82.2) & 63.4 (86.6) \\
-% 	vit & circle & 5.8 (2.6) & 20.6 (16.2) & 48.2 (46.0) & 70.8 (77.6) & 80.2 (90.8) \\
-% 	vit & diamond & 2.0 (0.2) & 5.4 (2.2) & 15.2 (10.6) & 34.4 (28.6) & 61.8 (61.2) \\
-% 	vit & knit & 1.6 (-0.6) & 2.4 (0.6) & 2.8 (1.0) & 6.2 (2.0) & 8.0 (3.2) \\
-% 	vit & square & 3.2 (1.4) & 9.6 (6.4) & 25.0 (18.6) & 54.2 (50.2) & 77.2 (82.8) \\
-% 	\bottomrule
-% \end{tabular}
-	
-	
-
-% We evaluate how the rank of the correct class changes when applying the masks by measuring the rank (the position after sorting) of the ground-truth class before and after applying a mask to an image. In addition, we measure the perceptual quality of the images. We then look at the mean change in rank across models and images, and report the results for each combination of mask and opacity. 
-
-% The results of our experiment are visualized in \Cref{fig:accpercept}. The figure reveals a clear trend in the trade-off between adversarial effectiveness and perceptual quality. The plot shows a clear inverse relationship between these two factors, as indicated by the polynomial regression curve of degree 2. This relationship suggests that as the effectiveness of the adversarial attack increases (lower $\Delta$ Accuracy Rank), the perceptual quality of adversarial examples tends to decrease. This could be expected, but we noticeably see instances with significant drops in rank (>10) while having a relatively high perceptual quality (>0.4).
-
-% The different mask types (circle, square, diamond, and knit) and opacity levels demonstrate varying performance across this trade-off spectrum. The scatter plot reveals clusters of points corresponding to different mask types, with some masks consistently outperforming others in terms of balancing attack effectiveness and perceptual quality. Most importantly, it shows that these geometric pattern masks generalize across SOTA models.
-
-
 
 \section{Results: Self-Ensembled ResNet}
 
 
 
 
-% \begin{theorem}[First Theorem] \label{thm:first theorem}
-% 	This is our first theorem.
-% \end{theorem}
-
-% \begin{proof}
-% 	And this is the proof of the first theorem with a complicated formula and a reference to Theorem \ref{thm:first theorem}. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-% 	\begin{equation}
-% 		{\frac {\mathrm d}{\mathrm dx}}\arctan(\sin({x}^{2}))=-2 \cdot {\frac {\cos({x}^{2})x}{-2+\left (\cos({x}^{2})\right )^{2}}}
-% 	\end{equation}	
-% \end{proof}
-
 
 \bigskip
-
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 
 % \appendix
-% \chapter{Appendix: Overview of Generative AI Tools Used}
-
-% Note: This appendix is a mandatory part of the thesis.
-% Generative language models were used to assist in the writing of this thesis. The following tools were used to generate text, which was then manually reviewed and edited for clarity and coherence:
-% \begin{itemize}
-% 	\item JetBrains Grazie (version: 16 October 2024) - Spell and grammar checking
-% 	\item Google Translate (latest version as of December 2024) - Translations
-% 	\item GitHub Copilot (latest version as of December 2024) - Text completion
-% 	\item Perplexity.AI (latest version as of December 2024) - Retrieval Augmented Generation, combined with Claude Sonnet 3.5 and OpenAI o1
-% \end{itemize}
-% The exact prompts used for each tool are not available, as they were generated interactively during the writing process.
+% \chapter{Appendix}
 
 \end{document}
