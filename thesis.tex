@@ -554,7 +554,9 @@ masks = segment_sam1(img, boxes)
 % hcaptcha experiments
 % 
 
-\section{Experiments: HCaptcha Inspired Geometric Masks}
+\section{HCaptcha Inspired Geometric Masks}
+
+\subsection{Experimental Setup}
 
 The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. The goal was to assess the performance of solvers and identify potential vulnerabilities that could be exploited to generate CAPTCHA based adversarial examples. We targeted a single type of challenge: The classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
 
@@ -657,7 +659,7 @@ Our second grid search, which combined FGSM perturbations with the masks, reveal
 
 While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
 
-\section{Results: HCaptcha Inspired Geometric Masks}
+\subsection{Results}
 
 In our first set of experiments, we aimed to achieve two main objectives. First, we quantified the drop in top-1 and top-5 accuracy when various filters were applied to input images. Second, we compared the resilience of different model architectures to these adversarial examples.
 
@@ -804,11 +806,17 @@ There are many possible interpretations of these results. For example, the circl
 % self-ensemble experiments
 % 
 
-% https://github.com/ETH-DISCO/self-ensembling
+\section{Self-Ensembled ResNet}
 
-\section{Experiment: Self-Ensembled ResNet}
+\subsection{Experimental Setup}
 
-\section{Results: Self-Ensembled ResNet}
+\subsubsection{Results}
+
+
+
+
+
+
 
 
 \bigskip
