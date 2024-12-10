@@ -814,8 +814,20 @@ We noticed a gap in reproducibility studies for this model, due to its recency a
 
 \subsection{Experimental Setup}
 
-\subsection{Results}
+\paragraph{Hyperparameter Search (on custom model).}
 
+About two months after the paper was published, the authors shared a notebook detailing their preprocessor (saccading, jitter, and nature-imitating noise), architecture, and training pipeline. We decided to reconstruct the architecture ourselves (shoutout to Andreas Plesner) and implemented the CrossMax consensus algorithm. Our hyperparameter search included the following: dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16), and CrossMax $k$ (2, 3). We used a grid search to find the optimal settings for our custom model.
+
+We found the best results with a learning rate of 1e-4, running for 16 epochs, and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. You can see these results in Figure~\ref{fig:se-hyperparams}. When the authors later shared their hyperparameters, our findings were pretty much in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We think these differences are due to the computational limits they set for their experiments.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{figures/self-ensemble-hyperparams.png}
+	\caption{Hyperparameter search for the self-ensembled ResNet.}
+	\label{fig:se-hyperparams}
+\end{figure}
+
+\subsection{Results}
 
 
 
