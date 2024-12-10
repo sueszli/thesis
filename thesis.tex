@@ -725,8 +725,8 @@ Finally, we evaluated the robustness of different models to our generated geomet
 There are many possible interpretations of these results. For example, the circle masks, contrary to our initial hyperparameter search, seem to be the most effective at reducing accuracy across all models and opacities. The knit mask, on the other hand, has a much smaller impact on accuracy.
 
 \begin{table}[h]
-	% note: this was accidentally mislabeled as subset-500 by andreas in the paper
-	% it's actually the full imagenet dataset
+	% this was accidentally mislabeled as subset-500 by andreas in the paper - it's actually the full imagenet dataset
+	% see: https://github.com/ETH-DISCO/advx-bench/blob/main/analysis/4-eval_cls_modelperf.ipynb
 
     \setlength{\tabcolsep}{2pt}
     \tiny
@@ -799,52 +799,6 @@ There are many possible interpretations of these results. For example, the circl
 
     \end{minipage}
 \end{table}
-
-% \begin{table}[h]
-%     \centering
-% 	\begin{tabular}{lllllll}
-% 		\toprule
-% 		model & mask & 50-change@1 & 80-change@1 & 110-change@1 & 140-change@1 & 170-change@1 \\
-% 		\midrule
-% 		convnext & circle & 13.0 (7.6) & 33.6 (29.6) & 51.2 (54.8) & 64.6 (73.4) & 69.2 (85.0) \\
-% 		convnext & diamond & 4.8 (2.6) & 13.6 (8.8) & 31.8 (24.2) & 49.6 (51.4) & 64.6 (71.6) \\
-% 		convnext & knit & 2.2 (1.8) & 3.2 (2.2) & 8.0 (4.6) & 11.4 (7.8) & 18.0 (13.2) \\
-% 		convnext & square & 6.8 (4.8) & 18.4 (13.2) & 36.4 (28.8) & 52.0 (54.8) & 65.6 (76.8) \\
-% 		eva01 & circle & 7.2 (4.8) & 15.4 (14.0) & 33.0 (27.8) & 49.2 (50.6) & 65.0 (75.4) \\
-% 		eva01 & diamond & 2.6 (2.4) & 8.6 (6.6) & 19.6 (14.8) & 33.0 (31.0) & 54.8 (57.6) \\
-% 		eva01 & knit & 1.2 (1.4) & 1.2 (2.8) & 4.4 (4.6) & 6.6 (6.2) & 10.6 (8.0) \\
-% 		eva01 & square & 4.2 (3.4) & 9.0 (7.0) & 17.4 (12.6) & 31.4 (28.2) & 55.8 (61.0) \\
-% 		eva02 & circle & 9.4 (4.6) & 19.0 (12.2) & 31.4 (24.4) & 50.4 (44.6) & 63.8 (65.0) \\
-% 		eva02 & diamond & 2.4 (1.4) & 5.6 (3.6) & 10.6 (6.6) & 19.0 (14.8) & 38.0 (34.8) \\
-% 		eva02 & knit & 2.8 (0.4) & 4.8 (0.4) & 5.2 (1.8) & 6.8 (3.2) & 8.8 (4.8) \\
-% 		eva02 & square & 6.8 (2.2) & 12.4 (6.6) & 20.8 (15.0) & 37.4 (31.4) & 61.8 (63.6) \\
-% 		resnet & circle & 31.0 (34.2) & 54.6 (67.4) & 60.0 (80.4) & 62.4 (85.4) & 63.4 (86.2) \\
-% 		resnet & diamond & 13.2 (12.2) & 31.6 (28.8) & 50.4 (56.0) & 59.4 (75.6) & 62.2 (85.0) \\
-% 		resnet & knit & 5.0 (4.4) & 11.2 (8.0) & 14.4 (10.2) & 19.4 (15.0) & 27.6 (20.8) \\
-% 		resnet & square & 15.2 (15.2) & 38.8 (40.2) & 56.0 (66.4) & 62.2 (82.2) & 63.4 (86.6) \\
-% 		vit & circle & 5.8 (2.6) & 20.6 (16.2) & 48.2 (46.0) & 70.8 (77.6) & 80.2 (90.8) \\
-% 		vit & diamond & 2.0 (0.2) & 5.4 (2.2) & 15.2 (10.6) & 34.4 (28.6) & 61.8 (61.2) \\
-% 		vit & knit & 1.6 (-0.6) & 2.4 (0.6) & 2.8 (1.0) & 6.2 (2.0) & 8.0 (3.2) \\
-% 		vit & square & 3.2 (1.4) & 9.6 (6.4) & 25.0 (18.6) & 54.2 (50.2) & 77.2 (82.8) \\
-% 		\bottomrule
-% 	\end{tabular}
-% 	\vspace*{0.1cm}
-% 	\caption{Robustness of Models}
-% 	\label{tab:robustness}
-% \end{table}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 % 
 % self-ensemble experiments
