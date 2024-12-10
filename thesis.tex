@@ -594,14 +594,7 @@ For the segmentation task, we experimented with various background textures, inc
 
 To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on a consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
 
-After the literature review we also clustered the models by their family and task and plotted their performance trends. An example of one such plot is shown in Figure~\ref{fig:families}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=1\columnwidth]{figures/eval-families.png}
-	\caption{Scatter plot on model performance, clustered by family~\cite{howard_image_models}.}
-	\label{fig:families}
-\end{figure}
+After the literature review we clustered the models by their architecture family and clustered them on a scatter plot based on their performance, inspired by~\cite{howard_image_models}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available.
 
 We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \cite{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\cite{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\cite{conneau2020unsupervisedcrosslingualrepresentationlearning}. The RoBERTa models were included because they are known for their robustness against adversarial attacks. We highlight results for a subset of these models, specifically ConvNeXt, EVA02, ViT-H-14, ResNet50, and RoBERTa-L. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families.
 
