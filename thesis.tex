@@ -810,7 +810,7 @@ def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tenso
 
 Architecturally, what makes this approach special is its ability to use a single ResNet model to create a ``self-ensemble'' by decoupling and aggregating predictions from different layers. This eliminates the need for multiple independent models while still achieving ensemble-like robustness. Additionally, the use of multi-resolution inputs and stochastic augmentations reduces the attack surface for adversarial perturbations.
 
-We noticed a gap in reproducibility studies for this model, due to its recency and complexity. This lead us to choose this model as an alternative to the standard models used in adversarial research.
+We also noticed a gap in reproducibility studies for this model, due to its recency and complexity. This was an additional incentive for us to explore this approach further.
 
 \subsection{Experimental Setup}
 
