@@ -596,13 +596,13 @@ To identify the best zero-shot open vocabulary classification, object detection 
 
 After the literature review we clustered the models by their architecture family and clustered them on a scatter plot based on their performance, inspired by~\cite{howard_image_models}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available. This was to test the feasibility of running these models in a real-world scenario.
 
-We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \cite{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\cite{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\cite{conneau2020unsupervisedcrosslingualrepresentationlearning}. The RoBERTa models were included because they are known for their robustness against adversarial attacks. We highlight results for a subset of these models, specifically ConvNeXt, EVA02, ViT-H-14, ResNet50, and RoBERTa-L. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families.
+We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \cite{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\cite{He_2015_ICCV}, and RoBERTa-B and RoBERTa-L~\cite{conneau2020unsupervisedcrosslingualrepresentationlearning}. We highlight results for a subset of these models, specifically ConvNeXt, EVA01, EVA02, ViT-H-14 and ResNet50. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families.
 
 We also evaluated a custom adversarially trained ResNet-50, but due to its poor performance, we decided to exclude it from the final results.
 
 \paragraph{Dataset Selection.}
 
-For our experiments, we used the enriched ImageNet dataset with 1,000 entries from ``visual-layer'' on HuggingFace, as well as the smaller ImageNette dataset~\cite{Howard_Imagenette_2019}. ImageNette, with around 10,000 images spread across 10 categories, was chosen to keep the computations manageable.
+For our experiments, we used the enriched ImageNet dataset with 1,000 entries from ``visual-layer'' on HuggingFace.
 
 \paragraph{Evaluation Metrics.}
 
@@ -817,9 +817,6 @@ We noticed a gap in reproducibility studies for this model, due to its recency a
 \subsection{Experimental Setup}
 
 \subsection{Results}
-
-
-
 
 
 
