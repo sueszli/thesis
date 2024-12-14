@@ -226,8 +226,8 @@ Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2
 
 	Humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain. It's worth mentioning that invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}. \\
 	
-	Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial}.
- 	% and monkeys: https://gwern.net/doc/ai/nn/adversarial/human/index
+	Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial} and primates~\cite{yuan2020fooling}.
+	% see: https://gwern.net/doc/ai/nn/adversarial/human/index#harrington-deza-2021-section
 \end{highlightbox}
 
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
