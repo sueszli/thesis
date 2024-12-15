@@ -80,9 +80,9 @@
 
 	I also value the friendships I made throughout this journey. Prof.\ Nils Lukas, who first introduced me to ML-Security and was always there to discuss ideas. Alireza Furutanpey, for his camaraderie and sharing his boundless passion.
 
-	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar, who first inspired me to pursue research and enabled me to study abroad.
+	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar. %, who first inspired me to pursue research and enabled me to study abroad.
 
-	To me, adversarial examples are also a metaphor for having a strong character and being open-minded. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
+	To me, adversarial examples are also a metaphor for having a strong character. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
 	
 	I hope to continue this journey with the same spirit that brought me here.
 \end{acknowledgements}
@@ -142,7 +142,7 @@ All experiments related to the geometric masks from the paper. \\
 \linebreaks
 
 \textbf{cluster-tutorial} \\
-Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the terminal to an interactive SLURM job, run an Apptainer to enable admin privileges and redirect all filepointers to the EXT4 filesystem to avoid out-of-memory limits. A Jupyter notebook is then hosted on a public IP address. \\
+Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the shell to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all filepointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also can run a Jupyterlab instance on the intranet. \\
 \url{https://github.com/ETH-DISCO/cluster-tutorial}
 
 \linebreaks
@@ -228,6 +228,16 @@ Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2
 	
 	Additionally, small $\varepsilon$-bounded adversarial perturbations are found to cause misclassification in time-constrained humans~\cite{elsayed2018adversarial} and primates~\cite{yuan2020fooling}.
 	% see: https://gwern.net/doc/ai/nn/adversarial/human/index#harrington-deza-2021-section
+\end{highlightbox}
+
+\begin{highlightbox}
+	\textbf{Intuition:} The Deep Learning Hypothesis \\
+
+	Ilya Sutskever, in his ``Test of Time'' award talk at NeurIPS 2024~\cite{sutskever2014sequence,goodfellow2014generative}, revisited an idea he had previously only hinted at in interviews. This heuristic has since gained widespread acceptance and is now even taught in introductory machine learning courses~\cite{guerzhoy_ann}. \\
+	
+	The idea is straightforward: Human perception operates at a rapid pace. Neurons in the human brain can fire up to 100 times per second. Humans can complete simple perceptual tasks within 0.1 seconds. This implies that neurons fire in a sequence of at most 10 times for such tasks. Consequently, any task that a human can perform in 0.1 seconds can also be accomplished by a deep neural network with approximately 10 layers~\cite{sutskever2014sequence}. \\
+
+	This could explain why adversarial examples transfer to time-constrained humans~\cite{elsayed2018adversarial}. It also suggests that there may be a fundamental limit to the robustness of deep learning models, as they are inherently limited by the speed of their computations.
 \end{highlightbox}
 
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
@@ -330,7 +340,7 @@ An attack can be targeted or untargeted. Targeted attacks aim to manipulate the 
 
 The method used to generate adversarial examples can be gradient-based, optimization-based or search-based strategies. For example, some text-based attacks leverage language models to generate alternatives for masked tokens, ensuring grammatical correctness and semantic coherence~\cite{garg2020bae}.
 
-The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models, or the human vision system\cite{elsayed2018adversarial} \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
+The extent to which adversarial examples are transferable \textendash{} meaning their ability to fool multiple different models or the human vision system\cite{elsayed2018adversarial} \textendash{} is another way to differentiate them. Some adversarial examples demonstrate high transferability across various model architectures, while others are more model-specific in their effectiveness~\cite{Li2022ASO, li2022review}. Recent research has shown that adversarial examples are more readily transferable between vanilla neural networks than between defended ones~\cite{li2019nattack, zheng2023black}.
 
 Finally, attacks can either focus on preserving the semantic meaning of inputs or exploit the mathematical properties of models without regard for semantic interpretation~\cite{browne2020semantics}.
 
@@ -350,7 +360,7 @@ Recent research~\cite{bansal2021revisiting} has demonstrated that neural network
 
 This aligns with the ``Platonic Representation Hypothesis''~\cite{huh2024platonic}, which suggests that neural networks are converging toward a shared statistical model of reality, regardless of their training objectives or architectures. As models become larger and are trained on more diverse tasks and data, their internal representations increasingly align with each other, even across different modalities like vision and language. This convergence appears to be driven by the fundamental constraints\footnote{Formally: ``If an optimal representation exists in function space, larger hypothesis spaces are more likely to cover it.''} of modeling the underlying structure of the real world, similar to Plato's concept of an ideal reality that exists beyond our sensory perceptions. The hypothesis proposes that this convergence is not coincidental but rather a natural consequence of different models attempting to capture the same underlying statistical patterns and relationships that exist in reality~\cite{huh2024platonic}. 
 
-Should the ``Platonic Representation Hypothesis'' hold true, this would either mean that (a) adversarial examples as we know them are misalignments from a converged model of reality, or (b) that there exist a universal adversarial example that can fool any model, regardless of its architecture, training data or objective function, converging to a single and shared model of reality.
+Should the ``Platonic Representation Hypothesis'' hold true, this would either mean that (a) adversarial examples as we know them are misalignments from a converged model of reality or (b) that there exist a universal adversarial example that can fool any model, regardless of its architecture, training data or objective function, converging to a single and shared model of reality.
 
 Recent work by Moosavi-Dezfooli et al.\ \cite{moosavi2017universal} have demonstrated the existence of a single perturbation that can fool most models for all naturally occurring images, adding weight to the latter interpretation, though the question remains open.
 
@@ -484,7 +494,7 @@ This perspective suggests that enhancing adversarial robustness requires develop
 		\textit{``Well, at a high level, I think that the goal of computer security is to ensure that systems do the right thing, even in the presence of malicious inputs. Now, achieving this goal in the context of machine learning is exceptionally challenging for two reasons. [...] So first of all, computer scientists lack a deep mathematical understanding of how machine learning actually learns and predicts. [...] And second, many people who deploy machine learning don't actually care about the first problem.''}
 		\vspace{1em}
 
-		\textit{``And if somebody asks you why the stuff worked, you just say the stuff is what the stuff is brother, accept the mystery. Okay. And so basically machine learning is like this, right? So we've invented, invented a bunch of techniques that kind of work, like in some cases, but we're not really sure what's going on. [...] We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
+		\textit{``And if somebody asks you why the stuff worked, you just say the stuff is what the stuff is brother, accept the mystery. Okay. And so basically machine learning is like this, right? So we've invented a bunch of techniques that kind of work, like in some cases, but we're not really sure what's going on. [...] We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
 		\vspace{1em}
 
 		\textemdash{} James Mickens, USENIX'18~\cite{218395}
