@@ -1,0 +1,9 @@
+The proposal is very good in large parts. However, there are some issues that need to be fix (but it should be a quick fix)
+
+Please address the following issues in a revision and upload the revision in TISS.
+
+The proposal is missing a precise scientific problem statement. Which problem will disappear when you deliver your thesis?
+Rephrase the second research question: avoid binary questions and change: maximize -> increase.
+The section on research methods should in addition provide arguments that demonstrate that the approach lead to scientifically valid results.
+The state of the art section currently does include any references which is essential for a SOTA section.
+See also file attached.
