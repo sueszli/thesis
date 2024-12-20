@@ -111,9 +111,9 @@ Yahya Jabary andreas Plesner, Turlan Kuzhagaliyev, Roger Wattenhofer \\
 
 \section*{Open source software}
 
-The majority of time working on this thesis, was spent on developing a reproducible research pipeline for experiments in a compute and GPU memory constrained, containerized environment with compiled dependencies.
+The majority of time working on this thesis was spent on developing a reproducible research pipeline for experiments in a compute and GPU memory constrained, containerized environment with compiled dependencies.
 
-Due to the exploratory nature of the work many of the software built and experiments conducted had to be discarded.
+Due to the exploratory nature of the work, many of the software built and experiments conducted had to be discarded.
 
 The following projects were developed as part of this work (in chronological order, with the most recent first):
 
@@ -146,7 +146,7 @@ All experiments related to the geometric masks from the paper. \\
 \linebreaks
 
 \textbf{cluster-tutorial} \\
-Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the shell to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all filepointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also can run a Jupyterlab instance on the intranet. \\
+Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the shell to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all file pointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also can run a Jupyterlab instance on the intranet. \\
 \url{https://github.com/ETH-DISCO/cluster-tutorial}
 
 \linebreaks
@@ -163,11 +163,11 @@ Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHA
 
 \section*{Breakdown of contributions}
 
-For the paper Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments andreas and me writing the majority of the text and Turlan and me conducting all experiments. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet model, which did not make it into the final version of the paper. Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function. Additionally, he helped with general advice on PyTorch.
+For the paper Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments Andreas and I writing the majority of the text and Turlan and I conducting all experiments. The TU Wien DSG lab kindly provided the computational resources for robustifying a ResNet model, which did not make it into the final version of the paper. Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function. Additionally, he helped with general advice on PyTorch.
 
 Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
 
-Andreas Plesner diligently proofread this manuscript for errors. As is traditional, any errors that remain are of course mine alone.
+Andreas Plesner diligently proofread this manuscript for errors. As is traditional, any errors that remain, are of course, mine alone.
 
 \tableofcontents
 
@@ -188,9 +188,9 @@ The origin of perturbations can be traced back to the early days of computationa
 \begin{highlightbox}
 	\textbf{Example:} Perturbation scheme for a Linear Classifier \\
 
-	Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number the exact value of which is unimportant and $\delta(x)$ is the perturbation function to break degeneracies. \\
+	Consider a simple case of determining whether a point lies above or below a line~\cite{de2000computational}. While this classification appears straightforward, numerical issues arise when the point lies exactly on the line. Such degeneracies can cascade into algorithm failures or inconsistent results. The elegant solution is to imagine slightly moving (perturbing) the geometric objects to eliminate these special cases. Formally, we can express symbolic perturbation as $p_\varepsilon(x) = x + \varepsilon \cdot \delta(x)$ where $x$ is the original input, $\varepsilon$ is an infinitesimally small positive number, the exact value of which is unimportant and $\delta(x)$ is the perturbation function to break degeneracies. \\
 
-	A perturbation scheme should be (1) consistent, meaning that the same input always produces the same perturbed output (2) infinitesimal, such that perturbations are small enough not to affect non-degenerate cases and (3) effective, in breaking all possible degeneracies. \\
+	A perturbation scheme should be (1) consistent, meaning that the same input always produces the same perturbed output (2) infinitesimal, such that perturbations are small enough not to affect non-degenerate cases and (3) effective in breaking all possible degeneracies. \\
 
 	One powerful perturbation approach is Simulation of Simplicity (SoS)~\cite{franklin2022implementing, edelsbrunner2002topological, edelsbrunner2001sink, edelsbrunner1990simulation, levy2016robustness, schorn1993axiomatic}. SoS systematically perturbs input coordinates using powers of a symbolic infinitesimal. For a point $p_i = (x_i, y_i)$, the perturbed coordinates become:
 
@@ -203,7 +203,7 @@ The beauty of perturbation methods lies in their ability to handle degeneracies 
 
 \subsection{Imperceptible Adversarial Examples}
 
-Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
+Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2013intriguing}, follow the same principles as perturbation methods, but with the opposite objective. Instead of seeking to eliminate degeneracies (brittleness in the decision boundary), they exploit them to cause targeted misclassifications. Intuitively, they can be understood as seeking the closest point in the input space that lies on the ``wrong side'' of a decision boundary relative to the original input. This shift, applied to the original input, creates an adversarial example.
 
 \begin{highlightbox}
 	\textbf{Example:} Fast Gradient Sign Method (FGSM) \\
@@ -224,9 +224,9 @@ Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2
 \begin{highlightbox}
 	\textbf{Digression:} Pixel-space constraints don't guarantee imperceptibility \\
 
-	Traditionally adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in targeted models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}. \\
+	Traditionally, adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in targeted models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}. \\
 
-	However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{ning2023hflic}. \\
+	However, the concept of ``imperceptibility [to humans]'' as originally proposed by Szegedy et al.~\cite{szegedy2013intriguing} by limiting pixel-space perturbations through an $\varepsilon$-bounded constraint is fundamentally flawed. This is because the human visual system is not solely reliant on pixel-space information to interpret images~\cite{mentzer2020high, ning2023hflic}. \\
 
 	Humans can detect forged low-$\varepsilon$ adversarial examples with high accuracy in both the visual (85.4\%)~\cite{veerabadran2023subtle} and textual ($\geq$70\%)~\cite{herel2023preserving} domain. It's worth mentioning that invertible neural networks can partially mitigate this issue in the visual domain~\cite{chen2023imperceptible}. \\
 	
@@ -252,7 +252,7 @@ Imperceptible noise-based adversarial examples are just one type of semantics-pr
 
 This shift in defining adversarial examples, popularized by the ``Unrestricted Adversarial Examples Challenge''~\cite{brown2018unrestricted} by Google in 2018, has led to a more nuanced understanding of the phenomenon. It acknowledges that real-world applications, especially in safety-critical contexts, are subject to a broader range of adversarial attacks than previously assumed and do not always adhere to the ``small perturbation'' constraint initially proposed~\cite{brown2018unrestricted}.
 
-This paradigm shift towards seeking more meaningful adversarial examples and ``spatial robustness'' was first proposed by Gilmer et al.\ in 2018~\cite{gilmer2018motivating} and further explored by Engstrom et al.\ in 2019~\cite{engstrom2019exploring}. These works lay the theoretical foundation for our research and we believe this approach to to be the most promising for future research in adversarial machine learning.
+This paradigm shift towards seeking more meaningful adversarial examples and ``spatial robustness'' was first proposed by Gilmer et al.\ in 2018~\cite{gilmer2018motivating} and further explored by Engstrom et al.\ in 2019~\cite{engstrom2019exploring}. These works lay the theoretical foundation for our research and we believe this approach to be the most promising for future research in adversarial machine learning.
 
 The challenge of defining semantics is central to this discussion. Without perfect representations that align with human judgment functions, we must rely on the best available encoders or semantics preservation metrics~\cite{engstrom2019exploring, herel2023preserving} as proxies. This pragmatic approach acknowledges the limitations of current technology while striving for more meaningful adversarial examples.
 
@@ -311,7 +311,7 @@ One particularly entertaining example of an adversarial attack is the subversion
 
 But adversarial attacks are not limited to academia. Machine learning security has become particularly critical as models are deployed in increasingly sensitive and safety-critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, huggingface2024security}.
 
-National infrastructure and cyber-physical systems are commonly use machine learning-based protection systems, which can be compromised~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}. A single failure in a nuclear power plant or a water treatment facility or any other critical infrastructure can have catastrophic consequences.
+National infrastructure and cyber-physical systems are are commonly using machine-learning based protection systems, which can be compromised~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}. A single failure in a nuclear power plant, a water treatment facility or any other critical infrastructure can have catastrophic consequences.
 
 Adversarial attacks can also compromise credit card fraud detection systems, potentially leading to billions in annual losses~\cite{Gu2022DeepLT, Agarwal2021BlackBoxAE, Tsai2024EffectiveAE}.
 
@@ -319,7 +319,7 @@ In healthcare, malicious actors can manipulate medical imaging systems used for 
 
 In autonomous vehicles roadside billboards can be weaponized to display specially crafted videos that manipulate vehicle controllers into performing dangerous maneuvers, such as unexpected lane changes or road departures~\cite{Patel2019AdaptiveAV}. Even more concerning, acoustic attacks can exploit image stabilization hardware to create blurred images that cause object detection systems to misclassify or completely miss critical obstacles~\cite{Ji2021PoltergeistAA}. These vulnerabilities are increasing in sophistication~\cite{Axelrod2017CybersecurityCO}.
 
-This risk is also demonstrated in cybersecurity applications, where phishing website detectors face degradation of 3-10\% from realistic evasion attempts that are both cheap and practical to implement~\cite{Yuan2023MultiSpacePhishET}. In the domain of malware detection mutation systems that combine generative networks with reinforcement learning to create metamorphic malware capable of evading detection systems~\cite{to2023effectiveness}.
+This risk is also demonstrated in cybersecurity applications, where phishing website detectors face degradation of 3-10\% from realistic evasion attempts that are both inexpensive and practical to implement~\cite{Yuan2023MultiSpacePhishET}. In the domain of malware detection mutation systems that combine generative networks with reinforcement learning to create metamorphic malware capable of evading detection systems~\cite{to2023effectiveness}.
 
 This has lead to major companies investing heavily in adversarial machine learning research and security.
 
@@ -350,7 +350,7 @@ Finally, attacks can either focus on preserving the semantic meaning of inputs o
 
 \section{Latent Representations}
 
-The internal latent representations of neural networks, their alignment with human understanding and the resuling gap between the two (the human-machine vision gap~\cite{geirhos2021partial}) is a central theme in adversarial machine learning research. This gap has many practical implications for the robustness and interpretability of machine learning models.
+The internal latent representations of neural networks, their alignment with human understanding and the resulting gap between the two (the human-machine vision gap~\cite{geirhos2021partial}) is a central theme in adversarial machine learning research. This gap has many practical implications for the robustness and interpretability of machine learning models.
 
 Neural networks trained with topological features develop substantially different internal representations compared to those trained on raw data, though these differences can sometimes be reconciled through simple affine transformations~\cite{mcguire2023neural}. This finding suggests that while the structural representations may differ, the underlying semantic understanding might be preserved across different training approaches.
 
@@ -358,7 +358,7 @@ The Centered Kernel Alignment (CKA) metric enables us to compare neural network 
 
 The relationship between network architecture and concept representation has also been explored. Generally higher-level concepts are typically better represented in the final layers of neural networks, while lower-level concepts are often better captured in middle layers~\cite{Agafonov2022AnEO, Agafonov2022LocalizationOO}. This hierarchical organization mirrors our understanding of human cognitive processing and suggests that neural networks naturally develop structured representations that align with human conceptual understanding.
 
-The choice of objective function significantly influences how networks represent information, particularly when dealing with biased data. Networks trained with Negative Log Likelihood and Softmax Cross-Entropy loss functions demonstrate comparable capabilities in developing robust representations~\cite{bangaru2022interpreting}.
+The choice of an objective function significantly influences how networks represent information, particularly when dealing with biased data. Networks trained with Negative Log Likelihood and Softmax Cross-Entropy loss functions demonstrate comparable capabilities in developing robust representations~\cite{bangaru2022interpreting}.
 
 Recent research~\cite{bansal2021revisiting} has demonstrated that neural networks with strong performance tend to learn similar internal representations, regardless of their training methodology. Networks trained through different approaches, such as supervised or self-supervised learning, can be effectively ``stitched'' together without significant performance degradation. This suggests a convergence in how successful neural networks represent information.
 
@@ -388,7 +388,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 \begin{highlightbox}
 	\textbf{Definition:} Manifold \\
 	
-	The first attempt to explain adversarial examples by Szegedy et al.\ \cite{szegedy2013intriguing} used the term ``manifold'', while refering to a data submanifold. \\
+	The first attempt to explain adversarial examples by Szegedy et al.\ \cite{szegedy2013intriguing} used the term ``manifold'', while referring to a data submanifold. \\
 		
 	A manifold can be thought of as a low-dimensional structure embedded in a high-dimensional space, representing the set of valid data points (e.g., natural images) that the neural network is trained to classify. Mathematically, if the input data lies on a manifold $\mathcal{M} \subset \mathbb{R}^m$, then $\mathcal{M}$ represents the subset of the high-dimensional input space $\mathbb{R}^m$ that corresponds to meaningful or real-world data. \\
 
@@ -423,7 +423,7 @@ Initially, when Szegedy et al.\ \cite{szegedy2013intriguing} coined the term the
 
 Since then there have been many attempts at finding a cohesive narrative to explain these counter-intuitive properties, each with their own limitations and assumptions \textendash{} some complementary, some contradictory~\cite{ilyas2019adversarial}.
 
-\paragraph{Non-robust features \& concentration of measure in high-dimensions.} Most popularly, Ilyas et al.\ \cite{ilyas2019adversarial} proposed that features that models learn from can be divided in 3 categories: (1) useless featurs, to be discarded by the feature extractor, (2) robust features, which are comprehensible to humans, generalize across multiple datasets and remain stable under small adversarial perturbations and (3) non-robust features, which are incomprehensible to humans, learned by the supervised model to exploit patterns in the data distribution which are highly effective for the task at hand but also brittle and easily manipulated by adversarial perturbations. The authors suggest that the vulnerability of deep neural networks to adversarial examples is due to their reliance on non-robust features and inherent to how the models are optimized to minimize the loss function. In essence, the authors argue that adversarial vulnerability is a property of the dataset, not the algorithm and by removing these non-robust features from the training data although the adversarial robustness of the model can be improved, due to information loss of the most predictive features, the model's overall accuracy will decrease. This view is also shared among~\cite{engstrom2019a, raghunathan2018certified, wong2018provable, xiao2018training, cohen2019certified, fawzi2018adversarial, mahloujifar2019curse, shafahi2018adversarial, gilmer2018adversarial, madry2017towards}.
+\paragraph{Non-robust features \& concentration of measure in high dimensions.} Most popularly, Ilyas et al.\ \cite{ilyas2019adversarial} proposed that features that models learn from can be divided in 3 categories: (1) useless featurs, to be discarded by the feature extractor, (2) robust features, which are comprehensible to humans, generalize across multiple datasets and remain stable under small adversarial perturbations and (3) non-robust features, which are incomprehensible to humans, learned by the supervised model to exploit patterns in the data distribution which are highly effective for the task at hand but also brittle and easily manipulated by adversarial perturbations. The authors suggest that the vulnerability of deep neural networks to adversarial examples is due to their reliance on non-robust features and inherent to how the models are optimized to minimize the loss function. In essence, the authors argue that adversarial vulnerability is a property of the dataset, not the algorithm and by removing these non-robust features from the training data although the adversarial robustness of the model can be improved, due to information loss of the most predictive features, the model's overall accuracy will decrease. This view is also shared among~\cite{engstrom2019a, raghunathan2018certified, wong2018provable, xiao2018training, cohen2019certified, fawzi2018adversarial, mahloujifar2019curse, shafahi2018adversarial, gilmer2018adversarial, madry2017towards}.
 
 \paragraph{Theoretical constructions which incidentally exploit non-robust features.} A complimenting hypothesis is that because models trained to maximize accuracy will naturally utilize non-robust data, regardless of whether it aligns with human perception~\cite{ilyas2019adversarial} they add a low-magnitude weight to sensitive variables that can get overamplified by adversarial examples~\cite{bubeck2019adversarial, nakkiran2019adversarial}. The assumption is that this happens due to computational constraints or model complexity.
 
@@ -437,15 +437,15 @@ Since then there have been many attempts at finding a cohesive narrative to expl
 
 \paragraph{Piecewise-linear decision boundaries.} In the ``dimpled manifold hypothesis''~\cite{shamir2021dimpled} the central claim is that adversarial examples emerge because we attempt to fit high $n-1$ dimensional decision boundaries to inherently low-dimensional data like images (which can be losslessly projected to $k \ll n$ dimensions). This leaves redundant dimensions on which adversarial examples won't be judged, which enables them exist roughly perpendicularly from the true location of the low-dimensional natural image, by using large gradients. In this mental model adversarial examples can be on-manifold or off-manifold, based on the angle of the gradients relative to the data manifold.
 
-The authors also suggest that decision boundaries of neural networks evolve during training. This happens through two distinct phases. First, there is a rapid ``clinging'' phase where the decision boundary moves close to the low-dimensional image manifold containing the training examples. This is followed by a slower ``dimpling'' phase that creates shallow bulges in the decision boundary, pushing it to the correct side of the training examples, without shifting the plane. This gradient descent based process is highly efficient, but it also leaves a brittle decision boundary that can be easily exploited.
+The authors also suggest that decision boundaries of neural networks evolve during training. This happens through two distinct phases. First, there is a rapid ``clinging'' phase where the decision boundary moves close to the low-dimensional image manifold containing the training examples. This is followed by a slower ``dimpling'' phase that creates shallow bulges in the decision boundary, pushing it to the correct side of the training examples, without shifting the plane. This gradient-descent-based process is highly efficient, but it also leaves a brittle decision boundary that can be easily exploited.
 
 This implies that any attempt to robustify a network by limiting all its directional derivatives will make it harder to train and thus less accurate.
 
 It also explains why networks trained on incorrectly labeled adversarial examples can still perform well on regular test images, as the main effect of adversarial training is simply to deepen these dimples in the decision boundary.
 
-Lukas Karner successfully was able to successfully reproduce the experiments from the ``Dimpled Manifold Hypothesis'' paper in 2023~\cite{karner2023dimpled}. He additionally demonstrated that dimensionality reductions increases the interpretability of the perturbations to humans~\cite{karner2023dimpled}.
+Lukas Karner successfully was able to successfully reproduce the experiments from the ``Dimpled Manifold Hypothesis'' paper in 2023~\cite{karner2023dimpled}. He additionally demonstrated that dimensionality reduction increases the interpretability of the perturbations to humans~\cite{karner2023dimpled}.
 
-However, despite the experiments being carried out correctly themselves, the chain of reasoning might be flawed, as shown by a succinct (<100 LoC) counterexample by Yannik Kilcher in 2021~\cite{kilcher2021dimpledcode, kilcher2021dimpled}. While the ``Dimpled Manifold Hypothesis'' implies a relatively uniform vulnerability across all dimensions the counterexperiment contradicts these assumptions through successful adversarial attacks constructed by perturbing either an arbitrary subset of selected dimensions or their complement. If the decision boundary truly ``clung'' to the data manifold, restricting perturbations to a subset of dimensions would not have produced successful adversarial examples. The ability to generate adversarial examples in complementary subspaces suggests the decision boundary structure is more complex than just simple dimples.
+However, despite the experiments being carried out correctly themselves, the chain of reasoning might be flawed, as shown by a succinct (<100 LoC) counterexample by Yannik Kilcher in 2021~\cite{kilcher2021dimpledcode, kilcher2021dimpled}. While the ``Dimpled Manifold Hypothesis'' implies a relatively uniform vulnerability across all dimensions the counter experiment contradicts these assumptions through successful adversarial attacks constructed by perturbing either an arbitrary subset of selected dimensions or their complement. If the decision boundary truly ``clung'' to the data manifold, restricting perturbations to a subset of dimensions would not have produced successful adversarial examples. The ability to generate adversarial examples in complementary subspaces suggests the decision boundary structure is more complex than just simple dimples.
 
 To summarize, there is no consensus on the root cause of adversarial examples and the field remains an active area of research. The mental models proposed by different researchers are not necessarily mutually exclusive and it is likely that the true explanation involves a combination of these factors.
 
@@ -461,11 +461,11 @@ Several effective strategies have been developed. This collection is by no means
 
 \paragraph{Adversarial Training.} One of the least invasive methods to improve adversarial robustness is adversarial training. Incorporating adversarial examples into the training process improves model resilience by learning from potential attack patterns and helps maintain performance on clean data~\cite{araujo2020advocating, Ren2022VulnerabilityAR}. However, this requires the anticipated attacks to be known in advance. An alternative would be introducing derived variables for controlled randomness to input data during training, which is still effective~\cite{Adeke2023SecuringNT}.
 
-\paragraph{Quality Assessment Integration.} Implementing image quality assessment combined with knowledge distillation helps detect potentially harmful inputs that could cause incorrect model predictions~\cite{feng2020towards}. Another alternative preprocessing technique is using brain inspired encoders~\cite{Rakhimberdina2022StrengtheningRU}. This method is particularly effective as it doesn't require model retraining, but depending on the preprocessing techique used, it can be computationally expensive.
+\paragraph{Quality Assessment Integration.} Implementing image quality assessment combined with knowledge distillation helps detect potentially harmful inputs that could cause incorrect model predictions~\cite{feng2020towards}. Another alternative preprocessing technique is using brain-inspired encoders~\cite{Rakhimberdina2022StrengtheningRU}. This method is particularly effective as it doesn't require model retraining, but depending on the preprocessing technique used, it can be computationally expensive.
 
 \paragraph{Moving Target Defense.} Using heterogeneous models, diversifying the model structure, using ensembles and dynamic model switching can protect against white-box adversarial attacks. This approach will make attack vectors that work on one model ineffective on others~\cite{Li2023wAdvMTDAM}.
 
-\paragraph{Statistical Detection.} Statistical tests can be employed for some signal based deep learning systems to detect adversarial examples. This includes analyzing peak-to-average-power ratio and examining softmax outputs of the model~\cite{KokaljFilipovic2019AdversarialEI}.
+\paragraph{Statistical Detection.} Statistical tests can be employed for some signal-based deep learning systems to detect adversarial examples. This includes analyzing a peak-to-average-power ratio and examining softmax outputs of the model~\cite{KokaljFilipovic2019AdversarialEI}.
 
 \paragraph{Enhanced Transformation.} Transformation-based defense strategies, such as using generative adversarial networks (GANs), can help recover from adversarial examples. These methods can counteract adversarial effects while maintaining or even improving classification performance~\cite{Zhao2023EITGANAT}.
 
@@ -485,7 +485,7 @@ An interesting secondary outcome of this research was the discovery that gradien
 
 \section{Future Directions}
 
-Perhaps we should be rethinking unrestricted adversarial examples not as attacks but as indicators of insufficient generalization, which can not always be measured by accuracy on a predefined test set alone.
+Perhaps we should be rethinking unrestricted adversarial examples not as attacks but as indicators of insufficient generalization, which cannot always be measured by accuracy on a predefined test set alone.
 
 The most promising path forward may not lie in defending against these examples, but rather in fundamentally reimagining model architectures with reliability, robustness and interpretability as core design principles. This way, robustness becomes a natural byproduct of the model's structure, at no additional cost.
 
@@ -517,7 +517,7 @@ To address this challenge, we've adopted two guiding principles: (1) keeping it 
 
 \subsection{Research Motivation}
 
-We noticed a gap in research when it comes to unrestricted adversarial examples that exploit the human-machine vision gap. One practical application for these types of attacks is in developing robust CAPTCHAs\footnote{Completely Automated Public Turing test to tell Computers and Humans Apart}, which are widely used to differentiate between humans and bots. The aim is to create images that machines struggle or ideally fail to recognize, while remaining easily solvable by humans.
+We noticed a gap in research when it comes to unrestricted adversarial examples that exploit the human-machine vision gap. One practical application for these types of attacks is in developing robust CAPTCHAs\footnote{Completely Automated Public Turing test to tell Computers and Humans Apart}, which are widely used to differentiate between humans and bots. The aim is to create images that machines struggle or ideally fail to recognize, while remaining easily solvable by humans, to prevent denial-of-service attacks, spam, open-source intelligence scraping and other malicious activities.
 
 The biggest advantage of using CAPTCHAs for adversarial research is their proven effectiveness. By studying the challenges of top providers like Google's reCAPTCHA and hCaptcha, we can start off with a strong baseline \textendash{} with a proven track record of robustness \textendash{} to build upon. This saves us from having to reinvent the wheel. Additionally a CAPTCHA challenge is a well-defined problem with clear success criteria and would enable future studies to conduct adversarial research and their transferability to humans on a large scale with significantly fewer ethical, legal and financial constraints.
 
@@ -538,13 +538,17 @@ HCaptchas, on the other hand, have remained undefeated in the ongoing attack-def
 
 Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The segmentation challenge works by overlaying images with more complex patterns, such as a grid of colored geometric shapes with varying sizes and rotations. These challenges are designed to be easily solvable by humans, but difficult for machines to classify accurately.
 
+In this scenario, the solver / identity provider acts as the adversary, while the CAPTCHA provider is the challenger. The adversary aims to bypass the CAPTCHA, and the challenger's goal is to prevent this. The adversary's success is gauged by the solver's accuracy, whereas the challenger's success is measured by the CAPTCHA's effectiveness. 
+
+However, in traditional settings like automated content moderation on social media, the adversary aims to bypass the system by posting harmful content. Discovering simple geometric masks as robust black-box adversarial examples that transfer well between moderation systems would enable mass scale evasion at a fraction of the cost of traditional adversarial examples.
+
 \begin{highlightbox}
 	\textbf{Idea:} Evaluation on Synthetic Data \\
 
 	One interesting idea we explored but ultimately set aside was the use of synthetic images for adversarial training and evaluation of (natural unrestricted) adversarial examples. Although promising, it didn't quite align with our primary goals. We developed a pipeline that chains together several advanced models: starting with stable diffusion to generate an image, then using GPT-2 to caption it. These captions were used as text queries for zero-shot classification and detection models like CLIP and ViT, which perform exceptionally well but need a prompt to work. Finally, we used SAM1 for segmentation. This process is illustrated in Figure~\ref{fig:chained}. This is an exciting direction, especially with the advancements brought by FLUX.1~\cite{BlackForestLabs2024FLUX}, not sufficiently explored in the current literature, based on our preliminary review. \\
 
 \begin{minted}[fontsize=\footnotesize]{python}
-img = gen_stable_diffusion("an austronaut on mars riding a horse")
+img = gen_stable_diffusion("an astronaut on mars riding a horse")
 query = caption_gpt2(img)
 probs = classify_clip(img, query)
 boxes, scores, labels = detect_vit(img, query, 0.1)
@@ -594,7 +598,7 @@ For the segmentation task, we experimented with various background textures, inc
 	\hfill
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/hcaptcha-copy-original.png}\caption{Original image\\(for reconstructions)}\label{fig:subfig9}\end{subfigure}
 
-	\caption{Selected examples by hCAPTCHA and their optimized reconstructions. The ``Word'' overlay was ommited and replaced with a custom ``Knit'' mask.}
+	\caption{Selected examples by hCAPTCHA and their optimized reconstructions. The ``Word'' overlay was omited and replaced with a custom ``Knit'' mask.}
 	\label{fig:hcaptchacombined}
 \end{figure}
 
@@ -607,7 +611,7 @@ For the segmentation task, we experimented with various background textures, inc
 
 \paragraph{Model Selection.}
 
-To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on a consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
+To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
 
 After the literature review we clustered the models by their architecture family and clustered them on a scatter plot based on their performance, inspired by~\cite{howard_image_models}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available. This was to test the feasibility of running these models in a real-world scenario.
 
@@ -806,7 +810,7 @@ There are many possible interpretations of these results. For example, the circl
 
 \subsection{Research Motivation}
 
-The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the previous chapter, is a novel approach to enhancing adversarial robustness in deep learning models. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
+The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the previous chapter, is a novel approach to enhancing adversarial robustness in deep learning models. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of the intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
 
 \begin{minted}[fontsize=\footnotesize]{python}
 def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tensor:
@@ -829,7 +833,7 @@ We also noticed a gap in reproducibility studies for this model, due to its rece
 
 \subsection{Experimental Setup}
 
-\paragraph{Hyperparameter Search (on custom model).}
+\paragraph{Hyperparameter Search (on a custom model).}
 
 Approximately two months following the publication of the paper, the authors released a notebook detailing their preprocessor (including saccading, jitter and nature-imitating noise, ...), architecture and training pipeline. We opted to reconstruct the architecture independently\footnote{Credits to Andreas Plesner.} and implemented the CrossMax consensus algorithm. Our hyperparameter search encompassed the following parameters: dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16) and CrossMax $k$ (2, 3). We employed a grid search methodology to identify the optimal settings for our custom model.
 
