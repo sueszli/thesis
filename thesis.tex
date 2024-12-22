@@ -2,12 +2,10 @@
 % add gpt usage stuff: https://informatics.tuwien.ac.at/study-services/master-graduation/
 % examples: https://catalogplus.tuwien.at/primo-explore/search?query=any,exact,E%20066%20645,AND&pfilter=dr_s,exact,20180101,AND&pfilter=dr_e,exact,20251231,AND&tab=default_tab&search_scope=UTW&sortby=rank&vid=UTW&mode=advanced&offset=0
 
-% 
 % todo:
-% - use citet / citep where possible
-% - ilyas theorem might be contradictory to the universal approximation theorem (a single layer can approximate any function)
-% - move the citation box [x] to the end of the sentences. you would only have it in the middle if it is part of a list, e.g., "This method has been applied for A [1-4], B [4,6], and C [7-9]."
 % 
+% - use citet / citep where possible
+% - move the citation box [x] to the end of the sentences. you would only have it in the middle if it is part of a list, e.g., "This method has been applied for A [1-4], B [4,6], and C [7-9]."
 
 \documentclass[a4paper, oneside]{discothesis}
 \usepackage[utf8]{inputenc}
@@ -91,7 +89,7 @@
 
 	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar, who first inspired me to pursue research and enabled me to study abroad.
 
-	% To me, adversarial examples are also a metaphor for having a strong character. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
+	To me, adversarial examples are also a metaphor for having a strong character by being open-minded. They show how subtle differences in perspective can lead to vastly different interpretations and outcomes.
 	
 	I hope to continue this journey with the same spirit that brought me here.
 \end{acknowledgements}
@@ -245,10 +243,12 @@ Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2
 	\textbf{Intuition:} The Deep Learning Hypothesis \\
 
 	Ilya Sutskever, in his ``Test of Time'' award talk at NeurIPS 2024~\cite{sutskever2014sequence}, revisited an idea he had previously only hinted at in interviews. This heuristic has since gained widespread acceptance and is now even taught in introductory machine learning courses~\cite{guerzhoy_ann}. \\
-	
+
 	The idea is straightforward: Human perception operates at a rapid pace. Neurons in the human brain can fire up to 100 times per second. Humans can complete simple perceptual tasks within 0.1 seconds. This implies that neurons fire in a sequence of at most 10 times for such tasks. Consequently, any task that a human can perform in 0.1 seconds can also be accomplished by a deep neural network with approximately 10 layers~\cite{sutskever2014sequence}. \\
 
 	This could explain why adversarial examples transfer to time-constrained humans~\cite{elsayed2018adversarial}. It also suggests that there may be a fundamental limit to the robustness of deep learning models, as they are inherently limited by the speed of their computations.
+
+	At first glance this idea might seem contradictory to the universal approximation theorem (UAT). However, the UAT only guarantees the existence of a network that can approximate any continuous function, not the efficiency or speed of computation~\cite{hornik1989multilayer}.
 \end{highlightbox}
 
 While initially discovered in computer vision applications, the attack can be crafted for any domain or data type, even graphs~\cite{Kashyap2024AdversarialAA}. Natural language processing models can be attacked by circumventing the discrete nature of text data~\cite{Han2022TextAA, meng2020geometry, yang2024assessing}. Speech recognition systems are vulnerable to audio-based attacks, where crafted noise can cause system failure~\cite{rajaratnam2018noise}. Deep reinforcement learning applications, including pathfinding and robot control, have also shown susceptibility to adversarial manipulations that can compromise their decision-making capabilities~\cite{Bai2018AdversarialEC}.
