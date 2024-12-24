@@ -495,6 +495,8 @@ The countermeasures discussed so far provide a diverse array of techniques to mi
 
 \subsection{Architectural Defenses}
 
+% interpretability: https://arxiv.org/pdf/2207.13243
+
 Assuming that robustness and generalizability are not competing objectives but complementary goals, the ultimate defense lies in designing architectures that inherently integrate robustness and interpretability. By prioritizing these objectives at the core of model development, we can create systems that not only withstand adversarial attacks but also offer more trustworthy and transparent decision-making.
 
 \paragraph{Fermi-Bose Machine.} One noteworthy example is the Fermi-Bose Machine~\cite{xie2024fermi}. Unlike traditional neural networks that rely on backpropagation, this method introduces a local contrastive learning mechanism inspired by quantum mechanics principles. The system works by making representations of inputs with identical labels cluster together (like bosons), while representations of different labels repel each other (like fermions). This layer-wise learning approach is considered more biologically plausible than traditional backpropagation~\cite{xie2024fermi}. The researchers demonstrated the effectiveness of their method on the MNIST dataset, showing that by adjusting the target fermion-pair-distance parameter, they could significantly reduce the susceptibility to adversarial attacks that typically disturb standard perceptrons~\cite{xie2024fermi}. The key innovation lies in controlling the geometric separation of prototype manifolds through the target distance parameter, as revealed by statistical mechanics analysis~\cite{xie2024fermi}.
