@@ -36,15 +36,16 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{booktabs}
+\usepackage{scrlayer-scrpage}
+\usepackage{nopageno} % drop page numbers
 
 % 
 % customization
 % 
 
-\usepackage[margin=0pt, top=25mm, bottom=15mm, left=15mm, right=15mm]{geometry} % drop margins
-
+\usepackage[margin=0pt, top=25mm, bottom=15mm, left=15mm, right=15mm]{geometry} % drop margin
 \setlength\parindent{0pt} % drop indent
-\newcommand{\linebreaks}{\vspace*{0.5em}} % custom shortcuts
+\pagestyle{empty} % drop page numbers
 
 % make subcaption tiny for 2x8 grid
 \captionsetup[subfigure]{labelsep=none}
@@ -58,6 +59,9 @@
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
 \makeatother  
 \urlstyle{leo}
+
+% custom shortcuts
+\newcommand{\linebreaks}{\vspace*{0.5em}}
 
 % highlight boxes
 % - https://www.overleaf.com/latex/examples/simple-stylish-box-design/stzmmcshxdng
@@ -893,7 +897,6 @@ We found the best results with a learning rate of 1e-4, running for 16 epochs an
 \bibliography{references}
 
 \appendix
-\pagenumbering{gobble} % drop page count
 
 \chapter*{Appendix: Overview of Generative AI Tools Used}
 
