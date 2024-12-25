@@ -6,6 +6,7 @@
 
 % todo:
 % 
+% - drop or improve adv-bench figs
 % - also patch whatsapp todo list
 % - motivation: write about neglectedness, hype both in academia and industry
 % - split chapter 2 in two
@@ -692,7 +693,7 @@ Our initial grid search revealed some interesting patterns. We found that achiev
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\columnwidth]{figures/tradeoff-1.png}
+	\includegraphics[width=1\columnwidth]{figures/tradeoff-1.pdf}
 	\caption{Trade-off between accuracy and perceptual quality for the strongest masks.}
 	\label{fig:tradeoff-1}
 \end{figure}
@@ -701,7 +702,7 @@ Our second grid search, which combined FGSM perturbations with the masks, reveal
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\columnwidth]{figures/tradeoff-2.png}
+	\includegraphics[width=1\columnwidth]{figures/tradeoff-2.pdf}
 	\caption{Trade-off between accuracy and perceptual quality for the strongest masks.}
 	\label{fig:tradeoff-2}
 \end{figure}
@@ -918,15 +919,31 @@ The following models were used:
 	\item OpenAI GPT-4o, wrapped by Perplexity (version omni)
 \end{itemize}
 
-The following prompt was used:
+In almost all cases, the following prompt was used, before minor adjustments were made:
 
 \begin{verbatim}
 rewrite.
 do not alter the meaning of this text.
-keep it short and concise.
-use a casual but technical tone.
-avoid jargon, but do not oversimplify.
-do not use enumerations, itemizations, headings.
+
+do:
+- use a simple and clear language
+- make it short, concise and to the point
+- prefer transitive phrasal (noun comes inbetween the verb and the preposition)
+- use the pronouns "we" and "our"
+
+do not:
+- use flowery language
+- use useless technical jargon
+- use standard inversions
+- use dancing metaphores
+- use enumerations, itemizations, headings
+- use the words: AI, delve, dive, deep, uncover, discover, explore, revolutionize, tapestry, intriguing, holistic, intersection, ethical considerations, area, realm, boasts, emerge, embrace, realm, underscore, embody, nestled, vibrant, blend, ample, capture, synergy, in the realm of, paramount
+\end{verbatim}
+
+Alternatively, for quick edits, the following prompt was used:
+
+\begin{verbatim}
+rewrite. use a casual but academic tone.
 \end{verbatim}
 
 \end{document}
