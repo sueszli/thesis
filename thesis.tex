@@ -37,6 +37,15 @@
 \usepackage{subcaption}
 \usepackage{booktabs}
 
+% 
+% customization
+% 
+
+\usepackage[margin=0pt, top=25mm, bottom=15mm, left=15mm, right=15mm]{geometry} % drop margins
+
+\setlength\parindent{0pt} % drop indent
+\newcommand{\linebreaks}{\vspace*{0.5em}} % custom shortcuts
+
 % make subcaption tiny for 2x8 grid
 \captionsetup[subfigure]{labelsep=none}
 \subcaptionsetup{font=tiny}
@@ -58,10 +67,9 @@
 \newtcolorbox{highlightbox}{sharpish corners, boxrule = 0pt, leftrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 \newtcolorbox{quotebox}{sharpish corners, boxrule = 0pt, rightrule = 4.5pt, enhanced, breakable, fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35}}
 
-\setlength\parindent{0pt} % drop indent
-\newcommand{\linebreaks}{\vspace*{0.5em}} % custom shortcuts
-
-% ----
+% 
+% header
+% 
 
 \thesistype{Master's Thesis}
 \title{Rethinking Adversarial Examples}
@@ -90,8 +98,8 @@
 \begin{acknowledgements}
 	The most rewarding part of this project was working on a problem that truly matters to me, alongside people who genuinely care. For the first time, I felt a sense of belonging.
 
-	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian and my family, for their unwavering support \textendash{} even when I quit my job to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and carried me through many long nights.
-	
+	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian and my family, for their unconditional support \textendash{} even when I quit my job to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and carried me through many long nights.
+
 	I owe much to those who made this work possible. Prof.\ Roger Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision. Turlan Kuzhagaliyev, for keeping me grounded and focused.
 
 	I also value the friendships I made throughout this journey. Prof.\ Nils Lukas, who first introduced me to ML-Security and was always there to discuss ideas. Alireza Furutanpey, for his camaraderie and sharing his boundless passion.
@@ -104,13 +112,15 @@
 \end{acknowledgements}
 
 \begin{abstract}
-    % The abstract should be short, stating what you did and what the most important result is.
+	% The abstract should be short, stating what you did and what the most important result is.
 	% write both in german and english
 	% Neubetrachtung "adversarieller Beispiele" / "feindlicher Angriffe" -> https://www.oecd-ilibrary.org/docserver/6b89dea3-de.pdf?expires=1733712069&id=id&accname=guest&checksum=B9DC3EA65A25A58504E6F6FC5BF8B2A6
+	
 	...
 \end{abstract}
 
 \chapter*{Originality}
+
 % based on https://arxiv.org/pdf/2202.02435
 
 I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work \textendash{} including tables, maps and figures \textendash{} which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
@@ -181,11 +191,15 @@ For the paper Andreas Plesner had the original idea. The written text was joint 
 
 Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
 
-Andreas Plesner diligently proofread this manuscript for errors. As is traditional, any errors that remain, are of course, mine alone.
+Andreas Plesner and Maximilian Seeliger diligently proofread this manuscript for errors. As is traditional, any errors that remain, are of course, mine alone.
 
 \tableofcontents
 
 \mainmatter
+
+% 
+% introduction
+% 
 
 \chapter{Introduction}
 
@@ -879,6 +893,7 @@ We found the best results with a learning rate of 1e-4, running for 16 epochs an
 \bibliography{references}
 
 \appendix
+\pagenumbering{gobble} % drop page count
 
 \chapter*{Appendix: Overview of Generative AI Tools Used}
 
