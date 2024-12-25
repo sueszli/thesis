@@ -6,16 +6,9 @@
 
 % todo:
 % 
-% - drop or improve adv-bench figs
-% - also patch whatsapp todo list
-% - motivation: write about neglectedness, hype both in academia and industry
 % - split chapter 2 in two
-% - improve plot readability
 % - use citet / citep where possible
-% - move the citation box [x] to the end of the sentences. you would only have it in the middle if it is part of a list, e.g., "This method has been applied for A [1-4], B [4,6], and C [7-9]."
-
-
-
+% - move citation boxes to the end of the sentences
 
 \documentclass[a4paper, oneside]{discothesis}
 \usepackage[utf8]{inputenc}
@@ -298,7 +291,7 @@ The challenge of defining semantics is central to this discussion. Without perfe
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.75\columnwidth]{figures/unrestricted-advx.png}
+	\includegraphics[width=0.45\columnwidth]{figures/unrestricted-advx.png} % max val is 0.75
 	\caption{Unrestricted adversarial examples~\cite{brown2018unrestricted}.}
 	\label{fig:unrestricted}
 \end{figure}
@@ -347,14 +340,6 @@ The challenge of defining semantics is central to this discussion. Without perfe
 	\end{flushright}
 \end{quotebox}
 
-% motivation:
-% 
-% - attacking submission system model: https://www.usenix.org/system/files/usenixsecurity23-eisenhofer.pdf
-% - automated zero-day exploit detection in sqlite: https://www.theregister.com/2024/11/05/google_ai_vulnerability_hunting/
-% - osint and doxing people: https://www.theverge.com/2024/10/2/24260262/ray-ban-meta-smart-glasses-doxxing-privacy
-% - osint and leaking locations: https://healeycodes.com/geoguessing-with-deep-learning
-% - identifying browser tabs via browser throughput: https://jackcook.github.io/bigger-fish/
-
 One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
 
 But adversarial attacks are not limited to academia. Machine learning security has become particularly critical as models are deployed in increasingly sensitive and safety-critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, huggingface2024security}.
@@ -368,14 +353,17 @@ In healthcare, malicious actors can manipulate medical imaging systems used for 
 In autonomous vehicles roadside billboards can be weaponized to display specially crafted videos that manipulate vehicle controllers into performing dangerous maneuvers, such as unexpected lane changes or road departures~\cite{Patel2019AdaptiveAV}. Even more concerning, acoustic attacks can exploit image stabilization hardware to create blurred images that cause object detection systems to misclassify or completely miss critical obstacles~\cite{Ji2021PoltergeistAA}. These vulnerabilities are increasing in sophistication~\cite{Axelrod2017CybersecurityCO}.
 
 This risk is also demonstrated in cybersecurity applications, where phishing website detectors face degradation of 3-10\% from realistic evasion attempts that are both inexpensive and practical to implement~\cite{Yuan2023MultiSpacePhishET}. In the domain of malware detection mutation systems that combine generative networks with reinforcement learning to create metamorphic malware capable of evading detection systems~\cite{to2023effectiveness}.
+% - automated zero-day exploit detection in sqlite: https://www.theregister.com/2024/11/05/google_ai_vulnerability_hunting/
+% - doxing people in real time: https://www.theverge.com/2024/10/2/24260262/ray-ban-meta-smart-glasses-doxxing-privacy
+% - identifying browser tabs via browser throughput: https://jackcook.github.io/bigger-fish/
 
 This has lead to major companies investing heavily in adversarial machine learning research and security.
 
 Microsoft has taken a leading position, spending over \$20 billion on cybersecurity initiatives, with a significant portion dedicated to machine learning security research and their specialized ML red team operations~\cite{coursera_adversarial_2024}.
 
-Open Philanthropy has provided \$330,000 and \$343,235~\cite{openphil2024adversarial} in funding to Carnegie Mellon University dedicated to AdvX research.
+Open Philanthropy has provided \$330,000 and \$343,235 in funding to Carnegie Mellon University dedicated to AdvX research~\cite{openphil2024adversarial}.
 
-The MITRE corporation is now cooperating with Microsoft, Bosch, IBM, NVIDIA, Airbus, Deep Instinct and PricewaterhouseCoopers to develop the Adversarial Machine Learning Threat Matrix~\cite{mitre2024ml} for threat modeling and risk assessment.
+The MITRE corporation is now cooperating with Microsoft, Bosch, IBM, NVIDIA, Airbus, Deep Instinct and PricewaterhouseCoopers to develop the Adversarial Machine Learning Threat Matrix for threat modeling and risk assessment~\cite{mitre2024ml}.
 
 The Defense Advanced Research Projects Agency (DARPA) has granted nearly \$1 million to the CV AdvX team at UC Riverside~\cite{roy2020darpa}.
 Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, invested in HiddenLayer, Robust Intelligence~\cite{robustintelligence2024, cai2020robust} Shift5, Credo, Hidden Level, Latent, Synthetaic and Reveal Technology~\cite{boozallen2023adversarial, boozallen2023adversarialother}, all of which are dedicated to machine learning security and robustness research.
@@ -410,7 +398,7 @@ The choice of an objective function significantly influences how networks repres
 
 Recent research~\cite{bansal2021revisiting} has demonstrated that neural networks with strong performance tend to learn similar internal representations, regardless of their training methodology. Networks trained through different approaches, such as supervised or self-supervised learning, can be effectively ``stitched'' together without significant performance degradation. This suggests a convergence in how successful neural networks represent information.
 
-This aligns with the ``Platonic Representation Hypothesis''~\cite{huh2024platonic}, which suggests that neural networks are converging toward a shared statistical model of reality, regardless of their training objectives or architectures. As models become larger and are trained on more diverse tasks and data, their internal representations increasingly align with each other, even across different modalities like vision and language. This convergence appears to be driven by the fundamental constraints\footnote{Formally: ``If an optimal representation exists in function space, larger hypothesis spaces are more likely to cover it.''} of modeling the underlying structure of the real world, similar to Plato's concept of an ideal reality that exists beyond our sensory perceptions. The hypothesis proposes that this convergence is not coincidental but rather a natural consequence of different models attempting to capture the same underlying statistical patterns and relationships that exist in reality~\cite{huh2024platonic}. 
+This aligns with the ``Platonic Representation Hypothesis'', which suggests that neural networks are converging toward a shared statistical model of reality, regardless of their training objectives or architectures~\cite{huh2024platonic}. As models become larger and are trained on more diverse tasks and data, their internal representations increasingly align with each other, even across different modalities like vision and language. This convergence appears to be driven by the fundamental constraints\footnote{Formally: ``If an optimal representation exists in function space, larger hypothesis spaces are more likely to cover it.''} of modeling the underlying structure of the real world, similar to Plato's concept of an ideal reality that exists beyond our sensory perceptions. The hypothesis proposes that this convergence is not coincidental but rather a natural consequence of different models attempting to capture the same underlying statistical patterns and relationships that exist in reality~\cite{huh2024platonic}. 
 
 Should the ``Platonic Representation Hypothesis'' hold true, this would either mean that (a) adversarial examples as we know them are misalignments from a converged model of reality or (b) that there exist a universal adversarial example that can fool any model, regardless of its architecture, training data or objective function, converging to a single and shared model of reality.
 
@@ -887,14 +875,14 @@ We also noticed a gap in reproducibility studies for this model, due to its rece
 
 Approximately two months following the publication of the paper, the authors released a notebook detailing their preprocessor (including saccading, jitter and nature-imitating noise, ...), architecture and training pipeline. We opted to reconstruct the architecture independently\footnote{Credits to Andreas Plesner.} and implemented the CrossMax consensus algorithm. Our hyperparameter search encompassed the following parameters: dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16) and CrossMax $k$ (2, 3). We employed a grid search methodology to identify the optimal settings for our custom model.
 
-We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments.
+% We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=1\columnwidth]{figures/self-ensemble-hyperparams.png}
-	\caption{Hyperparameter search for the self-ensembled ResNet.}
-	\label{fig:se-hyperparams}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\includegraphics[width=1\columnwidth]{figures/self-ensemble-hyperparams.png}
+% 	\caption{Hyperparameter search for the self-ensembled ResNet.}
+% 	\label{fig:se-hyperparams}
+% \end{figure}
 
 \subsection{Results}
 
