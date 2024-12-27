@@ -671,13 +671,11 @@ We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enri
 
 In the hyperparameter search, the final score of each adversarial example was calculated using the following formula:
 
-$$
-\text{Adversarial Accuracy} = \frac{(\text{Acc@1}_{\text{adv}} + \text{Acc@5}_{\text{adv}}) / 2 - (\text{Acc@1} + \text{Acc@5}) / 2 + 1}{2}
+$$\text{Adversarial Accuracy} = \frac{(\text{Acc@1}_{\text{adv}} + \text{Acc@5}_{\text{adv}}) / 2 - (\text{Acc@1} + \text{Acc@5}) / 2 + 1}{2}$$
 
-\text{Perceptual Quality} = \frac{\text{Cosine Similarity} + \text{PSNR} / 100 + \text{SSIM}}{3}
+$$\text{Perceptual Quality} = \frac{\text{Cosine Similarity} + \text{PSNR} / 100 + \text{SSIM}}{3}$$
 
-\text{Final Score} = \text{Perceptual Quality} - \text{Adversarial Accuracy}
-$$
+$$\text{Final Score} = \text{Perceptual Quality} - \text{Adversarial Accuracy}$$
 
 Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
 
