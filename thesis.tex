@@ -6,22 +6,22 @@
 
 
 % todo:
-% 
-% - figure a way for citations to be clustered [1-3] instead of [1,2,3]
+
+% - use citet / citep anywhere you say et al.
+% - move citation boxes to the end of the sentences
+
 % - wait for most current experiments to finish
 % - use scp to download stuff from cluster -> yjabary@tikgpu10:/scratch/yjabary/self-ensembling/1-resnet
 % - chapter 2:
-% 	- split in two chapters
-% 	- increase fontsize, legend size, reduce "dimensions" -> no zooming should be necessary --> alternatively just put into appendix, given results aren't that interesting
 % 	- make figure descriptions longer, it should be self contained, explain how data is encoded visually, interpret it
+
 % - resnet experiment
 % 	- already start writing with just the cifar10 subset you have, it's fine if cifar100, imagenette finish later
 % 	- open up a notebook, evaluate against more masks with pretrained models in /tmp folder -> you can also just take 5, and try to tell an interesting story
+
 % - self ensemble experiment
 % 	- already start writing with just the cifar10 subset you have, it's fine if cifar100, imagenette finish later
-% 
-% - use citet / citep where possible
-% - move citation boxes to the end of the sentences
+
 
 
 
@@ -696,7 +696,7 @@ Our initial grid search revealed some interesting patterns. We found that achiev
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth]{figures/eval_cls_mask_density.pdf}
-	\caption{Trade-off between accuracy and perceptual quality for the strongest masks.}
+	\caption{Accuracy-perceptibility trade-off: We compare the strength of all our masks with different opacities and densities against their perceptibility based on our proxy metric.}
 	\label{fig:tradeoff-1}
 \end{figure}
 
@@ -705,7 +705,7 @@ Our second grid search, which combined FGSM perturbations with the chosen masks,
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth]{figures/eval_cls_perturb.pdf}
-	\caption{Trade-off between accuracy and perceptual quality for the strongest masks.}
+	\caption{Accuracy-perceptibility trade-off: We compare the strength of a diamond mask with different opacities, densities and FGSM perturbation settings against their perceptibility based on our proxy metric.}
 	\label{fig:tradeoff-2}
 \end{figure}
 
