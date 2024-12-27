@@ -4,6 +4,7 @@
 
 % todo:
 % 
+% - figure a way for citations to be clustered [1-3] instead of [1,2,3]
 % - wait for most current experiments to finish
 % - use scp to download stuff from cluster -> yjabary@tikgpu10:/scratch/yjabary/self-ensembling/1-resnet
 % - chapter 2:
@@ -209,10 +210,6 @@ Andreas Plesner and Maximilian Seeliger diligently proofread this manuscript for
 
 \mainmatter
 
-% 
-% introduction
-% 
-
 \chapter{Introduction}
 
 We have two goals in writing this document. One: fulfilling the requirements for a master's degree by presenting and extending our original research~\cite{jabary2024seeing} in thesis form. Two: offering a fresh and cohesive perspective on the rapidly evolving and, in our view, really exciting field of adversarial machine learning to a broader audience, with fewer technical prerequisites. We hope it will be valuable to those interested.
@@ -337,34 +334,25 @@ The challenge of defining semantics is central to this discussion. Without perfe
 
 \section{Motivation}
 
-\begin{quotebox}
-	\begin{flushright}
-		\textit{``The [...] mistake is that you connect that inscrutable thing to important real life things like financial markets or criminal justice systems.''}
-		\vspace{1em}
+Machine learning systems are growing rapidly in scale, capability\footnote{Today's LLMs are no longer mere ``stochastic parrots'', as they demonstrate compositional generalization~\cite{qiu2024can, keysers2019measuring, Ananthaswamy2024}.} and are increasingly being deployed in critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, huggingface2024security}.
 
-		\textit{``So did you know that AI is being used to perform risk assessments of criminal defendants to decide things like bond amounts or whether somebody gets parole instead of jail? Did you know that machine learning is being used to determine whether people qualify for loans or for mortgages? Did you know that people are using AI to screen job applicants and to match buyers and sellers in equities markets? And of course, as everyone in this room knows, AI is also being used to detect anomalies in cybersecurity settings.''}
-		\vspace{1em}
+Ensuring the safety of these systems is widely recognized as one of the most impactful fields for addressing global challenges~\cite{80000hours_infosec, FLI2023pause, hendrycks2021unsolved}.
 
-		\textemdash{} James Mickens, USENIX'18~\cite{218395}
-	\end{flushright}
-\end{quotebox}
+\paragraph{Neglectedness.}
 
-One particularly entertaining example of an adversarial attack is the subversion of the conference paper-reviewer assignment model by Eisenhofer et al.~\cite{eisenhofer2023no}, where authors preselect reviewers to gain a competitive advantage.
+The field of ML safety \textendash{} which encompasses research areas such as robustness (resilience to hazards), monitoring (hazard detection), alignment (guiding ML systems' behavior) and systemic safety (minimizing deployment risks) \textendash{} remains significantly overlooked compared to other domains of machine learning~\cite{hendrycks2021unsolved, 80000hours_infosec}. As estimated by Hilton et al.\ only about 0.1\% of the resources dedicated to advancing AI capabilities in 2021 were allocated toward mitigating AI risks~\cite{80000hours_ai_2024}. That is, despite a growing consensus that the risks posed by AI systems are significant and warrant urgent attention~\cite{FLI2023pause, hendrycks2021unsolved} and a near-exponential surge in academic interest in adversarial machine learning since 2014~\cite{carlini2019adversarial}.
 
-But adversarial attacks are not limited to academia. Machine learning security has become particularly critical as models are deployed in increasingly sensitive and safety-critical applications~\cite{10585001, ifci2023AnalysisOT, 9099439, Khadka2022ResilientML, yilmaz2021privacy, apruzzese2023real, kumar2020legal, Cao2020HateGANAG, Nurseitov2022ApplicationOM, Zolotukhin2022AttacksAM, huggingface2024security}.
+\paragraph{Impact.}
 
-National infrastructure and cyber-physical systems are are commonly using machine-learning based protection systems, which can be compromised~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}. A single failure in a nuclear power plant, a water treatment facility or any other critical infrastructure can have catastrophic consequences.
+Adversarial attacks and machine learning security extend beyond academic curiosity. Algorithmic models like deep neural networks face several challenges when deployed in high-stakes scenarios. (1) They fail to provide clear explanations for decisions, which makes their outcomes hard to trust. (2) They create additional security risks by expanding the potential attack surface, which we do not yet fully know how to defend. (3) They can be weaponized to uncover unknown vulnerabilities (zero-days) at an unprecedented scale.
 
-Adversarial attacks can also compromise credit card fraud detection systems, potentially leading to billions in annual losses~\cite{Gu2022DeepLT, Agarwal2021BlackBoxAE, Tsai2024EffectiveAE}.
+The issue with a lack of interpretability in high-stakes decisions and model vulnerability appears clearly in areas like autonomous weapons~\cite{Miller2017ComputerVO}, critical national infrastructure~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}, financial fraud detection~\cite{Gu2022DeepLT, Agarwal2021BlackBoxAE, Tsai2024EffectiveAE}, healthcare diagnostics~\cite{jogani2022analysis, najafi2024dft, 9154468}, autonomous vehicles~\cite{Patel2019AdaptiveAV, Ji2021PoltergeistAA, Axelrod2017CybersecurityCO} and cybersecurity~\cite{Yuan2023MultiSpacePhishET, to2023effectiveness, eisenhofer2023no}. Another, more day-to-day example of a model's vulnerability is the exploitation of conference paper-reviewer assignment systems, enabling the adversary to preselect reviewers to gain a competitive advantage~\cite{eisenhofer2023no}.
 
-In healthcare, malicious actors can manipulate medical imaging systems used for diagnosing conditions like skin cancer and Alzheimer's disease, potentially leading to incorrect diagnoses and treatment decisions~\cite{jogani2022analysis, najafi2024dft}. The vulnerability extends to pandemic management systems, where deep learning algorithms processing data from medical IoT devices, including CT scans and thermal cameras, can be compromised through perturbations~\cite{9154468}.
-
-In autonomous vehicles roadside billboards can be weaponized to display specially crafted videos that manipulate vehicle controllers into performing dangerous maneuvers, such as unexpected lane changes or road departures~\cite{Patel2019AdaptiveAV}. Even more concerning, acoustic attacks can exploit image stabilization hardware to create blurred images that cause object detection systems to misclassify or completely miss critical obstacles~\cite{Ji2021PoltergeistAA}. These vulnerabilities are increasing in sophistication~\cite{Axelrod2017CybersecurityCO}. This risk is also demonstrated in cybersecurity applications, where phishing website detectors face degradation of 3-10\% from realistic evasion attempts that are both inexpensive and practical to implement~\cite{Yuan2023MultiSpacePhishET}. In the domain of malware detection mutation systems that combine generative networks with reinforcement learning to create metamorphic malware capable of evading detection systems~\cite{to2023effectiveness}.
-% - automated zero-day exploit detection in sqlite: https://www.theregister.com/2024/11/05/google_ai_vulnerability_hunting/
-% - doxing people in real time: https://www.theverge.com/2024/10/2/24260262/ray-ban-meta-smart-glasses-doxxing-privacy
-% - identifying browser tabs via browser throughput: https://jackcook.github.io/bigger-fish/
+Finally, tools such as the VulnHuntr~\cite{vulnhuntr} and Big Sleep~\cite{bigsleep2024} models have high potential to be misused for malicious purposes. The latter has been particularly successful in automatically detecting zero-day exploits in SQLite in late 2024~\cite{bigsleep2024}.
 
 This has lead to major companies investing heavily in adversarial machine learning research and security.
+
+\paragraph{Funding.}
 
 Microsoft has taken a leading position, spending over \$20 billion on cybersecurity initiatives, with a significant portion dedicated to machine learning security research and their specialized ML red team operations~\cite{coursera_adversarial_2024}.
 
@@ -375,7 +363,7 @@ The MITRE corporation is now cooperating with Microsoft, Bosch, IBM, NVIDIA, Air
 The Defense Advanced Research Projects Agency (DARPA) has granted nearly \$1 million to the CV AdvX team at UC Riverside~\cite{roy2020darpa}.
 Booz Allen Hamilton, the largest provider of machine learning services for the Federal government, invested in HiddenLayer, Robust Intelligence~\cite{robustintelligence2024, cai2020robust} Shift5, Credo, Hidden Level, Latent, Synthetaic and Reveal Technology~\cite{boozallen2023adversarial, boozallen2023adversarialother}, all of which are dedicated to machine learning security and robustness research.
 
-These investments demonstrate the growing recognition of the importance of protecting machine learning systems from adversarial attacks.
+These investments reflect a growing recognition of the importance of adversarial machine learning research and the need for robust, secure and reliable machine learning systems in the industry.
 
 \section{Threat Modeling}
 
@@ -534,7 +522,11 @@ The most promising path forward may not lie in defending against these examples,
 
 This perspective suggests that enhancing adversarial robustness requires developing new architectures from the ground up that inherently exhibit these properties, rather than patching existing systems.
 
-\chapter{Methodology \& Results}
+% 
+% experiments 1
+% 
+
+\chapter{Results: HCaptcha Inspired Geometric Masks}
 
 \begin{quotebox}
 	\begin{flushright}
@@ -551,10 +543,6 @@ This perspective suggests that enhancing adversarial robustness requires develop
 When studying unrestricted adversarial examples in computer vision, we are essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can't easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
 
 To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques and (2) leveraging intermediary layers of neural networks to enhance interpretability.
-
-% 
-% hcaptcha experiments
-% 
 
 \section{HCaptcha Inspired Geometric Masks}
 
@@ -673,6 +661,18 @@ To evaluate, we focused on two main aspects: perceptual quality and model accura
 Perceptual quality is all about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image} and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We also used the Fréchet Inception Distance (FID), however it was omitted from the final metric due to its high computational cost. Overall, we want this number to be as high as possible.
 
 On the accuracy front, we looked at how well the models performed in predicting the correct class. The models output a list of classes sorted by likelihood. We measured accuracy using the top-k accuracy metric, specifically accuracy@1 (Acc@1) and accuracy@5 (Acc@5). This tells us how often the correct label is in the top 1 or top 5 predicted classes, respectively. Finally, we calculated the adversarial accuracy (AdvAcc) as the difference in accuracy between adversarial and benign examples. This metric gives us a sense of how much the performance decreases relative to the original accuracy. We want this number to be as low as possible.
+
+$$
+\text{Perceptual Quality} = 0.15 \times \text{Cosine\_Sim} + 0.25 \times \text{PSNR} + 0.35 \times \text{SSIM} + 0.25 \times \text{LPIPS}
+$$
+
+$$
+\text{Adversarial Accuracy} = \frac{\text{Acc@R}_{\text{adv}} - \text{Acc@R}_{\text{benign}}}{\text{Acc@R}_{\text{benign}}}
+$$
+
+$$
+\text{Final Score} = -\text{AdvAcc} + \text{Perceptual Quality}
+$$
 
 \paragraph{Hyperparameter Search.}
 
@@ -846,10 +846,10 @@ There are many possible interpretations of these results. For example, the circl
 \end{table}
 
 % 
-% self-ensemble experiments
+% experiments 2
 % 
 
-\section{Self-Ensembled ResNet}
+\chapter{Results: Self-Ensembled ResNet}
 
 \subsection{Research Motivation}
 
@@ -918,19 +918,19 @@ In almost all cases, the following prompt was used, before minor adjustments wer
 rewrite.
 do not alter the meaning of this text.
 
-do:
-- use a simple and clear language
-- make it short, concise and to the point
-- prefer transitive phrasal (noun comes inbetween the verb and the preposition)
-- use the pronouns "we" and "our"
+use full sentences.
+do not use enumerations, itemizations, headings
 
-do not:
-- use flowery language
-- use useless technical jargon
-- use standard inversions
-- use dancing metaphores
-- use enumerations, itemizations, headings
-- use the words: AI, delve, dive, deep, uncover, discover, explore, revolutionize, tapestry, intriguing, holistic, intersection, ethical considerations, area, realm, boasts, emerge, embrace, realm, underscore, embody, nestled, vibrant, blend, ample, capture, synergy, in the realm of, paramount
+use a simple, clear, to the point style.
+do not use useless technical jargon.
+do not use flowery language.
+prefer transitive phrasal (noun comes inbetween the verb and the preposition).
+do not use standard inversions.
+do not use semicolons.
+do not use serial commas / oxford commas.
+
+do not use dancing metaphores.
+do not use the words: AI, delve, dive, deep, uncover, discover, explore, revolutionize, tapestry, intriguing, holistic, intersection, ethical considerations, area, realm, boasts, emerge, embrace, realm, underscore, embody, nestled, vibrant, blend, ample, capture, synergy, in the realm of, paramount.
 \end{verbatim}
 
 Alternatively, for quick edits, the following prompt was used:
