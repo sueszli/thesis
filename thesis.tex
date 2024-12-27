@@ -662,23 +662,22 @@ Perceptual quality is all about how visually similar the adversarial examples ar
 
 On the accuracy front, we looked at how well the models performed in predicting the correct class. The models output a list of classes sorted by likelihood. We measured accuracy using the top-k accuracy metric, specifically accuracy@1 (Acc@1) and accuracy@5 (Acc@5). This tells us how often the correct label is in the top 1 or top 5 predicted classes, respectively. Finally, we calculated the adversarial accuracy (AdvAcc) as the difference in accuracy between adversarial and benign examples. This metric gives us a sense of how much the performance decreases relative to the original accuracy. We want this number to be as low as possible.
 
-$$
-\text{Perceptual Quality} = 0.15 \times \text{Cosine\_Sim} + 0.25 \times \text{PSNR} + 0.35 \times \text{SSIM} + 0.25 \times \text{LPIPS}
-$$
-
-$$
-\text{Adversarial Accuracy} = \frac{\text{Acc@R}_{\text{adv}} - \text{Acc@R}_{\text{benign}}}{\text{Acc@R}_{\text{benign}}}
-$$
-
-$$
-\text{Final Score} = -\text{AdvAcc} + \text{Perceptual Quality}
-$$
 
 \paragraph{Hyperparameter Search.}
 
 Having determined our evaluation metrics, dataset and models, we moved on to the hyperparameter search to find the optimal adversarial masks to benchmark with. We parameterized three variables: ``opacity'' (alpha value of the overlay), ``density'' (shapes per row/column and nesting, ranging from 0-100) and ``epsilon'' (for white-box FGSM attacks with CLIP-ViT on ImageNet). Using a grid search, we aimed to find the optimal values for these parameters.
 
 We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we picked the CLIP ViT model because of its strong adversarial robustness, as highlighted by~\cite{wang2024roz}.
+
+In the hyperparameter search, the final score of each adversarial example was calculated using the following formula:
+
+$$
+\text{Adversarial Accuracy} = \frac{(\text{Acc@1}_{\text{adv}} + \text{Acc@5}_{\text{adv}}) / 2 - (\text{Acc@1} + \text{Acc@5}) / 2 + 1}{2}
+
+\text{Perceptual Quality} = \frac{\text{Cosine Similarity} + \text{PSNR} / 100 + \text{SSIM}}{3}
+
+\text{Final Score} = \text{Perceptual Quality} - \text{Adversarial Accuracy}
+$$
 
 Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
 
@@ -691,7 +690,7 @@ Our initial grid search revealed some interesting patterns. We found that achiev
 	\label{fig:tradeoff-1}
 \end{figure}
 
-Our second grid search, which combined FGSM perturbations with the masks, revealed some interesting insights. We found that combining perturbations with the masks generally led to worse results. The best results were obtained using the diamond mask with FGSM disabled, a density of 50 and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
+Our second grid search, which combined FGSM perturbations with the chosen masks, revealed some interesting insights. We found that combining perturbations with the masks generally led to worse results. The best results were obtained using the diamond mask with FGSM disabled, a density of 50 and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
 
 \begin{figure}
 	\centering
