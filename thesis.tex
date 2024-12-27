@@ -2,6 +2,9 @@
 % - submission steps: https://informatics.tuwien.ac.at/study-services/master-graduation/
 % - thesis examples: https://catalogplus.tuwien.at/primo-explore/search?query=any,exact,E%20066%20645,AND&pfilter=dr_s,exact,20180101,AND&pfilter=dr_e,exact,20251231,AND&tab=default_tab&search_scope=UTW&sortby=rank&vid=UTW&mode=advanced&offset=0
 
+
+
+
 % todo:
 % 
 % - figure a way for citations to be clustered [1-3] instead of [1,2,3]
@@ -19,6 +22,14 @@
 % 
 % - use citet / citep where possible
 % - move citation boxes to the end of the sentences
+
+
+
+
+
+
+
+
 
 \documentclass[a4paper, oneside]{discothesis}
 \usepackage[utf8]{inputenc}
@@ -41,6 +52,7 @@
 \usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{scrlayer-scrpage}
+\usepackage{cite}
 
 %
 % customization
@@ -96,7 +108,7 @@
 
 \supervisors{Andreas Plesner\\[2pt] Prof.\ Dr.\ Roger Wattenhofer\\[2pt] Alireza Furutanpey\\[2pt] Prof.\ Dr.\ Schahram Dustdar}
 
-\keywords{Reliability, Robustness, Security, Algorithmic Models}
+% \keywords{Reliability, Robustness, Security, Algorithmic Models}
 % \categories{ACM categories go here.}
 
 \date{\today}
@@ -125,11 +137,15 @@
 \end{acknowledgements}
 
 \begin{abstract}
-	% The abstract should be short, stating what you did and what the most important result is.
-	% write both in german and english
-	% Neubetrachtung "adversarieller Beispiele" / "feindlicher Angriffe" -> https://www.oecd-ilibrary.org/docserver/6b89dea3-de.pdf?expires=1733712069&id=id&accname=guest&checksum=B9DC3EA65A25A58504E6F6FC5BF8B2A6
-	
-	...
+	% short. state what you did and what the most important result is.
+	% the context of the work/task, the research question, the scientific method(s)/procedure(s) used and the central results.
+	... (english)
+\end{abstract}
+
+\begin{abstract}
+	% Feindliche Angriffe / Adversarielle Beispiele.
+
+	... (german)
 \end{abstract}
 
 \chapter*{Originality}
@@ -348,7 +364,7 @@ Adversarial attacks and machine learning security extend beyond academic curiosi
 
 The issue with a lack of interpretability in high-stakes decisions and model vulnerability appears clearly in areas like autonomous weapons~\cite{Miller2017ComputerVO}, critical national infrastructure~\cite{Moradpoor2023TheTO, Chevardin2023AnalysisOA, Ulybyshev2021TrustworthyDA, Halak2022TowardsAP, Rudolph2008DevelopingPS}, financial fraud detection~\cite{Gu2022DeepLT, Agarwal2021BlackBoxAE, Tsai2024EffectiveAE}, healthcare diagnostics~\cite{jogani2022analysis, najafi2024dft, 9154468}, autonomous vehicles~\cite{Patel2019AdaptiveAV, Ji2021PoltergeistAA, Axelrod2017CybersecurityCO} and cybersecurity~\cite{Yuan2023MultiSpacePhishET, to2023effectiveness, eisenhofer2023no}. Another, more day-to-day example of a model's vulnerability is the exploitation of conference paper-reviewer assignment systems, enabling the adversary to preselect reviewers to gain a competitive advantage~\cite{eisenhofer2023no}.
 
-Finally, tools such as the VulnHuntr~\cite{vulnhuntr} and Big Sleep~\cite{bigsleep2024} models have high potential to be misused for malicious purposes. The latter has been particularly successful in automatically detecting zero-day exploits in SQLite in late 2024~\cite{bigsleep2024}.
+Finally, tools such as the VulnHuntr~\cite{vulnhuntr} and Big Sleep~\cite{bigsleep2024} models have high potential to be misused for malicious purposes. The latter has recently been particularly successful in automatically detecting zero-day exploits in SQLite~\cite{bigsleep2024}.
 
 This has lead to major companies investing heavily in adversarial machine learning research and security.
 
@@ -526,8 +542,7 @@ This perspective suggests that enhancing adversarial robustness requires develop
 % experiments 1
 % 
 
-\chapter{Results: HCaptcha Inspired Geometric Masks}
-
+\chapter{Experiments: HCaptcha Inspired Geometric Masks}
 \begin{quotebox}
 	\begin{flushright}
 		\textit{``Well, at a high level, I think that the goal of computer security is to ensure that systems do the right thing, even in the presence of malicious inputs. Now, achieving this goal in the context of machine learning is exceptionally challenging for two reasons. [...] So first of all, computer scientists lack a deep mathematical understanding of how machine learning actually learns and predicts. [...] And second, many people who deploy machine learning don't actually care about the first problem.''}
@@ -544,9 +559,7 @@ When studying unrestricted adversarial examples in computer vision, we are essen
 
 To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques and (2) leveraging intermediary layers of neural networks to enhance interpretability.
 
-\section{HCaptcha Inspired Geometric Masks}
-
-\subsection{Research Motivation}
+\section{Research Motivation}
 
 We noticed a gap in research when it comes to unrestricted adversarial examples that exploit the human-machine vision gap. One practical application for these types of attacks is in developing robust CAPTCHAs\footnote{Completely Automated Public Turing test to tell Computers and Humans Apart}, which are widely used to differentiate between humans and bots. The aim is to create images that machines struggle or ideally fail to recognize, while remaining easily solvable by humans, to prevent denial-of-service attacks, spam, open-source intelligence scraping and other malicious activities.
 
@@ -594,7 +607,7 @@ masks = segment_sam1(img, boxes)
 	\label{fig:chained}
 \end{figure}
 
-\subsection{Experimental Setup}
+\section{Experimental Setup}
 
 The first series of experiments focused on evaluating the performance of state-of-the-art computer vision models on hCaptcha challenges. The goal was to assess the performance of solvers and identify potential vulnerabilities that could be exploited to generate CAPTCHA based adversarial examples. We targeted a single type of challenge: The classification challenge, which involves overlaying images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares).
 
@@ -660,22 +673,21 @@ To evaluate, we focused on two main aspects: perceptual quality and model accura
 
 Perceptual quality is all about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image} and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We also used the Fréchet Inception Distance (FID), however it was omitted from the final metric due to its high computational cost. Overall, we want this number to be as high as possible.
 
+$$
+\text{Perceptual Quality} = 0.15 \times \text{Cosine Similarity} + 0.25 \times \text{PSNR} + 0.35 \times \text{SSIM} + 0.25 \times \text{LPIPS}
+$$
+
 On the accuracy front, we looked at how well the models performed in predicting the correct class. The models output a list of classes sorted by likelihood. We measured accuracy using the top-k accuracy metric, specifically accuracy@1 (Acc@1) and accuracy@5 (Acc@5). This tells us how often the correct label is in the top 1 or top 5 predicted classes, respectively. Finally, we calculated the adversarial accuracy (AdvAcc) as the difference in accuracy between adversarial and benign examples. This metric gives us a sense of how much the performance decreases relative to the original accuracy. We want this number to be as low as possible.
 
+$$
+\text{Adversarial Accuracy} = \frac{(\text{Acc@1}_{\text{adv}} + \text{Acc@5}_{\text{adv}}) / 2 - (\text{Acc@1} + \text{Acc@5}) / 2 + 1}{2}
+$$
 
 \paragraph{Hyperparameter Search.}
 
 Having determined our evaluation metrics, dataset and models, we moved on to the hyperparameter search to find the optimal adversarial masks to benchmark with. We parameterized three variables: ``opacity'' (alpha value of the overlay), ``density'' (shapes per row/column and nesting, ranging from 0-100) and ``epsilon'' (for white-box FGSM attacks with CLIP-ViT on ImageNet). Using a grid search, we aimed to find the optimal values for these parameters.
 
 We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we picked the CLIP ViT model because of its strong adversarial robustness, as highlighted by~\cite{wang2024roz}.
-
-In the hyperparameter search, the final score of each adversarial example was calculated using the following formula:
-
-$$\text{Adversarial Accuracy} = \frac{(\text{Acc@1}_{\text{adv}} + \text{Acc@5}_{\text{adv}}) / 2 - (\text{Acc@1} + \text{Acc@5}) / 2 + 1}{2}$$
-
-$$\text{Perceptual Quality} = \frac{\text{Cosine Similarity} + \text{PSNR} / 100 + \text{SSIM}}{3}$$
-
-$$\text{Final Score} = \text{Perceptual Quality} - \text{Adversarial Accuracy}$$
 
 Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
 
@@ -699,7 +711,7 @@ Our second grid search, which combined FGSM perturbations with the chosen masks,
 
 While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
 
-\subsection{Results}
+\section{Results}
 
 In our first set of experiments, we aimed to achieve two main objectives. First, we quantified the drop in top-1 and top-5 accuracy when various filters were applied to input images. Second, we compared the resilience of different model architectures to these adversarial examples.
 
@@ -846,11 +858,11 @@ There are many possible interpretations of these results. For example, the circl
 % experiments 2
 % 
 
-\chapter{Results: Self-Ensembled ResNet}
+\chapter{Experiments: Self-Ensembled ResNet}
 
-\subsection{Research Motivation}
+\section{Research Motivation}
 
-The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the previous chapter, is a novel approach to enhancing adversarial robustness in deep learning models. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of the intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
+The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the introduction, is a novel approach to enhancing adversarial robustness in deep learning models. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of the intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
 
 \begin{minted}[fontsize=\footnotesize]{python}
 def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tensor:
@@ -871,7 +883,7 @@ Architecturally, what makes this approach special is its ability to use a single
 
 We also noticed a gap in reproducibility studies for this model, due to its recency and complexity. This was an additional incentive for us to explore this approach further.
 
-\subsection{Experimental Setup}
+\section{Experimental Setup}
 
 \paragraph{Hyperparameter Search (on a custom model).}
 
@@ -886,7 +898,15 @@ Approximately two months following the publication of the paper, the authors rel
 % 	\label{fig:se-hyperparams}
 % \end{figure}
 
-\subsection{Results}
+\section{Results}
+
+\chapter{Summary and Conclusion}
+
+
+
+
+
+
 
 \bigskip
 \bibliographystyle{IEEEtran}
