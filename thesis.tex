@@ -884,6 +884,10 @@ Approximately two months following the publication of the paper, the authors rel
 
 % We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments.
 
+
+
+Due to time constraints we just did CIFAR10, but the codebase implements also CIFAR100 and Imagenette.
+
 % \begin{figure}
 % 	\centering
 % 	\includegraphics[width=1\columnwidth]{figures/self-ensemble-hyperparams.png}
