@@ -926,7 +926,7 @@ The nature-inspired noise works by adding noise, applying contrast adjustments, 
 
 Initially, we experimented with each technique independently to evaluate their effects. For example, applying random shuffling alone reduced adversarial robustness, whereas combining all three consistently produced the best results. We did not observe any negative interactions between these techniques, as they all seemed to complement each other. The results of these experiments are visualized in Figure~\ref{fig:8train-cifar10} and Figure~\ref{fig:8train-cifar100}. This led us to either exclusively use all three techniques or none at all in our subsequent experiments.
 
-Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR-100, as specified in the authors' codebase. While the original paper also utilized MNIST, we opted for Imagenette due to its relevance to higher-resolution tasks. However, the aggressive downsampling and upsampling in the code proved problematic for Imagenette, leading us to exclude it from our preliminary evaluation. These issues were addressed in later experiments.
+Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR-100, as specified in the authors' codebase. While the original paper also utilized MNIST, we opted for Imagenette due to its relevance to higher-resolution tasks. However, the aggressive downsampling and upsampling in the code proved problematic for Imagenette, leading us to exclude it from our preliminary evaluation. These issues were addressed in our codebase for future experiments.
 
 \begin{figure}
 	\centering
@@ -942,9 +942,18 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 	\label{fig:8train-cifar100}
 \end{figure}
 
-\paragraph{Evaluation metrics.}
 
-we decided to use both 
+
+
+
+
+\paragraph{Evaluation datasets.}
+
+we implemented the code for cifar10, cifar100 and Imagenette, but due to time constraints we only evaluated cifar10. however, as already visible in figure~\ref{fig:8train-cifar10} vs. figure~\ref{fig:8train-cifar100}, cifar10 is almost too easy for the self-ensembled ResNet and not representative of the model's performance on more challenging datasets. therefore our results should be taken with a grain of salt and further evaluation on cifar100 and Imagenette is necessary for more conclusive results. but this should not diminish the value of our findings on cifar10.
+
+\paragraph{Baseline.}
+
+the model we compare the self-ensembled ResNet to is the original ResNet model, as it is the most similar in architecture and training strategy.
 
 \section{Results}
 
