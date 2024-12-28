@@ -916,26 +916,25 @@ We found the best results with a learning rate of 1e-4, running for 16 epochs an
 	\label{fig:se-hyperparams}
 \end{figure}
 
-\paragraph{Training strategy selection.}
+\paragraph{Training Strategy Selection.}
 
-Once the authors shared their codebase, we switched to using their implementation for the subsequent experiments. This ensured consistency and made our results directly comparable to theirs.
+After the authors shared their codebase, we transitioned to their implementation to maintain consistency and ensure our results were directly comparable. Their code included several improvements not mentioned in the paper, such as random resolution shuffling, which were recommended in the code comments for better results. 
 
-We found the author's implementation to contain several improvements over our initial version, such as more variation in nature-based noise, very light FGSM training and random resolution shuffling. These features were not listed in the paper but are recommended and the comments in the code said that we should enable them because they would make the results better.
+We aimed to keep as many hyperparameters unchanged as possible while comparing the impact of three specific training enhancements: (1) nature inspired noise, (2) channel shuffling and (3) light FGSM adversarial training.
 
-we tried to keep as many hyperparameters unchanged. we initially differentiated between 3 kinds of special training improvements:
+The nature-inspired noise works by adding noise, applying contrast adjustments, shifting pixel positions (jittering) and modifying resolutions. In the last step it combines these augmented outputs into a multichannel input to enhance training. The random channel resolution shuffling randomly shuffles the resolutions in the stack, while the light FGSM adversarial training applies FGSM adversarial training for a few epochs to improve adversarial robustness.
 
-% ```
-% enable_noise=comb["training_natural"], -> adding nature-inspired noise, jitter, up and downsampling, blur to the data
-% enable_random_shuffle=comb["training_natural"], -> shuffling resolutions in the stack
-% enable_adversarial_training=comb["training_natural"], -> very light adversarial training in just a few epochs using FGSM
-% '''
+Initially, we experimented with each technique independently to evaluate their effects. For example, applying random shuffling alone reduced adversarial robustness, whereas combining all three consistently produced the best results. We did not observe any negative interactions between these techniques.
 
-we initially ran a bunch of experiments to decied which specific of the 3 had the most impact. for instance we found out that just shuffling without anything else reduced adversarial robustness to attacks and that in every single case the combination of all the 3 was the best.
+Our initial evaluations focused on CIFAR-10 and CIFAR-100, as specified in the authors' codebase. But while the original paper also utilized MNIST, we opted for Imagenette due to its relevance to higher-resolution tasks. However, the aggressive downsampling and upsampling in the code proved problematic for Imagenette, leading us to exclude it from our preliminary evaluation. These issues were addressed in later experiments, ensuring a more robust assessment of the training strategies.
 
-finding out that they don't mutually have a negative impact on each other (given that this is something that wasn't mentioned in the paper), we exclusively decided to flick all of them on or off for the following experiments. Given that the authors did not do so in their paper, we expect to be able to improve upon their results.
 
-we managed to run an initial evaluation this way on CIFAR10 and CIFAR100 as used in the author's codebase. the author's also used MNIST but we opted for imagenette. however due to the down and upsampling being too aggressive for imagenette, it didn't work and we decided to discard the imagenette experiments for our preliminary evaluation of training strategies. we did however fix these issues in the following experiments.
+% link to stuff in the addendum
 
+
+
+
+Based on these findings, we opted to activate all three techniques simultaneously for subsequent experiments.
 
 \paragraph{Evaluation metrics.}
 
@@ -946,9 +945,18 @@ we decided to use both
 Due to time constraints we just did CIFAR10, but the codebase implements also CIFAR100 and Imagenette.
 
 
+
+
+
+
+
+
+
 \section{Discussion}
 
 using MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information.
+
+
 
 
 \chapter{Summary and Conclusion}
@@ -966,9 +974,7 @@ using MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based 
 
 \appendix
 
-\chapter{Appendix}
-
-\section{Yo!}
+% \chapter{Appendix}
 
 \chapter*{Overview of Generative AI Tools Used}
 
