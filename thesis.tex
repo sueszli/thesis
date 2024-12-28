@@ -30,7 +30,7 @@
 % customization
 %
 
-\usepackage[margin=0pt, top=25mm, bottom=15mm, left=15mm, right=15mm]{geometry} % drop margin
+\usepackage[margin=0pt, top=30mm, bottom=20mm, left=20mm, right=20mm]{geometry} % drop margin
 \setlength\parindent{0pt} % drop indent
 
 % drop page numbers at footer
@@ -947,9 +947,12 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 
 
 
-\paragraph{Evaluation datasets.}
 
-we implemented the code for cifar10, cifar100 and Imagenette, but due to time constraints we only evaluated cifar10. however, as already visible in figure~\ref{fig:8train-cifar10} vs. figure~\ref{fig:8train-cifar100}, cifar10 is almost too easy for the self-ensembled ResNet and not representative of the model's performance on more challenging datasets. therefore our results should be taken with a grain of salt and further evaluation on cifar100 and Imagenette is necessary for more conclusive results. but this should not diminish the value of our findings on cifar10.
+\paragraph{Dataset Selection.}
+
+we implemented the code for cifar10, cifar100 and Imagenette, but due to time constraints we only evaluated cifar10. these time constraints were due to the limited availability of GPUs and the long training times for the self-ensembled ResNet, which requires at least 80 GB of GPU memory.
+
+however, as already visible in figure~\ref{fig:8train-cifar10} vs. figure~\ref{fig:8train-cifar100}, cifar10 is almost too easy for the self-ensembled ResNet and not representative of the model's performance on more challenging datasets. therefore our results should be taken with a grain of salt and further evaluation on cifar100 and Imagenette is necessary for more conclusive results. but this should not diminish the value of our findings on cifar10.
 
 \paragraph{Baseline.}
 
