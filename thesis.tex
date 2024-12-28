@@ -262,7 +262,7 @@ Adversarial examples, first introduced by Szegedy et al.\ in 2014~\cite{szegedy2
 \end{highlightbox}
 
 \begin{highlightbox}
-	\textbf{Digression:} Pixel-space constraints don't guarantee imperceptibility \\
+	\textbf{Digression:} Pixel-space constraints do not guarantee imperceptibility \\
 
 	Traditionally, adversarial examples are expected to have two key properties: (1) they should successfully cause misclassification in targeted models while (2) remaining imperceptible to human observers~\cite{cubuk2017intriguing}. \\
 
@@ -410,7 +410,7 @@ The question discussed in the previous section is just one of many that remain o
 	\setlength\itemsep{0em}
 	\item What are adversarial examples?
 	\item Why are the adversarial examples so close to the original images?
-	\item Why don't the adversarial perturbations resemble the target class?
+	\item Why do the adversarial perturbations not resemble the target class?
 	\item Why do robustness and accuracy trade-off~\cite{zhang2019theoretically}?
 	\item Why do adversarial examples transfer between models, even on disjoint training sets~\cite{szegedy2013intriguing}?
 	\item Why do adversarial examples transfer between models~\cite{szegedy2013intriguing}?
@@ -469,7 +469,7 @@ Since then there have been many attempts at finding a cohesive narrative to expl
 
 \paragraph{Local Linearity.} Goodfellow, Shlens and Szegedy et al.\ \cite{goodfellow2014explaining, madry2017towards} argue that even though DNNs are highly nonlinear overall, their behavior in high-dimensional spaces often resembles that of linear models. This makes the models vulnerable to small, targeted perturbations similar to how they are computed by FGSM. However some adversarial examples are successful all while defying the assumption of local linearity and reducing a model's linearity does not necessarily improve its robustness either~\cite{athalye2018obfuscated}.
 
-\paragraph{Piecewise-linear decision boundaries.} In the ``dimpled manifold hypothesis''~\cite{shamir2021dimpled} the central claim is that adversarial examples emerge because we attempt to fit high $n-1$ dimensional decision boundaries to inherently low-dimensional data like images (which can be losslessly projected to $k \ll n$ dimensions). This leaves redundant dimensions on which adversarial examples won't be judged, which enables them exist roughly perpendicularly from the true location of the low-dimensional natural image, by using large gradients. In this mental model adversarial examples can be on-manifold or off-manifold, based on the angle of the gradients relative to the data manifold.
+\paragraph{Piecewise-linear decision boundaries.} In the ``dimpled manifold hypothesis''~\cite{shamir2021dimpled} the central claim is that adversarial examples emerge because we attempt to fit high $n-1$ dimensional decision boundaries to inherently low-dimensional data like images (which can be losslessly projected to $k \ll n$ dimensions). This leaves redundant dimensions on which adversarial examples will not be judged, which enables them exist roughly perpendicularly from the true location of the low-dimensional natural image, by using large gradients. In this mental model adversarial examples can be on-manifold or off-manifold, based on the angle of the gradients relative to the data manifold.
 
 The authors also suggest that decision boundaries of neural networks evolve during training. This happens through two distinct phases. First, there is a rapid ``clinging'' phase where the decision boundary moves close to the low-dimensional image manifold containing the training examples. This is followed by a slower ``dimpling'' phase that creates shallow bulges in the decision boundary, pushing it to the correct side of the training examples, without shifting the plane. This gradient-descent-based process is highly efficient, but it also leaves a brittle decision boundary that can be easily exploited.
 
@@ -495,7 +495,7 @@ Several effective strategies have been developed. This collection is by no means
 
 \paragraph{Adversarial Training.} One of the least invasive methods to improve adversarial robustness is adversarial training. Incorporating adversarial examples into the training process improves model resilience by learning from potential attack patterns and helps maintain performance on clean data~\cite{araujo2020advocating, Ren2022VulnerabilityAR}. However, this requires the anticipated attacks to be known in advance. An alternative would be introducing derived variables for controlled randomness to input data during training, which is still effective~\cite{Adeke2023SecuringNT}.
 
-\paragraph{Quality Assessment Integration.} Implementing image quality assessment combined with knowledge distillation helps detect potentially harmful inputs that could cause incorrect model predictions~\cite{feng2020towards}. Another alternative preprocessing technique is using brain-inspired encoders~\cite{Rakhimberdina2022StrengtheningRU}. This method is particularly effective as it doesn't require model retraining, but depending on the preprocessing technique used, it can be computationally expensive.
+\paragraph{Quality Assessment Integration.} Implementing image quality assessment combined with knowledge distillation helps detect potentially harmful inputs that could cause incorrect model predictions~\cite{feng2020towards}. Another alternative preprocessing technique is using brain-inspired encoders~\cite{Rakhimberdina2022StrengtheningRU}. This method is particularly effective as it does not require model retraining, but depending on the preprocessing technique used, it can be computationally expensive.
 
 \paragraph{Moving Target Defense.} Using heterogeneous models, diversifying the model structure, using ensembles and dynamic model switching can protect against white-box adversarial attacks. This approach will make attack vectors that work on one model ineffective on others~\cite{Li2023wAdvMTDAM}.
 
@@ -542,7 +542,7 @@ This perspective suggests that enhancing adversarial robustness requires develop
 	\end{flushright}
 \end{quotebox}
 
-When studying unrestricted adversarial examples in computer vision, we are essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can't easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
+When studying unrestricted adversarial examples in computer vision, we are essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can not easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
 
 To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques and (2) leveraging intermediary layers of neural networks to enhance interpretability.
 
@@ -578,7 +578,7 @@ However, in traditional settings like automated content moderation on social med
 \begin{highlightbox}
 	\textbf{Idea:} Evaluation on Synthetic Data \\
 
-	One interesting idea we explored but ultimately set aside was the use of synthetic images for adversarial training and evaluation of (natural unrestricted) adversarial examples. Although promising, it didn't quite align with our primary goals. We developed a pipeline that chains together several advanced models: starting with stable diffusion to generate an image, then using GPT-2 to caption it. These captions were used as text queries for zero-shot classification and detection models like CLIP and ViT, which perform exceptionally well but need a prompt to work. Finally, we used SAM1 for segmentation. This process is illustrated in Figure~\ref{fig:chained}. This is an exciting direction, especially with the advancements brought by FLUX.1~\cite{BlackForestLabs2024FLUX}, not sufficiently explored in the current literature, based on our preliminary review. \\
+	One interesting idea we explored but ultimately set aside was the use of synthetic images for adversarial training and evaluation of (natural unrestricted) adversarial examples. Although promising, it did not quite align with our primary goals. We developed a pipeline that chains together several advanced models: starting with stable diffusion to generate an image, then using GPT-2 to caption it. These captions were used as text queries for zero-shot classification and detection models like CLIP and ViT, which perform exceptionally well but need a prompt to work. Finally, we used SAM1 for segmentation. This process is illustrated in Figure~\ref{fig:chained}. This is an exciting direction, especially with the advancements brought by FLUX.1~\cite{BlackForestLabs2024FLUX}, not sufficiently explored in the current literature, based on our preliminary review. \\
 
 \begin{minted}[fontsize=\footnotesize]{python}
 img = gen_stable_diffusion("an astronaut on mars riding a horse")
@@ -648,9 +648,9 @@ To identify the best zero-shot open vocabulary classification, object detection 
 
 After the literature review we clustered the models by their architecture family and clustered them on a scatter plot based on their performance, inspired by~\cite{howard_image_models}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available. This was to test the feasibility of running these models in a real-world scenario.
 
-We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, ``DFN5B-CLIP-ViT-H'' by Apple \cite{fang2023data}, the original ``ViT-L-14-378'' and ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words}, ``ResNet50x64''~\cite{He_2015_ICCV} and RoBERTa-B and RoBERTa-L~\cite{conneau2020unsupervisedcrosslingualrepresentationlearning}. We highlight results for a subset of these models, specifically ConvNeXt, EVA01, EVA02, ViT-H-14 and ResNet50. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families.
+We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, the original ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words} and ``ResNet50x64''~\cite{He_2015_ICCV}. We highlight results for a subset of these models, specifically ConvNeXt, EVA01, EVA02, ViT-H-14 and ResNet50. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families. Additonally, we also evaluated a custom adversarially trained ResNet-50, but due to its poor performance, we decided to exclude it from the final results.
 
-We also evaluated a custom adversarially trained ResNet-50, but due to its poor performance, we decided to exclude it from the final results.
+When specific models are not mentioned in tables, experiments or figures, we are implicitly referring to the average performance of all the models listed.
 
 \paragraph{Dataset Selection.}
 
@@ -658,9 +658,9 @@ For our experiments, we used the enriched ImageNet dataset with 1,000 entries fr
 
 \paragraph{Evaluation Metrics.}
 
-To evaluate, we focused on two main aspects: perceptual quality and model accuracy.
+To evaluate, we focused on two main aspects: the decrease in model accuracy after applying the adversarial mask and the perceptual quality for humans, using a proxy metric.
 
-Perceptual quality is all about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image} and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We also used the Fréchet Inception Distance (FID), however it was omitted from the final metric due to its high computational cost. Overall, we want this number to be as high as possible.
+Perceptual quality is about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image} and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We decided to omit the Fréchet Inception Distance (FID), due to its high computational cost. Overall, we want this number to be as high as possible.
 
 $$
 \text{Perceptual Quality} = 0.15 \times \text{Cosine Similarity} + 0.25 \times \text{PSNR} + 0.35 \times \text{SSIM} + 0.25 \times \text{LPIPS}
@@ -672,11 +672,17 @@ $$
 \text{Adversarial Accuracy} = \frac{(\text{Acc@1}_{\text{adv}} + \text{Acc@5}_{\text{adv}}) / 2 - (\text{Acc@1} + \text{Acc@5}) / 2 + 1}{2}
 $$
 
+This brings us to our final evaluation metric, the final score (Score). It is calculated as the difference between perceptual quality and adversarial accuracy. Ideally, we want this number to be as high as possible.
+
+$$
+\text{Final Score} = \text{Perceptual Quality} - \text{Adversarial Accuracy}
+$$
+
 \paragraph{Hyperparameter Search.}
 
 Having determined our evaluation metrics, dataset and models, we moved on to the hyperparameter search to find the optimal adversarial masks to benchmark with. We parameterized three variables: ``opacity'' (alpha value of the overlay), ``density'' (shapes per row/column and nesting, ranging from 0-100) and ``epsilon'' (for white-box FGSM attacks with CLIP-ViT on ImageNet). Using a grid search, we aimed to find the optimal values for these parameters.
 
-We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we picked the CLIP ViT model because of its strong adversarial robustness, as highlighted by~\cite{wang2024roz}.
+We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we exclusively used the CLIP ViT model due to its strong adversarial robustness, as highlighted by~\cite{wang2024roz}.
 
 Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
 
@@ -702,15 +708,17 @@ While these results are not representative of the entire dataset or model space,
 
 \section{Results}
 
-In our first set of experiments, we aimed to achieve two main objectives. First, we quantified the drop in top-1 and top-5 accuracy when various filters were applied to input images. Second, we compared the resilience of different model architectures to these adversarial examples.
-
 \paragraph{Mask Generalizability.}
 
-We assess how the rank of the correct class shifts when we apply the masks by checking the rank (position after sorting) of the ground-truth class before and after masking an image. Additionally, we evaluate the perceptual quality of the images. We then calculate the average change in rank across different models and images and present the findings for each mask and opacity combination. 
+First, we evaluated the individual masks for their generalizability across different models by averaging the ``final score'' across all models. This score serves as a proxy for the trade-off between adversarial effectiveness and perceptual quality. We found that opacity was the most significant parameter, regardless of mask specifics. Therefore, we chose the best-performing density parameter from the hyperparameter search and applied different masks and opacities to the models.
 
-The results of our experiment are visualized in Figure~\ref{fig:accpercept} and summarized in Table~\ref{tab:generalizability}. The figure shows a clear trend in the trade-off between adversarial effectiveness and perceptual quality. The plot highlights an inverse relationship between these two factors, as indicated by the polynomial regression curve of degree 1. This relationship suggests that as the effectiveness of the adversarial attack increases (lower $\Delta$ Accuracy Rank), the perceptual quality of adversarial examples tends to decrease. While this is somewhat expected, we do see instances where there's a significant drop in rank (>10) while maintaining relatively high perceptual quality (>0.4).
+The results of our experiment are visualized in Figure~\ref{fig:accpercept} and summarized in Table~\ref{tab:generalizability}. The figure shows a clear trend in the trade-off between adversarial effectiveness and perceptibility. The plot highlights an inverse relationship between these two factors, as indicated by the polynomial regression curve of degree 1. This relationship suggests that as the effectiveness of the adversarial attack increases (lower $\Delta$ Accuracy Rank), the perceptual quality of adversarial examples tends to decrease. While this is somewhat expected, we do see instances where there's a significant drop in rank (>10) while maintaining relatively high perceptual quality (>0.4).
 
 The different mask types (circle, square, diamond and knit) and opacity levels show a range of performance across this trade-off spectrum. The scatter plot highlights clusters of points for each mask type, with some masks consistently striking a better balance between attack effectiveness and perceptual quality. Most importantly, these geometric pattern masks generalize well across state-of-the-art models.
+
+The circle masks, contrary to our initial hyperparameter search, seem to be the most effective at reducing accuracy across all models and opacities. The knit mask, on the other hand, has a much smaller impact on accuracy.
+
+These results demonstrate that using geometric masks is a practical method for generating adversarial examples with minimal computational demands for benchmarking in future experiments.
 
 \begin{figure}
 	\centering
@@ -763,16 +771,19 @@ The different mask types (circle, square, diamond and knit) and opacity levels s
 	
 \paragraph{Model Robustness.}
 
-Finally, we evaluated the robustness of different models to our generated geometric masks. We measured the change in top-1 and top-5 accuracy for each model when presented with adversarial examples. The results are summarized in Table~\ref{tab:drop-acc1} and Table~\ref{tab:drop-acc5} for top-1 and top-5 accuracy, respectively. A negative value indicates an improvement in accuracy, while a positive value indicates a decrease. Larger values indicate a stronger effect of the adversarial examples.
+Next, we want to take a closer look at the results, this time breaking them down by individual models and examining both the drop in acc@1 and acc@5. This will give us a more detailed understanding of how the masks impact the individual models. The results are summarized in Table~\ref{tab:drop-acc1} and Table~\ref{tab:drop-acc5} for top-1 and top-5 accuracy, respectively.
 
-There are many possible interpretations of these results. For example, the circle masks, contrary to our initial hyperparameter search, seem to be the most effective at reducing accuracy across all models and opacities. The knit mask, on the other hand, has a much smaller impact on accuracy.
+A negative value indicates an improvement in accuracy, while a positive value indicates a decrease. Larger values indicate a stronger effect of the adversarial examples.
+
+While the previous perspective on the data compared masks against each other, this view allows us to compare the models against each other. We can see that while all models show very similar overall trends in their behavior, the ResNet model seems to be particularly sensitive to the Knit pattern in contrast to the others. This is particularly interesting, given that it is the least effective mask overall, as seen in the previous step.
 
 \begin{table}[h]
 	% this was accidentally mislabeled as subset-500 by andreas in the paper - it's actually the full imagenet dataset
 	% see: https://github.com/ETH-DISCO/advx-bench/blob/main/analysis/4-eval_cls_modelperf.ipynb
 
     \setlength{\tabcolsep}{2pt}
-    \tiny
+    % \tiny
+
     \centering
     \begin{minipage}{0.48\textwidth}
         \centering
@@ -843,17 +854,29 @@ There are many possible interpretations of these results. For example, the circl
     \end{minipage}
 \end{table}
 
+\section{Discussion}
+
+In our initial experiments, we tested geometric masks against state-of-the-art models. While the results yielded several insights, two key takeaways stand out as especially relevant for the rest of this work.
+
+\paragraph{The geometric masks generalize.}
+
+Our experiments confirm the hypothesis that the hCAPTCHA inspired geometric masks are responsible for task difficulty and generalize effectively across different models. This makes them a straightforward and transferable black-box attack, aligning with our goal of dissecting adversarial examples. These masks are not only simple to generate but also easier to analyze, especially in the latent spaces of models. This ease of interpretability sets them apart from other adversarial attacks, which often lack this clarity. As a result, geometric masks serve as an ideal tool for studying adversarial machine learning.
+
+\paragraph{ResNet is an outlier.}
+
+When analyzing the impact of these masks on different models, we observed that most state-of-the-art architectures exhibited similar performance distributions. However, ResNet stood out as unusually sensitive to the Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that ResNet results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
+
 % 
 % experiments 2
 % 
 
 \chapter{Experiments: Self-Ensembled ResNet}
 
-In this chapter we present our experiments with the self-ensembled ResNet model.
+In this chapter, we present our findings on the self-ensembled ResNet model.
 
 \section{Research Motivation}
 
-The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the introduction, is a novel approach to enhancing adversarial robustness in deep learning models. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of the intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
+The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the introduction, is a novel approach to enhancing adversarial robustness. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of the intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
 
 \begin{spacing}{1}
 \begin{minted}[fontsize=\footnotesize]{python}
@@ -872,33 +895,41 @@ def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tenso
 \end{minted}
 \end{spacing}
 
-Architecturally, what makes this approach special is its ability to use a single ResNet model to create a ``self-ensemble'' by decoupling and aggregating predictions from different layers. This eliminates the need for multiple independent models while still achieving ensemble-like robustness. Additionally, the use of multi-resolution inputs and stochastic augmentations reduces the attack surface for adversarial perturbations.
+Architecturally, what makes this approach special is its ability to use a single ResNet model to create a ``self-ensemble'' by decoupling and aggregating predictions from intermediate layers. This eliminates the need for multiple independent models while still achieving ensemble-like robustness. Additionally, the use of multi-resolution inputs and stochastic augmentations reduces the attack surface for adversarial perturbations.
 
-We also noticed a gap in reproducibility studies for this model, due to its recency and complexity. This was an additional incentive for us to explore this approach further.
+To the best of our knowledge, we are the first to reproduce and evaluate and improve upon this approach.
 
 \section{Experimental Setup}
 
-\paragraph{Hyperparameter Search (on a custom model).}
+\paragraph{Reproduction and Hyperparameter Search.}
 
-Approximately two months following the publication of the paper, the authors released a notebook detailing their preprocessor (including saccading, jitter and nature-imitating noise, ...), architecture and training pipeline. We opted to reconstruct the architecture independently\footnote{Credits to Andreas Plesner.} and implemented the CrossMax consensus algorithm. Our hyperparameter search encompassed the following parameters: dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16) and CrossMax $k$ (2, 3). We employed a grid search methodology to identify the optimal settings for our custom model.
+We chose to recreate the architecture\footnote{Credits to Andreas Plesner.}, the CrossMax consensus algorithm and our own distributed multi-GPU training setup from the ground up, as the authors had not yet shared their codebase. This allowed us to gain a deeper understanding of the model and validate the hyperparameters used in the original paper.
 
-% We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments.
+We ran a set of experiments on CIFAR10 and CIFAR100 to confirm our reproduction was sensible and to find the best hyperparameters. We used the same ResNet architecture as the authors but slightly adjusted the training pipeline. Our hyperparameter search space consisted of: the dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16) and CrossMax $k$ (2, 3).
 
+We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments. Figure~\ref{fig:se-hyperparams} shows the results of our hyperparameter search.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{figures/hyperparams.pdf}
+	\caption{Hyperparameter search for the self-ensembled ResNet.}
+	\label{fig:se-hyperparams}
+\end{figure}
 
-Due to time constraints we just did CIFAR10, but the codebase implements also CIFAR100 and Imagenette.
+\paragraph{Evaluation.}
 
-% \begin{figure}
-% 	\centering
-% 	\includegraphics[width=1\columnwidth]{figures/self-ensemble-hyperparams.png}
-% 	\caption{Hyperparameter search for the self-ensembled ResNet.}
-% 	\label{fig:se-hyperparams}
-% \end{figure}
+Even though the authors shared an implementation that includes new features like nature-based noise, mild FGSM training and random resolution shuffling \textendash{} some of which were not listed in the paper but appear in their codebase and may boost performance further \textendash{} 
+
+Approximately two months 
 
 \section{Results}
 
+Due to time constraints we just did CIFAR10, but the codebase implements also CIFAR100 and Imagenette.
 
 
+\section{Discussion}
+
+using MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information.
 
 
 \chapter{Summary and Conclusion}
