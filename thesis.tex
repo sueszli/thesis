@@ -775,7 +775,7 @@ Next, we want to take a closer look at the results, this time breaking them down
 
 A negative value indicates an improvement in accuracy, while a positive value indicates a decrease. Larger values indicate a stronger effect of the adversarial examples.
 
-While the previous perspective on the data compared masks against each other, this view allows us to compare the models against each other. We can see that while all models show very similar overall trends in their behavior, the ResNet model seems to be particularly sensitive to the Knit pattern in contrast to the others. This is particularly interesting, given that it is the least effective mask overall, as seen in the previous step.
+While the previous perspective on the data compared masks against each other, this view allows us to compare the models against each other. We can see that while all models show very similar overall trends in their behavior, the ResNet model seems to be particularly sensitive to the Diamond and Knit pattern in contrast to the others. This is particularly interesting, given that the Knit pattern is the least effective mask overall, as seen in the previous step.
 
 \begin{table}[h]
 	% this was accidentally mislabeled as subset-500 by andreas in the paper - it's actually the full imagenet dataset
@@ -864,7 +864,7 @@ Our experiments confirm the hypothesis that the hCAPTCHA inspired geometric mask
 
 \paragraph{ResNet is an outlier.}
 
-When analyzing the impact of these masks on different models, we observed that most state-of-the-art architectures exhibited similar performance distributions. However, ResNet stood out as unusually sensitive to the Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that ResNet results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
+When analyzing the impact of these masks on different models, we observed that most state-of-the-art architectures exhibited similar performance distributions. However, ResNet stood out as unusually sensitive to the Diamond and Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that ResNet results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
 
 % 
 % experiments 2
@@ -895,15 +895,15 @@ def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tenso
 \end{minted}
 \end{spacing}
 
-Architecturally, what makes this approach special is its ability to use a single ResNet model to create a ``self-ensemble'' by decoupling and aggregating predictions from intermediate layers. This eliminates the need for multiple independent models while still achieving ensemble-like robustness. Additionally, the use of multi-resolution inputs and stochastic augmentations reduces the attack surface for adversarial perturbations.
+Architecturally, what makes this approach interesting is its ability to use a single ResNet model to create a ``self-ensemble'' by decoupling and aggregating predictions from intermediate layers. This eliminates the need for multiple independent models while still achieving ensemble-like robustness. Additionally, the use of multi-resolution inputs and stochastic augmentations reduces the attack surface for adversarial perturbations.
 
-To the best of our knowledge, we are the first to reproduce and evaluate and improve upon this approach.
+To the best of our knowledge, we are the first team to reproduce, evaluate and improve upon this approach.
 
 \section{Experimental Setup}
 
-\paragraph{Reproduction and Hyperparameter Search.}
+\paragraph{Reproduction and hyperparameter search.}
 
-We chose to recreate the architecture\footnote{Credits to Andreas Plesner.}, the CrossMax consensus algorithm and our own distributed multi-GPU training setup from the ground up, as the authors had not yet shared their codebase. This allowed us to gain a deeper understanding of the model and validate the hyperparameters used in the original paper.
+We chose to recreate the architecture\footnote{Credits to Andreas Plesner.}, the CrossMax consensus algorithm and our own distributed multi-GPU training setup from the ground up, as the authors had not yet shared their codebase, when we started our experiments. This allowed us to gain a deeper understanding of the model and validate the hyperparameters used in the original paper.
 
 We ran a set of experiments on CIFAR10 and CIFAR100 to confirm our reproduction was sensible and to find the best hyperparameters. We used the same ResNet architecture as the authors but slightly adjusted the training pipeline. Our hyperparameter search space consisted of: the dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16) and CrossMax $k$ (2, 3).
 
@@ -916,11 +916,23 @@ We found the best results with a learning rate of 1e-4, running for 16 epochs an
 	\label{fig:se-hyperparams}
 \end{figure}
 
-\paragraph{Evaluation.}
+\paragraph{Training strategy selection.}
 
-Even though the authors shared an implementation that includes new features like nature-based noise, mild FGSM training and random resolution shuffling \textendash{} some of which were not listed in the paper but appear in their codebase and may boost performance further \textendash{} 
+Once the authors shared their codebase, we switched to using their implementation for the subsequent experiments. This ensured consistency and made our results directly comparable to theirs.
 
-Approximately two months 
+We found the author's implementation to contain several improvements over our initial version, such as more variation in nature-based noise, very light FGSM training and random resolution shuffling. These features were not listed in the paper but are recommended and the comments in the code said that we should enable them because they would make the results better.
+
+we tried to keep as many hyperparameters unchanged. we initially differentiated between 3 kinds of special training improvements:
+
+% ```
+% enable_noise=comb["training_natural"], -> adding nature-inspired noise, jitter, up and downsampling, blur to the data
+% enable_random_shuffle=comb["training_natural"], -> shuffling resolutions in the stack
+% enable_adversarial_training=comb["training_natural"], -> very light adversarial training in just a few epochs using FGSM
+% '''
+
+we initially ran a bunch of experiments to decied which specific of the 3 had the most impact. for instance we found out that just shuffling without anything else reduced adversarial robustness to attacks and that in every single case the combination of all the 3 was the best.
+
+finding out that they don't mutually have a negative impact on each other (given that this is something that wasn't mentioned in the paper), we exclusively decided to flick all of them on or off for the following experiments. Given that the authors did not do so in their paper, we expect to be able to improve upon their results.
 
 \section{Results}
 
@@ -947,7 +959,11 @@ using MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based 
 
 \appendix
 
-\chapter*{Appendix: Overview of Generative AI Tools Used}
+\chapter{Appendix}
+
+\section{Yo!}
+
+\chapter*{Overview of Generative AI Tools Used}
 
 In this work language models were not used to generate original content. Instead, they solely enhanced spelling, grammar and style.
 
