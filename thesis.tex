@@ -920,33 +920,27 @@ We found the best results with a learning rate of 1e-4, running for 16 epochs an
 
 After the authors shared their codebase, we transitioned to their implementation to maintain consistency and ensure our results were directly comparable. Their code included several improvements not mentioned in the paper, such as random resolution shuffling, which were recommended in the code comments for better results. 
 
-We aimed to keep as many hyperparameters unchanged as possible while comparing the impact of three specific training enhancements: (1) nature inspired noise, (2) channel shuffling and (3) light FGSM adversarial training.
+We aimed to keep as many hyperparameters unchanged as possible while comparing the impact of three specific training enhancements: (1) nature inspired noise, (2) channel shuffling and (3) light FGSM adversarial training, resulting in $2^3$ possible training configurations.
 
 The nature-inspired noise works by adding noise, applying contrast adjustments, shifting pixel positions (jittering) and modifying resolutions. In the last step it combines these augmented outputs into a multichannel input to enhance training. The random channel resolution shuffling randomly shuffles the resolutions in the stack, while the light FGSM adversarial training applies FGSM adversarial training for a few epochs to improve adversarial robustness.
 
-Initially, we experimented with each technique independently to evaluate their effects. For example, applying random shuffling alone reduced adversarial robustness, whereas combining all three consistently produced the best results. We did not observe any negative interactions between these techniques.
+Initially, we experimented with each technique independently to evaluate their effects. For example, applying random shuffling alone reduced adversarial robustness, whereas combining all three consistently produced the best results. We did not observe any negative interactions between these techniques, as they all seemed to complement each other. The results of these experiments are visualized in Figure~\ref{fig:8train-cifar10} and Figure~\ref{fig:8train-cifar100}. This led us to either exclusively use all three techniques or none at all in our subsequent experiments.
 
-Our initial evaluations focused on CIFAR-10 and CIFAR-100, as specified in the authors' codebase. But while the original paper also utilized MNIST, we opted for Imagenette due to its relevance to higher-resolution tasks. However, the aggressive downsampling and upsampling in the code proved problematic for Imagenette, leading us to exclude it from our preliminary evaluation. These issues were addressed in later experiments, ensuring a more robust assessment of the training strategies.
-
-
-% link to stuff in the addendum
+Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR-100, as specified in the authors' codebase. While the original paper also utilized MNIST, we opted for Imagenette due to its relevance to higher-resolution tasks. However, the aggressive downsampling and upsampling in the code proved problematic for Imagenette, leading us to exclude it from our preliminary evaluation. These issues were addressed in later experiments.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/self_ensemble_8train_cifar10.pdf}
-	\caption{Hyperparameter search. Ensemble is a dotted line, x-axis shows the layers, y-axis the accuracy, x-grid the train combinations, y-grid the different attacks.}
+	\caption{Training combinations on CIFAR10, with the red dotted line for the ensemble. The X-axis shows layers, the Y-axis shows accuracy, the X-grid shows train configs and the Y-grid shows different attacks.}
 	\label{fig:8train-cifar10}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/self_ensemble_8train_cifar100.pdf}
-	\caption{Hyperparameter search.}
+	\caption{Train combinations on CIFAR100, with the red dotted line for the ensemble. The X-axis shows layers, the Y-axis shows accuracy, the X-grid shows train configs and the Y-grid shows different attacks.}
 	\label{fig:8train-cifar100}
 \end{figure}
-
-
-Based on these findings, we opted to activate all three techniques simultaneously for subsequent experiments.
 
 \paragraph{Evaluation metrics.}
 
