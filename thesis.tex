@@ -901,6 +901,8 @@ To the best of our knowledge, we are the first team to reproduce, evaluate and i
 
 \section{Experimental Setup}
 
+We conducted a series of experiments on the self-ensembled ResNet and the standard ResNet-50 as a baseline with the same weights, trained on ImageNet to evaluate the new architecture against. We build upon our findings from the previous chapter.
+
 \paragraph{Reproduction and hyperparameter search.}
 
 We chose to recreate the architecture\footnote{Credits to Andreas Plesner.}, the CrossMax consensus algorithm and our own distributed multi-GPU training setup from the ground up, as the authors had not yet shared their codebase, when we started our experiments. This allowed us to gain a deeper understanding of the model and validate the hyperparameters used in the original paper.
@@ -942,21 +944,24 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 	\label{fig:8train-cifar100}
 \end{figure}
 
-
-
-
-
-
-
 \paragraph{Dataset Selection.}
 
-we implemented the code for cifar10, cifar100 and Imagenette, but due to time constraints we only evaluated cifar10. these time constraints were due to the limited availability of GPUs and the long training times for the self-ensembled ResNet, which requires at least 80 GB of GPU memory.
+We evaluated on CIFAR-10 only.
 
-however, as already visible in figure~\ref{fig:8train-cifar10} vs. figure~\ref{fig:8train-cifar100}, cifar10 is almost too easy for the self-ensembled ResNet and not representative of the model's performance on more challenging datasets. therefore our results should be taken with a grain of salt and further evaluation on cifar100 and Imagenette is necessary for more conclusive results. but this should not diminish the value of our findings on cifar10.
+Although we implemented the code for CIFAR-10, CIFAR-100 and Imagenette, we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did find significant performance improvements and submitted a pull request to the authors to increase overall performance.
 
-\paragraph{Baseline.}
+However, as already visible in Figure~\ref{fig:8train-cifar10} vs. Figure~\ref{fig:8train-cifar100}, CIFAR-10 is almost too easy for the self-ensembled ResNet and not representative of the model's performance on more challenging datasets. Therefore, our results should be taken with a grain of salt, and further evaluation on CIFAR-100 and Imagenette is necessary for more conclusive results. But this should not diminish the value of our findings, as they provide a solid foundation for future research and are exhaustive in terms of the training strategies and attacks evaluated.
 
-the model we compare the self-ensembled ResNet to is the original ResNet model, as it is the most similar in architecture and training strategy.
+\paragraph{Adversarial Attack Selection.}
+
+% PGD, FGSM, masks
+% \footnote{Thanks to Nicholas Carlini for advising us on suitable attacks.}
+
+For the geometric masks we used the same rendering engine library we built. Given the particular effectiveness of the knit mask on the ResNet architecture, we noticed that in addition to the mask opacity, the mask density also played a significant role in the effectiveness of the attack. Therefore, we generalized and parametrized our mask generator with the following parameters: number of sides (3, 4, 6, 10)\footnote{3 sides correspond to a triangle, 4 sides to a square, 6 sides to a hexagon and 10 sides to a decagon.}, number of concentric shapes (1, 2, 3, 4) and colors (True, False). We generated masks for all combinations of these parameters for our experiments.
+
+
+
+
 
 \section{Results}
 
