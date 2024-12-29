@@ -93,6 +93,20 @@
 \cleardoublepage
 
 \begin{acknowledgements}
+	\begin{quotebox}
+		\begin{flushright}
+			\textit{``Well, at a high level, I think that the goal of computer security is to ensure that systems do the right thing, even in the presence of malicious inputs. Now, achieving this goal in the context of machine learning is exceptionally challenging for two reasons. [...] So first of all, computer scientists lack a deep mathematical understanding of how machine learning actually learns and predicts. [...] And second, many people who deploy machine learning don't actually care about the first problem.''}
+			\vspace{1em}
+	
+			\textit{``And if somebody asks you why the stuff worked, you just say the stuff is what the stuff is brother, accept the mystery. Okay. And so basically machine learning is like this, right? So we've invented a bunch of techniques that kind of work, like in some cases, but we're not really sure what's going on. [...] We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
+			\vspace{1em}
+	
+			James Mickens, USENIX'18~\cite{218395}
+		\end{flushright}
+	\end{quotebox}
+
+	\linebreaks
+
 	The most rewarding part of this project was working on a problem that truly matters to me, alongside people who genuinely care. For the first time, I felt a sense of belonging.
 
 	I'm deeply grateful to those who supported me along the way. My parents, Shima and Florian and my family, for their unconditional support \textendash{} even when I quit my job to pursue my passion. My partner, Laura, whose love and encouragement crossed the Atlantic and carried me through many long nights.
@@ -145,61 +159,75 @@ The following projects were developed as part of this work (in chronological ord
 
 \linebreaks
 
-\begin{spacing}{1}
-	\textbf{self-ensembling} \\
-	All experiments related to the Self-Ensembling algorithm by Fort et al. \\
-	\url{https://github.com/ETH-DISCO/self-ensembling} \\
-	\url{https://huggingface.co/sueszli/self-ensembling-resnet152}
-\end{spacing}
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{self-ensembling} \\
+		All experiments related to the Self-Ensembling algorithm by Fort et al. \\
+		\url{https://github.com/ETH-DISCO/self-ensembling} \\
+		\url{https://huggingface.co/sueszli/self-ensembling-resnet152}
+	\end{spacing}
+\end{samepage}
 
 \linebreaks
 
-\begin{spacing}{1}
-	\textbf{ensemble-everything-everywhere} \\
-	Pull Request: Optimizing the official Self-Ensembler repository by Fort et al. \\
-	\url{https://github.com/stanislavfort/ensemble-everything-everywhere/pull/2}
-\end{spacing}
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{ensemble-everything-everywhere} \\
+		Pull Request: Optimizing the official Self-Ensembler repository by Fort et al. \\
+		\url{https://github.com/stanislavfort/ensemble-everything-everywhere/pull/2}
+	\end{spacing}
+\end{samepage}
 
 \linebreaks
 
-\begin{spacing}{1}
-	\textbf{vision} \\
-	Pull Request: Containerizing TorchVision to build ResNet from scratch. \\
-	\url{https://github.com/pytorch/vision/pull/8652}
-\end{spacing}
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{vision} \\
+		Pull Request: Containerizing TorchVision to build ResNet from scratch. \\
+		\url{https://github.com/pytorch/vision/pull/8652}
+	\end{spacing}
+\end{samepage}
 
 \linebreaks
 
-\begin{spacing}{1}
-	\textbf{advx-bench} \\
-	All experiments related to the geometric masks from the paper. \\
-	\url{https://github.com/ETH-DISCO/advx-bench} \\
-	\url{https://huggingface.co/sueszli/robustified_clip_vit}
-\end{spacing}
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{advx-bench} \\
+		All experiments related to the geometric masks from the paper. \\
+		\url{https://github.com/ETH-DISCO/advx-bench} \\
+		\url{https://huggingface.co/sueszli/robustified_clip_vit}
+	\end{spacing}
+\end{samepage}
 
 \linebreaks
+
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{cluster-tutorial} \\
+		Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the shell to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all file pointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also can run a Jupyterlab instance on the intranet. \\
+		\url{https://github.com/ETH-DISCO/cluster-tutorial}
+	\end{spacing}
+\end{samepage}
+
+\linebreaks
+
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{python-template} \\
+		Short scripts to \texttt{pip-compile} dependencies, containerize the environment and translate back and forth between Conda and Docker for different job submission systems. Also a simple job watchdog for long-running processes. \\ 
+		\url{https://github.com/sueszli/python-template/}
+	\end{spacing}
+\end{samepage}
 	
-\begin{spacing}{1}
-	\textbf{cluster-tutorial} \\
-	Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the shell to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all file pointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also can run a Jupyterlab instance on the intranet. \\
-	\url{https://github.com/ETH-DISCO/cluster-tutorial}
-\end{spacing}
+\linebreaks
 
-\linebreaks
-	
-\begin{spacing}{1}
-	\textbf{python-template} \\
-	Short scripts to \texttt{pip-compile} dependencies, containerize the environment and translate back and forth between Conda and Docker for different job submission systems. Also a simple job watchdog for long-running processes. \\ 
-	\url{https://github.com/sueszli/python-template/}
-\end{spacing}
-	
-\linebreaks
-	
-\begin{spacing}{1}
-	\textbf{captcha-the-flag} \\
-	Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHAv2 and a scraper used to evaluate challenges against solvers. \\
-	\url{https://github.com/ETH-DISCO/captcha-the-flag}
-\end{spacing}
+\begin{samepage}
+	\begin{spacing}{1}
+		\textbf{captcha-the-flag} \\
+		Cybersecurity emulation for CAPTCHAs: A deployable replica of Google's reCAPTCHAv2 and a scraper used to evaluate challenges against solvers. \\
+		\url{https://github.com/ETH-DISCO/captcha-the-flag}
+	\end{spacing}
+\end{samepage}
 
 \section*{Breakdown of contributions}
 
@@ -530,17 +558,6 @@ This perspective suggests that enhancing adversarial robustness requires develop
 % 
 
 \chapter{Experiments: HCaptcha Inspired Geometric Masks}
-\begin{quotebox}
-	\begin{flushright}
-		\textit{``Well, at a high level, I think that the goal of computer security is to ensure that systems do the right thing, even in the presence of malicious inputs. Now, achieving this goal in the context of machine learning is exceptionally challenging for two reasons. [...] So first of all, computer scientists lack a deep mathematical understanding of how machine learning actually learns and predicts. [...] And second, many people who deploy machine learning don't actually care about the first problem.''}
-		\vspace{1em}
-
-		\textit{``And if somebody asks you why the stuff worked, you just say the stuff is what the stuff is brother, accept the mystery. Okay. And so basically machine learning is like this, right? So we've invented a bunch of techniques that kind of work, like in some cases, but we're not really sure what's going on. [...] We don't ask questions about the weights. We just wake up, we go to work, we use the weights, we go back home. Okay. If we change the weights, the predictions would be different and less good, probably... depending on the weather... so we don't ask about the weights.''}
-		\vspace{1em}
-
-		\textemdash{} James Mickens, USENIX'18~\cite{218395}
-	\end{flushright}
-\end{quotebox}
 
 When studying unrestricted adversarial examples in computer vision, we are essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can not easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
 
@@ -604,6 +621,8 @@ We also studied and reconstructed the segmentation challenge, which embeds image
 
 \paragraph{Mask Generation.}
 
+We generated adversarial examples using 4 geometric shapes.
+
 We developed a sublibrary that allows for the parametrizable reconstruction of geometric masks used in the classification task using the rendering engine \texttt{pycairo}. We created four distinct masks to overlay on images at varying intensities: ``Circle'', ``Diamond'', ``Square'' and ``Knit'' (the ``Word'' mask was also reconstructed, but omitted as they have been proven to be easy to mitigate~\cite{zhang2023text,dong2023robust,shayegani2023plug}).
 
 These masks were chosen based on an experiment where we hand-labeled 1600 images from hCaptcha\footnote{Credits to Turlan Kuzhagaliyev.}. The opacities (alpha values) and densities of these masks were determined through an initial hyperparameter search, which we'll discuss later. Figure~\ref{fig:hcaptchacombined} showcases the optimized reconstructions we used to benchmark the models.
@@ -644,6 +663,8 @@ For the segmentation task, we experimented with various background textures, inc
 
 \paragraph{Model Selection.}
 
+We benchmarked 5 SOTA models, that can run on consumer hardware.
+
 To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
 
 After the literature review we clustered the models by their architecture family and clustered them on a scatter plot based on their performance, inspired by~\cite{howard_image_models}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available. This was to test the feasibility of running these models in a real-world scenario.
@@ -654,11 +675,13 @@ When specific models are not mentioned in tables, experiments or figures, we are
 
 \paragraph{Dataset Selection.}
 
-For our experiments, we used the enriched ImageNet dataset with 1,000 entries from ``visual-layer'' on HuggingFace.
+We evaluated against an enriched ImageNet dataset.
+
+For experiments we utilized the enriched ImageNet dataset provided by ``visual-layer'' on HuggingFace. This dataset includes 1,000 distinct classes, offering a comprehensive range of categories for our experiments.
 
 \paragraph{Evaluation Metrics.}
 
-To evaluate, we focused on two main aspects: the decrease in model accuracy after applying the adversarial mask and the perceptual quality for humans, using a proxy metric.
+We measured the drop in accuracy and perceptual quality using a proxy metric.
 
 Perceptual quality is about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image} and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We decided to omit the Fréchet Inception Distance (FID), due to its high computational cost. Overall, we want this number to be as high as possible.
 
@@ -680,6 +703,8 @@ $$
 
 \paragraph{Hyperparameter Search.}
 
+A grid search attempted to find the best mask parameters.
+
 Having determined our evaluation metrics, dataset and models, we moved on to the hyperparameter search to find the optimal adversarial masks to benchmark with. We parameterized three variables: ``opacity'' (alpha value of the overlay), ``density'' (shapes per row/column and nesting, ranging from 0-100) and ``epsilon'' (for white-box FGSM attacks with CLIP-ViT on ImageNet). Using a grid search, we aimed to find the optimal values for these parameters.
 
 We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enriched'' dataset on HuggingFace, testing 5-20 examples per combination on the validation set. For this phase, we exclusively used the CLIP ViT model due to its strong adversarial robustness, as highlighted by~\cite{wang2024roz}.
@@ -688,14 +713,16 @@ Our optimization metric combined the difference in model accuracy before and aft
 
 Our initial grid search revealed some interesting patterns. We found that achieving high perceptual quality generally required a combination of low opacity and high density. Specifically, the optimal opacity range appeared to be between 50 and 200. Additionally, higher density values consistently yielded better results. Among the various masks we tested, the diamond mask stood out as offering the best balance between effectiveness and perceptual quality. Based on these findings, the diamond mask seemed most promising for the subsequent steps of our experiments. Figure \ref{fig:tradeoff-1} shows the trade-off between accuracy and perceptual quality for the strongest masks, where masks are visually encoded through shapes, opacities through alpha values and densities through the size of the shapes. A linear regression line is shown to highlight the areas of interest.
 
+Our second grid search, which combined FGSM perturbations with the chosen masks, revealed some interesting insights. We found that combining perturbations with the masks generally led to worse results. The best results were obtained using the diamond mask with FGSM disabled, a density of 50 and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
+
+While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth]{figures/eval_cls_mask_density.pdf}
 	\caption{Accuracy-perceptibility trade-off: We compare the strength of all our masks with different opacities and densities against their perceptibility based on our proxy metric.}
 	\label{fig:tradeoff-1}
 \end{figure}
-
-Our second grid search, which combined FGSM perturbations with the chosen masks, revealed some interesting insights. We found that combining perturbations with the masks generally led to worse results. The best results were obtained using the diamond mask with FGSM disabled, a density of 50 and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
 
 \begin{figure}
 	\centering
@@ -704,17 +731,15 @@ Our second grid search, which combined FGSM perturbations with the chosen masks,
 	\label{fig:tradeoff-2}
 \end{figure}
 
-While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
-
 \section{Results}
 
-\paragraph{Mask Generalizability.}
+\paragraph{Attack Transferability.}
 
-First, we evaluated the individual masks for their generalizability across different models by averaging the ``final score'' across all models. This score serves as a proxy for the trade-off between adversarial effectiveness and perceptual quality. We found that opacity was the most significant parameter, regardless of mask specifics. Therefore, we chose the best-performing density parameter from the hyperparameter search and applied different masks and opacities to the models.
+We evaluated the individual masks for their transferability between different models by averaging the ``final score'' across all models. This score serves as a proxy for the trade-off between adversarial effectiveness and perceptual quality. We found that opacity was the most significant parameter, regardless of mask specifics. Therefore, we chose the best-performing density parameter from the hyperparameter search and applied different masks and opacities to the models.
 
-The results of our experiment are visualized in Figure~\ref{fig:accpercept} and summarized in Table~\ref{tab:generalizability}. The figure shows a clear trend in the trade-off between adversarial effectiveness and perceptibility. The plot highlights an inverse relationship between these two factors, as indicated by the polynomial regression curve of degree 1. This relationship suggests that as the effectiveness of the adversarial attack increases (lower $\Delta$ Accuracy Rank), the perceptual quality of adversarial examples tends to decrease. While this is somewhat expected, we do see instances where there's a significant drop in rank (>10) while maintaining relatively high perceptual quality (>0.4).
+The results of our experiment are visualized in Figure~\ref{fig:accpercept} and summarized in Table~\ref{tab:transferability}. The figure shows a clear trend in the trade-off between adversarial effectiveness and perceptibility. The plot highlights an inverse relationship between these two factors, as indicated by the polynomial regression curve of degree 1. This relationship suggests that as the effectiveness of the adversarial attack increases (lower $\Delta$ Accuracy Rank), the perceptual quality of adversarial examples tends to decrease. While this is somewhat expected, we do see instances where there's a significant drop in rank (>10) while maintaining relatively high perceptual quality (>0.4).
 
-The different mask types (circle, square, diamond and knit) and opacity levels show a range of performance across this trade-off spectrum. The scatter plot highlights clusters of points for each mask type, with some masks consistently striking a better balance between attack effectiveness and perceptual quality. Most importantly, these geometric pattern masks generalize well across state-of-the-art models.
+The different mask types (circle, square, diamond and knit) and opacity levels show a range of performance across this trade-off spectrum. The scatter plot highlights clusters of points for each mask type, with some masks consistently striking a better balance between attack effectiveness and perceptual quality. Most importantly, these geometric pattern masks transfer well between state-of-the-art models.
 
 The circle masks, contrary to our initial hyperparameter search, seem to be the most effective at reducing accuracy across all models and opacities. The knit mask, on the other hand, has a much smaller impact on accuracy.
 
@@ -765,13 +790,13 @@ These results demonstrate that using geometric masks is a practical method for g
         \bottomrule
     \end{tabular}
     \vspace*{0.1cm}
-    \caption{Generalizability of Masks}
-    \label{tab:generalizability}
+    \caption{Transferability of Masks}
+    \label{tab:transferability}
 \end{table}
 	
 \paragraph{Model Robustness.}
 
-Next, we want to take a closer look at the results, this time breaking them down by individual models and examining both the drop in acc@1 and acc@5. This will give us a more detailed understanding of how the masks impact the individual models. The results are summarized in Table~\ref{tab:drop-acc1} and Table~\ref{tab:drop-acc5} for top-1 and top-5 accuracy, respectively.
+We inspected individual models, examining both the drop in acc@1 and acc@5. This will give us a more detailed understanding of how the masks impact the individual models. The results are summarized in Table~\ref{tab:drop-acc1} and Table~\ref{tab:drop-acc5} for top-1 and top-5 accuracy, respectively.
 
 A negative value indicates an improvement in accuracy, while a positive value indicates a decrease. Larger values indicate a stronger effect of the adversarial examples.
 
@@ -858,13 +883,13 @@ While the previous perspective on the data compared masks against each other, th
 
 In our initial experiments, we tested geometric masks against state-of-the-art models. While the results yielded several insights, two key takeaways stand out as especially relevant for the rest of this work.
 
-\paragraph{The geometric masks generalize.}
+\paragraph{Geometric mask attacks are simple, effective and transferable.}
 
-Our experiments confirm the hypothesis that the hCAPTCHA inspired geometric masks are responsible for task difficulty and generalize effectively across different models. This makes them a straightforward and transferable black-box attack, aligning with our goal of dissecting adversarial examples. These masks are not only simple to generate but also easier to analyze, especially in the latent spaces of models. This ease of interpretability sets them apart from other adversarial attacks, which often lack this clarity. As a result, geometric masks serve as an ideal tool for studying adversarial machine learning.
+Our experiments show that hCAPTCHA-inspired geometric masks are (1) simple, (2) effective, noticeably reducing model accuracy, and (3) transferable, as they perform similarly across different models. The advantage they offer over traditional imperceptible black-box adversarial examples is their simplicity, which makes it feasible to reason about their influence on models, even in latent spaces. This enables us to study adversarial vulnerabilities more effectively. This is a valuable first step in breaking down the complexity of adversarial examples and understanding the underlying mechanisms that make them effective.
 
 \paragraph{ResNet is an outlier.}
 
-When analyzing the impact of these masks on different models, we observed that most state-of-the-art architectures exhibited similar performance distributions. However, ResNet stood out as unusually sensitive to the Diamond and Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that ResNet results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
+We observed that most state-of-the-art architectures exhibited similar accuracy distributions when subjected to geometric masks. However, ResNet stood out as unusually sensitive to the Diamond and Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that ResNet results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
 
 % 
 % experiments 2
@@ -878,6 +903,7 @@ In this chapter, we present our findings on the self-ensembled ResNet model.
 
 The self-ensembled ResNet~\cite{fort2024ensemble}, as presented in the introduction, is a novel approach to enhancing adversarial robustness. It combines multi-resolution inputs with dynamic self-ensembling of predictions from intermediate layers of the neural network. The multi-resolution input strategy involves feeding the model multiple versions of an image at different resolutions, inspired by biological mechanisms like eye saccades, which enhances robustness by forcing the network to process diverse representations simultaneously. The self-ensembling aspect leverages the inherent robustness of the intermediate layer predictions, which are less affected by adversarial attacks targeting the final classifier. These predictions are aggregated using a consensus algorithm called ``CrossMax'', inspired by Vickrey auctions, which dynamically selects consistent outputs across layers:
 
+\begin{samepage}
 \begin{spacing}{1}
 \begin{minted}[fontsize=\footnotesize]{python}
 def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tensor:
@@ -894,6 +920,7 @@ def get_cross_max_consensus_logits(outputs: torch.Tensor, k: int) -> torch.Tenso
     return Y
 \end{minted}
 \end{spacing}
+\end{samepage}
 
 Architecturally, what makes this approach interesting is its ability to use a single ResNet model to create a ``self-ensemble'' by decoupling and aggregating predictions from intermediate layers. This eliminates the need for multiple independent models while still achieving ensemble-like robustness. Additionally, the use of multi-resolution inputs and stochastic augmentations reduces the attack surface for adversarial perturbations.
 
@@ -903,24 +930,30 @@ To the best of our knowledge, we are the first team to reproduce, evaluate and i
 
 We conducted a series of experiments on the self-ensembled ResNet and the standard ResNet-50 as a baseline with the same weights, trained on ImageNet to evaluate the new architecture against. We build upon our findings from the previous chapter.
 
-\paragraph{Reproduction and hyperparameter search.}
+\paragraph{Reproduction.}
+
+We discarded our reproduction after the authors shared their code.
 
 We chose to recreate the architecture\footnote{Credits to Andreas Plesner.}, the CrossMax consensus algorithm and our own distributed multi-GPU training setup from the ground up, as the authors had not yet shared their codebase, when we started our experiments. This allowed us to gain a deeper understanding of the model and validate the hyperparameters used in the original paper.
 
 We ran a set of experiments on CIFAR10 and CIFAR100 to confirm our reproduction was sensible and to find the best hyperparameters. We used the same ResNet architecture as the authors but slightly adjusted the training pipeline. Our hyperparameter search space consisted of: the dataset (CIFAR10, CIFAR100), learning rate (1e-1, 1e-4, 1e-5, 1.7e-5, 1e-6, 1e-7), number of epochs (4, 8, 16) and CrossMax $k$ (2, 3).
 
-We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments. Figure~\ref{fig:se-hyperparams} shows the results of our hyperparameter search.
+We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments. Figure~\ref{fig:se-hyperparams} shows the results of our hyperparameter search on our reproduction of the self-ensembled ResNet.
+
+After the authors shared their codebase, we transitioned to their implementation to maintain consistency and ensure our results were directly comparable. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth]{figures/hyperparams.pdf}
-	\caption{Hyperparameter search for the self-ensembled ResNet.}
+	\caption{Hyperparameter search on the reproduced architecture.}
 	\label{fig:se-hyperparams}
 \end{figure}
 
 \paragraph{Training Strategy Selection.}
 
-After the authors shared their codebase, we transitioned to their implementation to maintain consistency and ensure our results were directly comparable. Their code included several improvements not mentioned in the paper, such as random resolution shuffling, which were recommended in the code comments for better results. 
+We compared $2^3$ training configurations.
+
+The author's code included several improvements not mentioned in the paper, such as random resolution shuffling, which were recommended in the code comments for better results.
 
 We aimed to keep as many hyperparameters unchanged as possible while comparing the impact of three specific training enhancements: (1) nature inspired noise, (2) channel shuffling and (3) light FGSM adversarial training, resulting in $2^3$ possible training configurations.
 
@@ -948,9 +981,9 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 
 We evaluated on CIFAR-10 only.
 
-Although we implemented the code for CIFAR-10, CIFAR-100 and Imagenette, we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did find significant performance improvements and submitted a pull request to the authors to increase overall performance.
+Although we implemented the code for CIFAR-10, CIFAR-100 and Imagenette, we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did identify compute bottlenecks in the codebase, some of which we also addressed as a pull request to the authors.
 
-However, as already visible in Figure~\ref{fig:8train-cifar10} vs. Figure~\ref{fig:8train-cifar100}, CIFAR-10 is almost too easy for the self-ensembled ResNet and not representative of the model's performance on more challenging datasets. Therefore, our results should be taken with a grain of salt, and further evaluation on CIFAR-100 and Imagenette is necessary for more conclusive results. But this should not diminish the value of our findings, as they provide a solid foundation for future research and are exhaustive in terms of the training strategies and attacks evaluated.
+However, as already visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and not representative. Therefore, our results should be taken with a grain of salt and further evaluation on CIFAR-100 and Imagenette is necessary for more conclusive results. But this should not diminish the value of our findings, as they provide a solid foundation and by performing a thorough evaluation.
 
 \paragraph{Adversarial Attack Selection.}
 
@@ -961,6 +994,9 @@ For the geometric masks we used the same rendering engine library we built. Give
 
 
 
+\paragraph{Baseline.} We benchmarked a ResNet-50 for comparison.
+
+...
 
 
 \section{Results}
