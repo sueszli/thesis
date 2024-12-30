@@ -966,14 +966,14 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/self_ensemble_8train_cifar10.pdf}
-	\caption{Training combinations on CIFAR10, with the red dotted line for the ensemble. The X-axis shows layers, the Y-axis shows accuracy, the X-grid shows train configs and the Y-grid shows different attacks.}
+	\caption{Training strategy combinations on CIFAR10, with the red dotted line for the ensemble. The X-axis shows layers, the Y-axis shows accuracy, the X-grid shows train configs and the Y-grid shows different attacks.}
 	\label{fig:8train-cifar10}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/self_ensemble_8train_cifar100.pdf}
-	\caption{Training combinations on CIFAR100, with the red dotted line for the ensemble. The X-axis shows layers, the Y-axis shows accuracy, the X-grid shows train configs and the Y-grid shows different attacks.}
+	\caption{Training strategy combinations on CIFAR100, with the red dotted line for the ensemble. The X-axis shows layers, the Y-axis shows accuracy, the X-grid shows train configs and the Y-grid shows different attacks.}
 	\label{fig:8train-cifar100}
 \end{figure}
 
@@ -981,16 +981,49 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 
 We evaluated on CIFAR-10 only.
 
-Although we implemented the code for CIFAR-10, CIFAR-100 and Imagenette, we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did identify compute bottlenecks in the codebase, some of which we also addressed as a pull request to the authors.
+Despite implementing and configuring our evaluation pipeline for 3 datasets (CIFAR-10, CIFAR-100 and Imagenette), we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did identify compute bottlenecks in the codebase, some of which we also addressed as a pull request to the authors.
 
-However, as already visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and not representative. Therefore, our results should be taken with a grain of salt and further evaluation on CIFAR-100 and Imagenette is necessary for more conclusive results. But this should not diminish the value of our findings, as they provide a solid foundation and by performing a thorough evaluation.
+However, as visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and this dataset is not representative for the others. Therefore, our results should be taken with a grain of salt and further evaluation is necessary for more conclusive results. This should however not diminish the value of our findings on CIFAR-10 and our methodological contributions.
 
-\paragraph{Adversarial Attack Selection.}
+\paragraph{Attack Selection.}
 
-% PGD, FGSM, masks
-% \footnote{Thanks to Nicholas Carlini for advising us on suitable attacks.}
+We benchmarked against geometric masks, FGSM and PGD.
 
-For the geometric masks we used the same rendering engine library we built. Given the particular effectiveness of the knit mask on the ResNet architecture, we noticed that in addition to the mask opacity, the mask density also played a significant role in the effectiveness of the attack. Therefore, we generalized and parametrized our mask generator with the following parameters: number of sides (3, 4, 6, 10)\footnote{3 sides correspond to a triangle, 4 sides to a square, 6 sides to a hexagon and 10 sides to a decagon.}, number of concentric shapes (1, 2, 3, 4) and colors (True, False). We generated masks for all combinations of these parameters for our experiments.
+The authors use a general benchmarking suite and visualize their attacks against FGSM, conducting only light adversarial training with FGSM. However, after consulting\footnote{Thanks to Nicholas Carlini for his advice.} and manual inspection, we decided to also include Projected Gradient Descent (PGD) attacks in our benchmarking suite.
+
+For the geometric masks, we extended our rendering pipeline from previous experiments. Building on the observation that opacity and density of a mask are generally relevant across all models and the effectiveness of the ``Knit'' mask on the vanilla ResNet architecture (which we also kept, see Figure \ref{fig:attacks-v2}), we parametrized our mask generator with the following parameters: number of sides (3, 4, 6, 10), number of concentric shapes (1, 2, 3, 4) and colors (True, False). We generated masks for all combinations of these parameters for our experiments. Selected examples of these masks are shown in Figure~\ref{fig:attacks-v2}.
+
+\begin{figure}[th]
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/3_2_2_False.png}\caption{Triangle mask}\label{fig:atk1}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/4_4_5_True.png}\caption{Square mask}\label{fig:atk2}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/6_2_2_True.png}\caption{Hexagon mask}\label{fig:atk3}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/10_10_10_False.png}\caption{Decagon mask}\label{fig:atk4}\end{subfigure}
+
+	\caption{Selected examples of geometric masks used in our experiments with varying sides, count of shapes per row/column, number of concentric shapes and colors.}
+	\label{fig:attacks-v2}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth,keepaspectratio]{figures/self_ensemble_mask_exploration_cifar10.pdf}
+	\caption{Wassup.}
+	\label{fig:wassup2}
+\end{figure}
+
+
+
+
+
+
 
 
 
@@ -1001,7 +1034,6 @@ For the geometric masks we used the same rendering engine library we built. Give
 
 \section{Results}
 
-
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/self_ensemble_fgsm_pgd_cifar10.pdf}
@@ -1011,19 +1043,10 @@ For the geometric masks we used the same rendering engine library we built. Give
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\columnwidth,keepaspectratio]{figures/self_ensemble_mask_exploration_cifar10.pdf}
-	\caption{Wassup.}
-	\label{fig:wassup2}
-\end{figure}
-
-\begin{figure}
-	\centering
 	\includegraphics[width=1\columnwidth,keepaspectratio]{figures/self_ensemble_mask_final_cifar10.pdf}
 	\caption{Wassup.}
 	\label{fig:wassup3}
 \end{figure}
-
-
 
 
 
