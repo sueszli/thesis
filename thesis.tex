@@ -113,7 +113,7 @@
 
 	I owe much to those who made this work possible. Prof.\ Roger Wattenhofer, for trusting me with this project and guiding me with wisdom and humor. Andreas Plesner, who was just as much of a mentor as a collaborator, for his dedication to our vision. Turlan Kuzhagaliyev, for keeping me grounded and focused.
 
-	I also value the friendships I made throughout this journey. Prof.\ Nils Lukas, who first introduced me to ML-Security and was always there to discuss ideas. Alireza Furutanpey, for his camaraderie and sharing his boundless passion.
+	I also value the friendships I made throughout this journey. Prof.\ Nils Lukas, who first introduced me to ML-Security and has been a personal role model. Alireza Furutanpey, for his camaraderie and sharing his boundless passion.
 
 	Thanks as well to those whose paths have diverged from mine but whose impact remains with me, including Prof.\ Schahram Dustdar, who enabled me to study abroad.
 
@@ -125,7 +125,7 @@
 \begin{abstract}
 	% short. state what you did and what the most important result is.
 	
-	Traditionally, adversarial examples have been defined as imperceptible perturbations that fool deep neural networks. This thesis challenges that narrow view by examining unrestricted adversarial examples \textendash{} a broader class of manipulations that can compromise model security while preserving semantics.
+	Traditionally, adversarial examples have been defined as imperceptible perturbations that fool deep neural networks. This thesis challenges this view by examining unrestricted adversarial examples \textendash{} a broader class of manipulations that can compromise model security while preserving semantics.
 
 	Through extensive experiments, we make three key contributions: First, we demonstrate that the standard imperceptibility constraint is insufficient for characterizing real-world adversarial threats through a comprehensive survey of current research. Second, we develop a novel and computationally efficient method for generating adversarial examples using geometric masks inspired by hCAPTCHA challenges. Our approach creates adversarial examples that are (1) effective, (2) transferable between models and (3) more traceable in the model's decision space \textendash{} achieving comparable misclassification rates to existing techniques while requiring significantly less compute. Finally, we investigate improving model robustness by creating ensembles from intermediary ResNet layers using linear probes, combined with nature-inspired noise during training. While this architectural approach shows promise, we find that achieving ``zero-cost robustness'' remains unattainable without adversarial training.
 
@@ -239,7 +239,7 @@ The following projects were developed as part of this work (in chronological ord
 
 \section*{Breakdown of contributions}
 
-For the paper Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments. Andreas and I writing the majority of the text. Turlan and I conducting all experiments. The TU Wien DSG lab provided computational resources for robustifying a ResNet model, which we had to discard. Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function. Additionally, he helped with general advice on PyTorch.
+For the paper Andreas Plesner had the original idea. The written text was joint work between all authors, with Prof.\ Roger Wattenhofer taking the lead on creating a cohesive narrative for our experiments. Andreas and I writing the majority of the text. Turlan and I conducting all experiments. The TU Wien DSG lab provided computational resources for robustifying a ResNet model, which we had to discard. Alireza Furutanpey suggested using LPIPS as a metric to evaluate the perceptual quality of adversarial examples, which we incorporated into our weighted objective function.
 
 Regarding the developed software, all contributions are my own, unless stated otherwise in the repository. A prototype of the self-ensembled ResNet model was developed by Andreas Plesner, but the authors soon released their own implementation, which was then used in all experiments for consistency.
 
@@ -977,7 +977,7 @@ We evaluated on CIFAR-10 only.
 
 Despite implementing and configuring our evaluation pipeline for 3 datasets (CIFAR-10, CIFAR-100 and Imagenette), we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did identify compute bottlenecks in the codebase, some of which we also addressed as a pull request to the authors.
 
-However, as visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and this dataset is not representative for the others. Therefore, our results should be taken with a grain of salt and further evaluation is necessary for more conclusive results. This should however not diminish the value of our findings on CIFAR-10 and our methodological contributions.
+However, as visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and not representative. Therefore, our results should be taken with a grain of salt and further evaluation is necessary for a comprehensive understanding of the model's performance. This should however not diminish the value of our findings on CIFAR-10 and our methodological contributions.
 
 \begin{figure}
 	\centering
@@ -1048,17 +1048,15 @@ The experiments discussed in this section are illustrated in Figures~\ref{fig:fg
 
 \paragraph{Natural Training.}
 
-Looking broadly at the self-ensembled model's robustness against various attacks, we observe a consistent trend.
-
-Natural training was not given much attention in the original paper we reproduced, even though our experiments consistently show that it plays a key role in achieving robustness. For example, while self-ensembling of the ResNet architecture is effective, it falls short when dealing with more sophisticated attacks beyond simple FGSM. When comparing naturally trained models (marked in black in the plots) to non-naturally trained ones (marked in gray), an interesting pattern emerges: initially, the non-naturally trained model underperforms on benign datasets by around 10\%. However, as attack strength increases—whether through FGSM, PGD, or masks with opacity above 32 \textendash{} we see the naturally trained model gain a substantial advantage. This is particularly striking in PGD attacks, where the accuracy of non-naturally trained models can drop close to zero when targeting the final or intermediate layers. Meanwhile, naturally trained models experience only minor accuracy reductions under the same conditions.
+Natural training was not given much attention in the original paper we reproduced, even though our experiments consistently show that it plays a key role in achieving robustness. When comparing naturally trained models to non-naturally trained ones, an interesting pattern emerges: initially, the non-naturally trained model underperforms on benign datasets by around 10\%. However, as attack strength increases—whether through FGSM, PGD, or masks with opacity above 32 \textendash{} we see the naturally trained model gain a substantial advantage. This is particularly striking in PGD attacks, where the accuracy of non-naturally trained models can drop close to zero when targeting the final or intermediate layers. Meanwhile, naturally trained models experience only minor accuracy reductions under the same conditions.
 
 That said, this does not undermine the value of self-ensembling. In fact, it's highly effective in most scenarios, with the ensemble consistently outperforming the final layer. Only a few cases deviate from this trend. Attacks specifically targeting the ensemble itself are generally ineffective and combining natural training with self-ensembling produces exceptional results. When natural training is used, the ensemble's accuracy declines much more gradually as attack strength ramps up, compared to models lacking natural training.
 
-However, we had hoped that this new architecture alone might achieve state-of-the-art robustness without requiring any form of adversarial training \textendash{} a concept we refer to as ``zero-cost robustness''. This represents an exciting vision for the future of adversarial robustness research. Unfortunately, our findings suggest we're not there yet. While self-ensembling with ResNet is a promising step forward, it's not sufficient on its own to achieve state-of-the-art robustness without adversarial training.
+However, we had hoped that this new architecture alone might achieve state-of-the-art robustness without requiring any form of adversarial training \textendash{} a concept we refer to as ``zero-cost robustness''. This represents an exciting vision for the future of adversarial robustness research. Unfortunately, our findings suggest we are not there yet. While self-ensembling with ResNet is a promising step forward, it's not sufficient on its own to achieve state-of-the-art robustness without adversarial training.
 
 \paragraph{FGSM vs.\ PGD.}
 
-As expected, the PGD attack proves a lot stronger than FGSM when tested against the self-ensembled ResNet. Despite this, both attacks exhibit similar patterns in terms of which intermediary layers they impact and the overall shape of intermediary accuracy, as shown in Figure~\ref{fig:fgsm-pgd}. In every example, the PGD attack amplifies the accuracy drop seen from FGSM, particularly for the non-naturally trained model. While FGSM reduces accuracy to around 25\%, PGD pushes it nearly to zero. This disparity is most pronounced in the final layer, where PGD leads to a drop in accuracy exceeding 40\%.
+As expected, the PGD attack proves a lot stronger than FGSM when tested against the self-ensembled ResNet. Despite this, both attacks exhibit similar patterns in terms of which intermediary layers they impact and the overall shape of intermediary accuracy, as shown in Figure~\ref{fig:fgsm-pgd}. While FGSM reduces accuracy to around 25\%, PGD pulls it nearly to zero. This disparity is most pronounced in the final layer, where PGD leads to a drop in accuracy exceeding 40\%.
 
 \begin{figure}
 	\centering
@@ -1069,7 +1067,7 @@ As expected, the PGD attack proves a lot stronger than FGSM when tested against 
 
 \paragraph{Geometric Masks.}
 
-In this set of experiments, we did not rely on perceptibility proxy metrics. Instead, we manually inspected the masks to evaluate their perceptibility. We observed that the unrestricted geometric adversarial examples used as masks were not only clearly perceptible but also caused information loss. Specifically, with an opacity of 128, which left only the contours and rough edges of shapes visible. Nonetheless we could consistently and accurately identify the underlying class of the image in every case.
+In this set of experiments, we did not rely on perceptibility proxy metrics. Instead, we manually inspected the masks to evaluate their perceptibility. We observed that the unrestricted geometric adversarial examples used as masks were not only clearly perceptible but also caused information loss. Specifically, with an opacity of 128, which left only the contours and rough edges of shapes visible. Nonetheless we could consistently and accurately identify the underlying class of the image in every case. The opacity of 128 (in a range from 0 to 255) was the highest exponent of 2 that we could safely identify the underlying class with in every case.
 
 Among the variables involved in geometric mask attacks \textendash{} such as the number of shape sides, number of shapes per row and column, number of concentric shapes, enabling or disabling colors and opacity \textendash{} we identified the three most effective masks through exploratory analysis. We then fixed those variables as constants and focused our investigation on two variables: the number of shapes per row and column and opacity, as they had the most significant impact.
 
@@ -1086,9 +1084,9 @@ Interestingly, while varying the number of shapes per row and column yielded onl
 
 Similar to the large accuracy drop observed in the self-ensembled ResNet, especially from opacity 32, we find that simply tuning the backbone on the CIFAR10 dataset without incorporating adversarial examples also results in a noticeable accuracy decline. However, when the backbone is adversarially trained using the same masks it is later evaluated on, its accuracy significantly improves, outperforming the self-ensembled ResNet and reaching nearly 80\% accuracy. This trend is illustrated in Figure~\ref{fig:vanilla}.
 
-The key insight here is that when adversaries gain access to the mask used for generating adversarial examples and train their model against it (along with the dataset), the effectiveness of the attack diminishes considerably. This highlights that a ``robustified'' backbone, trained with adversarial examples in its tuning set, is not directly comparable to the self-ensembled model in a fair manner.
+The key insight here is that when adversaries gain access to the mask used for generating adversarial examples and train their model against it, the effectiveness of the attack diminishes considerably. This highlights that a ``robustified'' backbone, trained with adversarial examples in its tuning set, is not directly comparable to the self-ensembled model in a fair manner.
 
-The self-ensembling approach and naturally trained self-ensemble exhibit an additional advantage: robustness across all masks, regardless of their specific properties. In contrast, the robustified backbone shows robustness only to the masks it was specifically tuned with. This finding underscores the versatility and potential of the self-ensembled ResNet.
+The self-ensembling approach and naturally trained self-ensemble exhibit an additional advantage: robustness across all masks, regardless of their specific properties. In contrast, the robustified backbone shows robustness only to the masks it was specifically tuned with. This finding underscores the versatility of the self-ensembled ResNet.
 
 However, in a specific case \textendash{} using 3-sided shapes, 10 shapes per row/column, 2 concentric shapes, with colors enabled \textendash{} we observe an anomaly among the high-opacity experiments. Here, even the naturally trained ensemble underperforms compared to the tuned but non-robustified backbone. While such exceptions exist, they were observed in less than 1\% of all experiments and only under particularly strong attacks.
 
@@ -1105,21 +1103,15 @@ Our key takeaways can be summarized in two important concepts.
 
 \paragraph{Limited Zero-Cost Robustness.}
 
-One of the central aspirations of this research was to assess whether self-ensembling architectures could achieve state-of-the-art adversarial robustness without incurring the computational expense of adversarial training \textendash{} a concept we refer to as ``zero-cost robustness''. While self-ensembling demonstrated clear potential, particularly in its ability to outperform non-ensembled layers in most scenarios, our results indicate that it falls short of achieving robustness on par with adversarially trained models.
-
-Attacks such as PGD revealed critical limitations of the self-ensembled ResNet, particularly when natural training was absent. The accuracy of non-naturally trained models plummeted close to zero under stronger attacks, emphasizing the need for additional mechanisms beyond architectural improvements to achieve true zero-cost robustness. Although natural training improved the model's resilience massively (maintaining accuracy by over 50\% for the highest tested opacity), it alone could not bridge the gap entirely. This suggests that while self-ensembling remains a promising approach, the vision of achieving robust, attack-resistant models without adversarial training is not yet a reality, underscoring the importance of continued research in this direction.
+One of the central aspirations of this research was to assess whether self-ensembling architectures could achieve state-of-the-art adversarial robustness without incurring the computational expense of adversarial training \textendash{} a concept we refer to as ``zero-cost robustness''. We observed that the accuracy of non-naturally trained models plummeted close to zero under stronger attacks such as PGD, emphasizing the need for additional mechanisms beyond architectural improvements for ResNet. Although natural training improved the model's resilience massively (maintaining accuracy by over 50\% for the highest tested mask opacity), it alone could not bridge the gap entirely. This suggests that while self-ensembling remains a promising approach, the vision of achieving robust, attack-resistant models without adversarial training is not yet a reality.
 
 \paragraph{Accuracy Flipping through Natural Training.}
 
-One of the most intriguing discoveries in our experiments was the ``accuracy flipping'' phenomenon observed under increasing attack strength. When comparing naturally trained and non-naturally trained models, we identified a consistent pattern: non-naturally trained models initially performed better on benign datasets but suffered dramatically under attack. Naturally trained models, on the other hand, demonstrated a striking resilience, with their accuracy surpassing that of non-naturally trained models as attack strength increased.
+One of the most intriguing discoveries in our experiments was the ``accuracy flipping'' phenomenon observed under increasing attack strength. When comparing naturally trained and non-naturally trained models, we identified a consistent pattern: non-naturally trained models initially performed better on benign datasets but suffered dramatically under attack. Naturally trained models, on the other hand, demonstrated great resilience. This behavior was especially pronounced when varying the opacity of geometric masks. A critical threshold emerged between opacity levels of 32 and 64, where naturally trained models began outperforming their non-naturally trained counterparts.
 
-This behavior was especially pronounced when varying the opacity of geometric masks. A critical threshold emerged between opacity levels of 32 and 64, where naturally trained models not only maintained more consistent performance but also began outperforming their non-naturally trained counterparts. This ``flipping'' of accuracy highlights the nuanced interplay between robustness and accuracy within naturally trained models.
-
-The phenomenon aligns with the broader ``robustness-accuracy trade-off'', suggesting that natural training manipulates a model's ability to generalize across both benign and adversarial examples. Moreover, it underscores the importance of natural training as a foundational mechanism for adversarial robustness.
+This ``flipping'' of accuracy aligns with the broader ``robustness-accuracy trade-off'', suggesting that natural training manipulates a model's ability to generalize across both benign and adversarial examples.
 
 \paragraph{Outlook.}
-
-In summary, our experiments highlight both the promise and the limitations of self-ensembling as a pathway toward robust machine learning. While natural training emerges as a surprisingly effective tool, particularly in counteracting stronger attacks like PGD and high-opacity geometric masks, achieving true zero-cost robustness remains an open challenge.
 
 Future work could explore the use of MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information between self-ensemble layers and track the movement of latent representations across these intermediate layers. Ideally, these finer-grained metrics, combined with simple and effective black-box attacks, could lay the groundwork for foundational research in the intersection of machine learning interpretability and adversarial robustness.
 
