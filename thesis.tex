@@ -940,7 +940,7 @@ We ran a set of experiments on CIFAR10 and CIFAR100 to confirm our reproduction 
 
 We found the best results with a learning rate of 1e-4, running for 16 epochs and setting CrossMax $k$ to 2. Interestingly, running more epochs only bumped up performance by less than 1\%, so we stuck with 16 epochs. For CrossMax $k$, 2 was the sweet spot for both datasets, although CIFAR10 showed a tiny edge with $k=3$ by just 0.1\%. These results are visualized in Figure~\ref{fig:se-hyperparams}. When the authors later shared parts of their implementation and hyperparameters, our findings were in line with theirs, except for slight differences in the learning rate (3.3e-5 vs 1e-4) and the number of epochs (6 vs 16). We believe these differences to be due to the computational limits they set for their experiments. Figure~\ref{fig:se-hyperparams} shows the results of our hyperparameter search on our reproduction of the self-ensembled ResNet.
 
-After the authors shared their codebase, we transitioned to their implementation to maintain consistency and ensure our results were directly comparable. 
+After the authors shared their codebase, we transitioned to their implementation to maintain consistency and ensure our results were directly comparable.
 
 \begin{figure}
 	\centering
@@ -959,9 +959,17 @@ We aimed to keep as many hyperparameters unchanged as possible while comparing t
 
 The nature-inspired noise works by adding noise, applying contrast adjustments, shifting pixel positions (jittering) and modifying resolutions. In the last step it combines these augmented outputs into a multichannel input to enhance training. The random channel resolution shuffling randomly shuffles the resolutions in the stack, while the light FGSM adversarial training applies FGSM adversarial training for a few epochs to improve adversarial robustness.
 
-Initially, we experimented with each technique independently to evaluate their effects. For example, applying random shuffling alone reduced adversarial robustness, whereas combining all three consistently produced the best results. We did not observe any negative interactions between these techniques, as they all seemed to complement each other. The results of these experiments are visualized in Figure~\ref{fig:8train-cifar10} and Figure~\ref{fig:8train-cifar100}. This led us to either exclusively use all three techniques or none at all in our subsequent experiments.
+Initially, we experimented with each technique independently to evaluate their effects. For example, applying random shuffling alone reduced adversarial robustness, whereas combining all three consistently produced the best results. We did not observe any negative interactions between these techniques, as they all seemed to complement each other. The results of these experiments are visualized in Figure~\ref{fig:8train-cifar10} and Figure~\ref{fig:8train-cifar100}. This led us to either exclusively use all three techniques or none at all in our subsequent experiments. We simply refer to this enhanced training strategy as ``natural training'' (or just adversarial training) in the following.
 
 Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR-100, as specified in the authors' codebase. While the original paper also utilized MNIST, we opted for Imagenette due to its relevance to higher-resolution tasks. However, the aggressive downsampling and upsampling in the code proved problematic for Imagenette, leading us to exclude it from our preliminary evaluation. These issues were addressed in our codebase for future experiments.
+
+\paragraph{Dataset Selection.}
+
+We evaluated on CIFAR-10 only.
+
+Despite implementing and configuring our evaluation pipeline for 3 datasets (CIFAR-10, CIFAR-100 and Imagenette), we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did identify compute bottlenecks in the codebase, some of which we also addressed as a pull request to the authors.
+
+However, as visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and this dataset is not representative for the others. Therefore, our results should be taken with a grain of salt and further evaluation is necessary for more conclusive results. This should however not diminish the value of our findings on CIFAR-10 and our methodological contributions.
 
 \begin{figure}
 	\centering
@@ -977,21 +985,13 @@ Our initial evaluations of the training strategies focused on CIFAR-10 and CIFAR
 	\label{fig:8train-cifar100}
 \end{figure}
 
-\paragraph{Dataset Selection.}
-
-We evaluated on CIFAR-10 only.
-
-Despite implementing and configuring our evaluation pipeline for 3 datasets (CIFAR-10, CIFAR-100 and Imagenette), we only evaluated CIFAR-10 due to time constraints. These constraints were due to the limited availability of GPUs with at least 80 GB memory, which is required by the self-ensembled ResNet model. We were unable to reduce the model's memory requirements, but we did identify compute bottlenecks in the codebase, some of which we also addressed as a pull request to the authors.
-
-However, as visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8train-cifar100}, classifying CIFAR-10 is clearly less challenging than other datasets for the self-ensembled ResNet and this dataset is not representative for the others. Therefore, our results should be taken with a grain of salt and further evaluation is necessary for more conclusive results. This should however not diminish the value of our findings on CIFAR-10 and our methodological contributions.
-
 \paragraph{Attack Selection.}
 
-We benchmarked against geometric masks, FGSM and PGD.
+We attacked the model with geometric masks, FGSM and PGD.
 
-The authors use a general benchmarking suite and visualize their attacks against FGSM, conducting only light adversarial training with FGSM. However, after consulting\footnote{Thanks to Nicholas Carlini for his advice.} and manual inspection, we decided to also include Projected Gradient Descent (PGD) attacks in our benchmarking suite.
+The authors use a general benchmarking suite and visualize their attacks against FGSM, while conducting only light adversarial training with FGSM. However, after consulting\footnote{Thanks to Nicholas Carlini for his advice.} and manual inspection, we decided to also include Projected Gradient Descent (PGD) attacks in our benchmarking suite.
 
-For the geometric masks, we extended our rendering pipeline from previous experiments. Building on the observation that opacity and density of a mask are generally relevant across all models and the effectiveness of the ``Knit'' mask on the vanilla ResNet architecture (which we also kept, see Figure \ref{fig:attacks-v2}), we parametrized our mask generator with the following parameters: number of sides (3, 4, 6, 10), number of concentric shapes (1, 2, 3, 4) and colors (True, False). We generated masks for all combinations of these parameters for our experiments. Selected examples of these masks are shown in Figure~\ref{fig:attacks-v2}.
+For the geometric masks, we extended our rendering pipeline from previous experiments. Building on the observation that opacity and density of a mask are generally relevant across all models and the effectiveness of the ``Knit'' mask on the vanilla ResNet architecture (which we also kept, see Figure \ref{fig:attacks-v2}), we parametrized our mask generator with the following parameters: the number of sides (3, 4, 6, 10), the shapes per row and column (2, 4, 10), the number of concentric shapes (1, 2, 3, 4) and colors (True, False). We generated masks for all combinations of these parameters for our experiments. Selected examples of these masks are shown in Figure~\ref{fig:attacks-v2}.
 
 \begin{figure}[th]
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/3_2_2_False.png}\caption{Triangle mask}\label{fig:atk1}\end{subfigure}
@@ -1006,51 +1006,53 @@ For the geometric masks, we extended our rendering pipeline from previous experi
 	\label{fig:attacks-v2}
 \end{figure}
 
-
-
-
-
-
+To narrow down the 96 geometric mask attacks, we did a preliminary exploratory analysis. We focused on the stronger ensemble accuracy (with and without natural training) since the ensemble consistently outperformed the last layer in all challenging experiments. This is further discussed in the results section. Figure~\ref{fig:mask-limit} shows the visual results of this analysis. We found that having 4 shapes per column and row, combined with 2 concentric shapes, was the most effective. Surprisingly, the number of sides had little impact on the mask's effectiveness, although triangles performed best overall. In every opacity, color, and side combination we tested, using colored masks (like those used by hCAPTCHA) outperformed monochrome masks by a wide margin. The most important parameters to vary in the remaining analyses were opacity, the number of shapes per row/column and whether the model was naturally trained. We discuss this narrowed subset of masks in the results section.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth,keepaspectratio]{figures/self_ensemble_mask_exploration_cifar10.pdf}
-	\caption{Wassup.}
-	\label{fig:wassup2}
+	\caption{Limiting mask parameters to the most effective ones for CIFAR10. The lower most plot encodes the opacity in the x-axis, the better performing ensemble accuracy in the y-axis, the number of sides in the individual subplots and whether masks are colored or not as the color.}
+	\label{fig:mask-limit}
 \end{figure}
-
-
-
-
-
-
-
-
 
 \paragraph{Baseline.} We benchmarked a ResNet-50 for comparison.
 
-...
+... add everything to the baseline section ...
 
 
 \section{Results}
 
+In this section we discuss the findings of our experiments, visualized in Figures~\ref{fig:fgsm-pgd} and~\ref{fig:mask-effective}.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figures/self_ensemble_fgsm_pgd_cifar10.pdf}
-	\caption{Wassup.}
-	\label{fig:wassup1}
+	\caption{Comparing FGSM and PGD attacks on CIFAR10. The X-axis shows intermediary layers, the Y-axis shows accuracy, the black line indicates light natural training, dotted horizontal lines show ensemble performance.}
+	\label{fig:fgsm-pgd}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth,keepaspectratio]{figures/self_ensemble_mask_final_cifar10.pdf}
-	\caption{Wassup.}
-	\label{fig:wassup3}
+	\caption{Evaluating the most effective masks on CIFAR10. The X-axis shows intermediary layers, the Y-axis shows accuracy, the black line indicates natural training with FGSM, dotted horizontal lines show ensemble performance.}
+	\label{fig:mask-effective}
 \end{figure}
 
+\paragraph{Replication was successful.}
 
+Self-ensembling proves to be highly effective. In most cases, the ensemble outperforms the final layer, with only a few exceptions. Attacks targeting the ensemble itself are generally ineffective. Combining natural training with self-ensembling yields exceptional results. With natural training, the ensemble accuracy declines much more slowly as the attack strength increases compared to models without natural training.
 
+This is particularly evident in PGD attacks: without natural training, targeting the final or intermediate layers can drop accuracy close to zero. In contrast, natural training allows the ensemble's accuracy to drop only marginally under similar conditions.
 
+\paragraph{Natural training isn't always beneficial.}
+
+The robustness-accuracy trade-off is evident through natural training.
+
+Interestingly, the impact of natural training appears to flip depending on the presence of an attack. Without an attack or under very low-opacity masks (e.g., up to 32), natural training tends to reduce model accuracy by about 10\% almost consistently. However, as opacity increases or when an attack is applied, natural training becomes highly beneficial. This phenomenon may reflect the robustness-accuracy trade-off commonly discussed in the literature. Notably, the self-ensembling technique seems unaffected by this trade-off, which is a particularly intriguing finding.
+
+\paragraph{Outlook.}
+
+Future research could explore the use of MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information between self-ensemble layers and track the movement of latent representations across these intermediate layers. Ideally, these finer-grained metrics, combined with simple and effective black-box attacks, could lay the groundwork for foundational research in adversarial robustness.
 
 
 
@@ -1058,10 +1060,6 @@ For the geometric masks, we extended our rendering pipeline from previous experi
 
 
 \section{Conclusion}
-
-\paragraph{Outlook.}
-
-using MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information between self-ensemble layers.
 
 
 
