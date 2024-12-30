@@ -1096,16 +1096,27 @@ However, in a specific case \textendash{} using 3-sided shapes, 10 shapes per ro
 
 \section{Conclusion}
 
+Our key takeaways can be summarized in two important concepts.
+
+\paragraph{Limited Zero-Cost Robustness.}
+
+One of the central aspirations of this research was to assess whether self-ensembling architectures could achieve state-of-the-art adversarial robustness without incurring the computational expense of adversarial training \textendash{} a concept we refer to as ``zero-cost robustness''. While self-ensembling demonstrated clear potential, particularly in its ability to outperform non-ensembled layers in most scenarios, our results indicate that it falls short of achieving robustness on par with adversarially trained models.
+
+Attacks such as PGD revealed critical limitations of the self-ensembled ResNet, particularly when natural training was absent. The accuracy of non-naturally trained models plummeted close to zero under stronger attacks, emphasizing the need for additional mechanisms beyond architectural improvements to achieve true zero-cost robustness. Although natural training improved the model's resilience massively (maintaining accuracy by over 50\% for the highest tested opacity), it alone could not bridge the gap entirely. This suggests that while self-ensembling remains a promising approach, the vision of achieving robust, attack-resistant models without adversarial training is not yet a reality, underscoring the importance of continued research in this direction.
+
+\paragraph{Accuracy Flipping through Natural Training.}
+
+One of the most intriguing discoveries in our experiments was the ``accuracy flipping'' phenomenon observed under increasing attack strength. When comparing naturally trained and non-naturally trained models, we identified a consistent pattern: non-naturally trained models initially performed better on benign datasets but suffered dramatically under attack. Naturally trained models, on the other hand, demonstrated a striking resilience, with their accuracy surpassing that of non-naturally trained models as attack strength increased.
+
+This behavior was especially pronounced when varying the opacity of geometric masks. A critical threshold emerged between opacity levels of 32 and 64, where naturally trained models not only maintained more consistent performance but also began outperforming their non-naturally trained counterparts. This ``flipping'' of accuracy highlights the nuanced interplay between robustness and accuracy within naturally trained models.
+
+The phenomenon aligns with the broader ``robustness-accuracy trade-off'', suggesting that natural training manipulates a model's ability to generalize across both benign and adversarial examples. Moreover, it underscores the importance of taking natural training into account as a foundational component of robustness, especially when designing models aimed at withstanding unrestricted or perceptual adversarial attacks.
+
 \paragraph{Outlook.}
 
-Future research could explore the use of MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information between self-ensemble layers and track the movement of latent representations across these intermediate layers. Ideally, these finer-grained metrics, combined with simple and effective black-box attacks, could lay the groundwork for foundational research in the intersection of machine learning interpretability and adversarial robustness.
+In summary, our experiments highlight both the promise and the limitations of self-ensembling as a pathway toward robust machine learning. While natural training emerges as a surprisingly effective tool, particularly in counteracting stronger attacks like PGD and high-opacity geometric masks, achieving true zero-cost robustness remains an open challenge.
 
-
-
-
-
-
-
+Future work could explore the use of MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information between self-ensemble layers and track the movement of latent representations across these intermediate layers. Ideally, these finer-grained metrics, combined with simple and effective black-box attacks, could lay the groundwork for foundational research in the intersection of machine learning interpretability and adversarial robustness.
 
 \bigskip
 \bibliographystyle{IEEEtran}
