@@ -124,33 +124,21 @@
 
 \begin{abstract}
 	% short. state what you did and what the most important result is.
-	Adversarial machine learning has traditionally focused on imperceptible perturbations that fool deep neural networks. This thesis challenges that narrow view by examining unrestricted adversarial examples \textendash{} a broader class of manipulations that can compromise model security while preserving semantics.
+	
+	Traditionally, adversarial examples have been defined as imperceptible perturbations that fool deep neural networks. This thesis challenges that narrow view by examining unrestricted adversarial examples \textendash{} a broader class of manipulations that can compromise model security while preserving semantics.
 
-	Through extensive experiments, we make three key contributions: First, we demonstrate that the standard imperceptibility constraint is insufficient for characterizing real-world adversarial threats through a comprehensive survey of current research. Second, we develop a novel and computationally efficient method for generating adversarial examples using geometric masks inspired by hCAPTCHA challenges. Our approach creates adversarial examples that are (1) effective, (2) transferable between models and (3) more traceable in the model's decision space \textendash{} achieving comparable misclassification rates to existing techniques while requiring significantly less compute. Finally, we investigate improving model robustness by creating ensembles from intermediary ResNet layers using linear probes, combined with nature-inspired noise during training. While this architectural approach shows promise, we find that achieving ``zero-cost robustness'' remains elusive without adversarial training.
+	Through extensive experiments, we make three key contributions: First, we demonstrate that the standard imperceptibility constraint is insufficient for characterizing real-world adversarial threats through a comprehensive survey of current research. Second, we develop a novel and computationally efficient method for generating adversarial examples using geometric masks inspired by hCAPTCHA challenges. Our approach creates adversarial examples that are (1) effective, (2) transferable between models and (3) more traceable in the model's decision space \textendash{} achieving comparable misclassification rates to existing techniques while requiring significantly less compute. Finally, we investigate improving model robustness by creating ensembles from intermediary ResNet layers using linear probes, combined with nature-inspired noise during training. While this architectural approach shows promise, we find that achieving ``zero-cost robustness'' remains unattainable without adversarial training.
 
 	This work advances our understanding of adversarial examples beyond pixel-space perturbations and provides practical tools for both generating and defending against them.
 	Our findings highlight the need to rethink how we conceptualize and evaluate adversarial robustness in machine learning systems.
 \end{abstract}
 
 \begin{zusammenfassung}
-	% feindliche angriffe / adversarielle beispiele
-	% Das Maschinellelernwidrigkeitsforschungsgebietsuntersuchungswesen hat sich traditionellerweise auf Unmerklichkeitsveränderungsmanipulationsvorgehensweisen fokussieret, welche die Tiefeneuronalennetzwerkverarbeitungssysteme täuschen. Diese Masterarbeitsforschungsschriftendokumentation herausfordert selbige eingeschränkte Betrachtungsweisenmethodologie durch die Untersuchungsanalyse von uneingeschränkten Widersacherischenexemplifizierungsmanifestationen \textendash{} eine umfänglichere Klassifizierungskategorisierung von Manipulationsverfahrensweisenmethodologien, welche die Modellsicherheitsverhältnisgarantien kompromittieren können, während die Semantikbedeutungserhaltung bewahret wird.
+	Traditionell wurden adversariale Beispiele als unmerkliche Störungen definiert, die tiefe neuronale Netze täuschen. Diese Arbeit stellt diese Sichtweise infrage, indem sie uneingeschränkte adversariale Beispiele untersucht \textendash{} eine breitere Klasse von Manipulationen, die die Modellsicherheit gefährden können, während die Semantik erhalten bleibt.
 
-	% Durch umfängliche Experimentalforschungsuntersuchungsdurchführungen leisten wir drei hauptsächliche Beitragsleistungsmanifestationen: Erstens demonstrieren wir, dass die standardisierte Unmerklichkeitseinschränkungsbedingungsvoraussetzung unzureichend ist für die Charakterisierungsbestimmung realweltlicher widersacherischer Bedrohungsszenarienkonstellationen durch eine allumfassende Begutachtungsuntersuchung gegenwärtiger Forschungsarbeitsbestrebungen. Zweitens entwickeln wir eine neuartige und recheneffizienzoptimierte Methodologievorgehensweise zur Generierungsherstellung widersacherischer Exemplifizierungsmanifestationen unter Verwendung geometrischer Maskierungsvorrichtungsapparaturen, inspirieret durch hCAPTCHA-Herausforderungsaufgabenstellungen.
-	
-	% Unsere Herangehensweisenmethodologie erschaffet widersacherische Exemplifizierungsmanifestationen, welche (1) wirkungsvollheitspotential, (2) zwischenmodellübertragungsfähigkeitscharakteristika und (3) modellentscheidungsraumsnachvollziehbarkeitsqualitäten aufweisen \textendash{} vergleichbare Fehlklassifizierungsratenleistungen zu existierenden Technikmethodologien erreichend bei wesentlich geringerem Berechnungsaufwandserfordernis.
-	
-	% Schlussendlich investigieren wir die Verbesserungspotentialausschöpfung der Modellrobustheitseigenschaftscharakteristika durch die Kreierungsbestrebungen von Ensemblezusammenstellungskonfigurationen aus intermediären ResNet-Schichtenstrukturarchitekturen unter Verwendung linearer Sondierungsapparaturmechanismen, kombinieret mit naturinspiriertem Rauschverhaltensphänomen während des Trainierungsprozessablaufes.
-	
-	% Diese Forschungsarbeitsbestrebung erweitert unser Verständnishorizontpotential widersacherischer Exemplifizierungsmanifestationen jenseits von Pixelraumperturbationsmodifikationen und stellet praktische Werkzeugunterstützungsmechanismen zur Verfügung.
-	% Unsere Erkenntnisgewinnungsresultate unterstreichen die Notwendigkeitserfordernis, unsere Konzeptualisierungsherangehensweise und Evaluierungsmethodologien der widersacherischen Robustheitseigenschaftscharakteristika in Maschinellenlernverarbeitungssystemen zu überdenken.
+	Durch umfangreiche Experimente leisten wir drei wichtige Beiträge: Erstens zeigen wir durch eine umfassende Untersuchung der aktuellen Forschung, dass die standardmäßige Beschränkung der Unmerklichkeit für die Charakterisierung realer adversarialer Bedrohungen unzureichend ist. Zweitens entwickeln wir eine neuartige und rechnerisch effiziente Methode zur Erzeugung adversarialer Beispiele mithilfe geometrischer Masken, die von hCAPTCHA-Herausforderungen inspiriert sind. Unser Ansatz erzeugt adversariale Beispiele, die (1) effektiv, (2) zwischen Modellen übertragbar und (3) im Entscheidungsraum des Modells besser nachvollziehbar sind \textendash{} wobei vergleichbare Fehlklassifizierungsraten wie bei bestehenden Techniken erreicht werden, während deutlich weniger Rechenleistung erforderlich ist. Schließlich untersuchen wir die Verbesserung der Modellrobustheit durch die Erstellung von Ensembles aus intermediären ResNet-Schichten unter Verwendung linearer Sonden, kombiniert mit naturinspiriertem Rauschen während des Trainings. Während dieser architektonische Ansatz vielversprechend ist, stellen wir fest, dass das Erreichen einer ``kostenfreien Robustheit'' ohne adversariales Training nicht möglich ist.
 
-	Feindliche Angriffe wurden traditionell auf nicht wahrnehmbare Störungen beschränkt, die tiefe neuronale Netzwerke täuschen. Diese Arbeit stellt diese enge Sichtweise in Frage, indem sie unbeschränkte feindliche Angriffe untersucht, eine breitere Klasse von Manipulationen, die die Sicherheit des Modells gefährden können, ohne die Semantik von Eingaben zu beeinträchtigen.
-
-	Durch umfangreiche Experimente leisten wir drei wichtige Beiträge: Erstens zeigen wir, dass die Standardbedingung der Unwahrnehmbarkeit nicht ausreicht, um reale Bedrohungen zu charakterisieren, indem wir einen umfassenden Überblick über die aktuelle Forschung geben. Zweitens entwickeln wir eine neuartige und rechnerisch effiziente Methode zur Generierung von feindlichen Beispielen mit geometrischen Masken, die von hCAPTCHA-Herausforderungen inspiriert sind. Unser Ansatz erzeugt feindliche Beispiele, die (1) effektiv, (2) zwischen Modellen übertragbar und (3) im Entscheidungsraum des Modells nachvollziehbarer sind und vergleichbare Fehlklassifizierungsraten wie bestehende Verfahren erreichen, während sie deutlich weniger Rechenaufwand erfordern. Schließlich untersuchen wir die Verbesserung der Modellrobustheit durch die Erstellung von Ensembles aus ResNet-Zwischenschichten unter Verwendung von linearen Sonden in Kombination mit naturinspiriertem Rauschen während des Trainings. Während dieser architektonische Ansatz vielversprechend ist, stellen wir fest, dass sie keine ``kostenlose Robustheit'' erreicht.
-
-	Diese Arbeit erweitert unser Verständnis von feindlichen Beispielen über Pixel-Raum-Störungen hinaus und bietet praktische Werkzeuge, um sie zu erzeugen und sich gegen sie zu verteidigen.
-	Unsere Ergebnisse unterstreichen die Notwendigkeit, die Art und Weise, wie wir die Robustheit von Systemen des maschinellen Lernens konzeptualisieren und bewerten, zu überdenken.
+	Diese Arbeit erweitert unser Verständnis von adversarialen Beispielen über Pixel-Raum-Störungen hinaus und bietet praktische Werkzeuge sowohl für deren Erzeugung als auch für die Verteidigung gegen sie. Unsere Ergebnisse unterstreichen die Notwendigkeit, unser Verständnis und unsere Bewertung der adversarialen Robustheit in maschinellen Lernsystemen zu überdenken.
 \end{zusammenfassung}
 
 \chapter*{Originality}
@@ -158,8 +146,6 @@
 I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work \textendash{} including tables, maps and figures \textendash{} which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
 
 I further declare that I have used generative AI tools only as an aid, and that my own intellectual and creative efforts predominate in this work. In the appendix ``Overview of Generative AI Tools Used'' I have listed all generative AI tools that were used in the creation of this work, and indicated where in the work they were used. If whole passages of text were used without substantial changes, I have indicated the input (prompts) I formulated and the IT application used with its product name and version number/date.
-
-Yahya Jabary, \today. Signed digitally.
 
 \section*{Papers}
 
@@ -703,7 +689,7 @@ For experiments we utilized the enriched ImageNet dataset provided by ``visual-l
 
 \paragraph{Evaluation Metrics.}
 
-We measured the drop in accuracy and perceptual quality using a proxy metric.
+We measured accuracy drop and perceptual quality using a proxy metric.
 
 Perceptual quality is about how visually similar the adversarial examples are to the original images. We used a weighted average metric to get a comprehensive view of image quality. This metric combines cosine similarity (15\% weight)~\cite{singhal2001modern}, Peak Signal-to-Noise Ratio (PSNR, 25\% weight)~\cite{9311108}, Structural Similarity Index (SSIM, 35\% weight)~\cite{wang2004image} and Learned Perceptual Image Patch Similarity (LPIPS, 25\% weight)~\cite{lpips}. These weights were chosen to balance the importance of each component in assessing overall image quality. We decided to omit the Fréchet Inception Distance (FID), due to its high computational cost. Overall, we want this number to be as high as possible.
 
@@ -1129,7 +1115,7 @@ One of the most intriguing discoveries in our experiments was the ``accuracy fli
 
 This behavior was especially pronounced when varying the opacity of geometric masks. A critical threshold emerged between opacity levels of 32 and 64, where naturally trained models not only maintained more consistent performance but also began outperforming their non-naturally trained counterparts. This ``flipping'' of accuracy highlights the nuanced interplay between robustness and accuracy within naturally trained models.
 
-The phenomenon aligns with the broader ``robustness-accuracy trade-off'', suggesting that natural training manipulates a model's ability to generalize across both benign and adversarial examples. Moreover, it underscores the importance of taking natural training into account as a foundational component of robustness, especially when designing models aimed at withstanding unrestricted or perceptual adversarial attacks.
+The phenomenon aligns with the broader ``robustness-accuracy trade-off'', suggesting that natural training manipulates a model's ability to generalize across both benign and adversarial examples. Moreover, it underscores the importance of natural training as a foundational mechanism for adversarial robustness.
 
 \paragraph{Outlook.}
 
