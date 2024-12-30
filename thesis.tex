@@ -207,7 +207,7 @@ The following projects were developed as part of this work (in chronological ord
 \begin{samepage}
 	\begin{spacing}{1}
 		\textbf{cluster-tutorial} \\
-		Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the shell to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all file pointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also can run a Jupyterlab instance on the intranet. \\
+		Tutorial on how to circumvent the distributed NFS4 filesystem by attaching the terminal to an interactive SLURM job, running an Apptainer to provide root privileges and redirecting all file pointers to the EXT4 filesystem to avoid out-of-memory OS errors. Also runs a Jupyterlab instance on the intranet for ease of use. \\
 		\url{https://github.com/ETH-DISCO/cluster-tutorial}
 	\end{spacing}
 \end{samepage}
@@ -1056,10 +1056,13 @@ In this section we present our findings on the self-ensembled ResNet model, as v
 	\label{fig:fgsm-pgd}
 \end{figure}
 
+% maybe also add the baseline resnet results as horizontal dotted lines in the plot below
+% alternatively maybe add a grouped bar plot
+
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth,keepaspectratio]{figures/self_ensemble_mask_final_cifar10.pdf}
-	\caption{Evaluating the most effective masks on CIFAR10. The X-axis shows intermediary layers, the Y-axis shows accuracy, the black line indicates natural training with FGSM, dotted horizontal lines show ensemble performance.}
+	\caption{Evaluating the most effective masks on CIFAR10. The X-axis shows intermediary layers, the Y-axis shows accuracy, the black line indicates natural training, dotted horizontal lines show ensemble performance.}
 	\label{fig:mask-effective}
 \end{figure}
 
