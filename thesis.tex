@@ -989,7 +989,7 @@ However, as visible in Figure~\ref{fig:8train-cifar10} vs.\ Figure~\ref{fig:8tra
 
 We attacked the model with geometric masks, FGSM and PGD.
 
-The authors use a general benchmarking suite and visualize their attacks against FGSM, while conducting only light adversarial training with FGSM. However, after consulting\footnote{Thanks to Nicholas Carlini for his advice.} and manual inspection, we decided to also include Projected Gradient Descent (PGD) attacks in our benchmarking suite.
+The authors use a general benchmarking suite and visualize their attacks against FGSM. However, after some consultation\footnote{Thanks to Nicholas Carlini for his advice.} and manual inspection, we decided to also include Projected Gradient Descent (PGD) attacks in our evaluation.
 
 For the geometric masks, we extended our rendering pipeline from previous experiments. Building on the observation that opacity and density of a mask are generally relevant across all models and the effectiveness of the ``Knit'' mask on the vanilla ResNet architecture (which we also kept, see Figure \ref{fig:attacks-v2}), we parametrized our mask generator with the following parameters: the number of sides (3, 4, 6, 10), the shapes per row and column (2, 4, 10), the number of concentric shapes (1, 2, 3, 4) and colors (True, False). We generated masks for all combinations of these parameters for our experiments. Selected examples of these masks are shown in Figure~\ref{fig:attacks-v2}.
 
@@ -1022,7 +1022,7 @@ To narrow down the 96 geometric mask attacks, we did a preliminary exploratory a
 
 \section{Results}
 
-In this section we discuss the findings of our experiments, visualized in Figures~\ref{fig:fgsm-pgd} and~\ref{fig:mask-effective}.
+In this section we present our findings on the self-ensembled ResNet model, as visualized in Figures~\ref{fig:fgsm-pgd} and~\ref{fig:mask-effective}.
 
 \begin{figure}
 	\centering
@@ -1038,6 +1038,11 @@ In this section we discuss the findings of our experiments, visualized in Figure
 	\label{fig:mask-effective}
 \end{figure}
 
+
+
+
+\section{Conclusion}
+
 \paragraph{Self-ensembling improves robustness.}
 
 Self-ensembling proves to be highly effective. In most cases, the ensemble outperforms the final layer, with only a few exceptions. Attacks targeting the ensemble itself are generally ineffective. Combining natural training with self-ensembling yields exceptional results. With natural training, the ensemble accuracy declines much more slowly as the attack strength increases compared to models without natural training.
@@ -1051,14 +1056,6 @@ Interestingly, the impact of natural training appears to flip depending on the p
 \paragraph{Outlook.}
 
 Future research could explore the use of MINE~\cite{pmlr-v80-belghazi18a} and Rényi's $\alpha$-order matrix-based functional~\cite{6954500} to estimate mutual information between self-ensemble layers and track the movement of latent representations across these intermediate layers. Ideally, these finer-grained metrics, combined with simple and effective black-box attacks, could lay the groundwork for foundational research in the intersection of machine learning interpretability and adversarial robustness.
-
-
-
-
-
-
-\section{Conclusion}
-
 
 
 
