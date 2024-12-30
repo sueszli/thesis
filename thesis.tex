@@ -124,14 +124,34 @@
 
 \begin{abstract}
 	% short. state what you did and what the most important result is.
-	% the context of the work/task, the research question, the scientific method(s)/procedure(s) used and the central results.
-	... (english)
+	Adversarial machine learning has traditionally focused on imperceptible perturbations that fool deep neural networks. This thesis challenges that narrow view by examining unrestricted adversarial examples \textendash{} a broader class of manipulations that can compromise model security while preserving semantics.
+
+	Through extensive experiments, we make three key contributions: First, we demonstrate that the standard imperceptibility constraint is insufficient for characterizing real-world adversarial threats through a comprehensive survey of current research. Second, we develop a novel and computationally efficient method for generating adversarial examples using geometric masks inspired by hCAPTCHA challenges. Our approach creates adversarial examples that are (1) effective, (2) transferable between models and (3) traceable in the model's decision space \textendash{} achieving comparable misclassification rates to existing techniques while requiring significantly less compute. Finally, we investigate improving model robustness by creating ensembles from intermediary ResNet layers using linear probes, combined with nature-inspired noise during training. While this architectural approach shows promise, we find that achieving ``zero-cost robustness'' remains elusive without adversarial training.
+
+	This work advances our understanding of adversarial examples beyond pixel-space perturbations and provides practical tools for both generating and defending against them.
+	
+	Our findings highlight the need to rethink how we conceptualize and evaluate adversarial robustness in machine learning systems.
 \end{abstract}
 
 \begin{zusammenfassung}
-	% feindliche angriffe / adversarielle beispiele.
+	% feindliche angriffe / adversarielle beispiele
+	Das Maschinellelernwidrigkeitsforschungsgebietsuntersuchungswesen hat sich traditionellerweise auf Unmerklichkeitsveränderungsmanipulationsvorgehensweisen fokussieret, welche die Tiefeneuronalennetzwerkverarbeitungssysteme täuschen. Diese Dissertationsforschungsschriftendokumentation herausfordert selbige eingeschränkte Betrachtungsweisenmethodologie durch die Untersuchungsanalyse von uneingeschränkten Widersacherischenexemplifizierungsmanifestationen \textendash{} eine umfänglichere Klassifizierungskategorisierung von Manipulationsverfahrensweisenmethodologien, welche die Modellsicherheitsverhältnisgarantien kompromittieren können, während die Semantikbedeutungserhaltung bewahret wird.
 
-	... (german)
+	Durch umfängliche Experimentalforschungsuntersuchungsdurchführungen leisten wir drei hauptsächliche Beitragsleistungsmanifestationen: Erstens demonstrieren wir, dass die standardisierte Unmerklichkeitseinschränkungsbedingungsvoraussetzung unzureichend ist für die Charakterisierungsbestimmung realweltlicher widersacherischer Bedrohungsszenarienkonstellationen durch eine allumfassende Begutachtungsuntersuchung gegenwärtiger Forschungsarbeitsbestrebungen. Zweitens entwickeln wir eine neuartige und recheneffizienzoptimierte Methodologievorgehensweise zur Generierungsherstellung widersacherischer Exemplifizierungsmanifestationen unter Verwendung geometrischer Maskierungsvorrichtungsapparaturen, inspirieret durch hCAPTCHA-Herausforderungsaufgabenstellungen.
+	
+	Unsere Herangehensweisenmethodologie erschaffet widersacherische Exemplifizierungsmanifestationen, welche (1) wirkungsvollheitspotential, (2) zwischenmodellübertragungsfähigkeitscharakteristika und (3) modellentscheidungsraumsnachvollziehbarkeitsqualitäten aufweisen \textendash{} vergleichbare Fehlklassifizierungsratenleistungen zu existierenden Technikmethodologien erreichend bei wesentlich geringerem Berechnungsaufwandserfordernis.
+	
+	Schlussendlich investigieren wir die Verbesserungspotentialausschöpfung der Modellrobustheitseigenschaftscharakteristika durch die Kreierungsbestrebungen von Ensemblezusammenstellungskonfigurationen aus intermediären ResNet-Schichtenstrukturarchitekturen unter Verwendung linearer Sondierungsapparaturmechanismen, kombinieret mit naturinspiriertem Rauschverhaltensphänomen während des Trainierungsprozessablaufes.
+	
+	Diese Forschungsarbeitsbestrebung erweitert unser Verständnishorizontpotential widersacherischer Exemplifizierungsmanifestationen jenseits von Pixelraumperturbationsmodifikationen und stellet praktische Werkzeugunterstützungsmechanismen zur Verfügung. Unsere Erkenntnisgewinnungsresultate unterstreichen die Notwendigkeitserfordernis, unsere Konzeptualisierungsherangehensweise und Evaluierungsmethodologien der widersacherischen Robustheitseigenschaftscharakteristika in Maschinellenlernverarbeitungssystemen zu überdenken.
+
+	% Das Maschinenlernwidrigkeitsforschungsgebiet hat sich traditionellerweise auf unmerkliche Veränderungsmanipulationen fokussieret, welche die tiefeneuronalen Netzwerke täuschen. Diese Dissertationsschrift challengieret selbige eingeschränkte Betrachtungsweise durch die Untersuchung von uneingeschränkten widersacherischen Exemplifizierungen \textendash{} eine umfänglichere Klassifizierung von Manipulationsverfahren, welche die Modellsicherheitsverhältnisse kompromittieren können, während die Semantik bewahret wird.
+
+	% Durch umfangreiche Experimentalforschungsuntersuchungen leisten wir drei hauptsächliche Beitragsleistungen: Erstens demonstrieren wir, dass die standardisierte Unmerklichkeitseinschränkungsbedingung unzureichend ist für die Charakterisierung realweltlicher widersacherischer Bedrohungsszenarien durch eine allumfassende Begutachtung gegenwärtiger Forschungsarbeit. Zweitens entwickeln wir eine neuartige und recheneffiziente Methodologie zur Generierung widersacherischer Exemplifizierungen unter Verwendung geometrischer Maskierungsvorrichtungen, inspirieret durch hCAPTCHA-Herausforderungsaufgaben. Unsere Herangehensweise erschaffet widersacherische Exemplifizierungen, welche (1) wirkungsvoll, (2) zwischen Modellen übertragbar und (3) im Modellentscheidungsraume nachvollziehbar sind \textendash{} vergleichbare Fehlklassifizierungsraten zu existierenden Techniken erreichend bei signifikant geringerem Berechnungsaufwande.
+	
+	% Schlussendlich investigieren wir die Verbesserung der Modellrobustheitseigenschaften durch die Kreierung von Ensemblezusammenstellungen aus intermediären ResNet-Schichtenstrukturen unter Verwendung linearer Sondierungsapparaturen, kombinieret mit naturinspiriertem Rauschverhalten während des Trainierungsprozesses. Während dieser architektonische Ansatz vielversprechend erscheinet, stellen wir fest, dass das Erreichen einer ``kostenfreien Robustheitseigenschaft'' ohne widersacherisches Training schwer erreichbar bleibet.
+	
+	% Diese Arbeit erweitert unser Verständnis widersacherischer Exemplifizierungen jenseits von Pixelraumperturbationen und stellet praktische Werkzeuge sowohl für die Generierung als auch die Verteidigung gegen selbige zur Verfügung. Unsere Erkenntnisse unterstreichen die Notwendigkeit, unsere Konzeptualisierungs- und Evaluierungsweise der widersacherischen Robustheitseigenschaften in Maschinenlehrnsystemen zu überdenken.
 \end{zusammenfassung}
 
 \chapter*{Originality}
