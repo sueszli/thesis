@@ -78,7 +78,7 @@
 
 % \logo{\includegraphics[width=0.2\columnwidth]{figures/dsg-logo}}
 
-\supervisors{Andreas Plesner\\[2pt] Prof.\ Dr.\ Roger Wattenhofer\\[2pt] Alireza Furutanpey\\[2pt] Prof.\ Dr.\ Schahram Dustdar}
+\supervisors{Andreas Plesner\\[2pt] Prof.\ Dr.\ Roger Wattenhofer\\[8pt] Alireza Furutanpey\\[2pt] Prof.\ Dr.\ Schahram Dustdar}
 
 % \keywords{Reliability, Robustness, Security, Algorithmic Models}
 % \categories{ACM categories go here.}
@@ -136,12 +136,15 @@
 
 \chapter*{Originality}
 
-% see: https://arxiv.org/pdf/2202.02435
 I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work \textendash{} including tables, maps and figures \textendash{} which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
 
 I further declare that I have used generative AI tools only as an aid, and that my own intellectual and creative efforts predominate in this work. In the appendix ``Overview of Generative AI Tools Used'' I have listed all generative AI tools that were used in the creation of this work, and indicated where in the work they were used. If whole passages of text were used without substantial changes, I have indicated the input (prompts) I formulated and the IT application used with its product name and version number/date.
 
+Yahya Jabary, \today. Signed digitally.
+
 \section*{Papers}
+
+% see: https://arxiv.org/pdf/2202.02435
 
 \begin{spacing}{1}
 	\textbf{Seeing Through the Mask: Rethinking Adversarial Examples for CAPTCHAs} \\
@@ -559,17 +562,17 @@ This perspective suggests that enhancing adversarial robustness requires develop
 
 \chapter{Experiments: HCaptcha Inspired Geometric Masks}
 
-When studying unrestricted adversarial examples in computer vision, we are essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we can not easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
+When studying unrestricted adversarial examples in computer vision, we are essentially dealing with a black box. Top-performing models are all deep neural networks, which are notoriously hard to interpret. This lack of interpretability means we cannot easily pinpoint why these models make certain decisions or more importantly, why they fail. This presents a challenge when trying to understand and mitigate adversarial vulnerabilities.
 
-To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric masks to overlay on images, avoiding complex spatial transformations or advanced attack techniques and (2) leveraging intermediary layers of neural networks to enhance interpretability.
+To address this challenge, we've adopted two guiding principles: (1) keeping it simple by using basic geometric shapes to overlay on images and (2) leveraging intermediary layers of neural networks, all to enhance interpretability.
 
-Each principle will be discussed in a seperate chapter.
+Each principle will be discussed in a separate chapter.
 
 \section{Research Motivation}
 
 We noticed a gap in research when it comes to unrestricted adversarial examples that exploit the human-machine vision gap. One practical application for these types of attacks is in developing robust CAPTCHAs\footnote{Completely Automated Public Turing test to tell Computers and Humans Apart}, which are widely used to differentiate between humans and bots. The aim is to create images that machines struggle or ideally fail to recognize, while remaining easily solvable by humans, to prevent denial-of-service attacks, spam, open-source intelligence scraping and other malicious activities.
 
-The biggest advantage of using CAPTCHAs for adversarial research is their proven effectiveness. By studying the challenges of top providers like Google's reCAPTCHA and hCaptcha, we can start off with a strong baseline \textendash{} with a proven track record of robustness \textendash{} to build upon. This saves us from having to reinvent the wheel. Additionally a CAPTCHA challenge is a well-defined problem with clear success criteria and would enable future studies to conduct adversarial research and their transferability to humans on a large scale with significantly fewer ethical, legal and financial constraints.
+Leveraging CAPTCHAs for adversarial research offers several key benefits: (1) Their real-world effectiveness is well-established, as demonstrated by widespread adoption from major providers like Google's reCAPTCHA and hCaptcha. Studying these systems provides a robust baseline with proven resilience, allowing researchers to build on existing strengths rather than starting from scratch. (2) CAPTCHAs present a well-defined challenge with clear success criteria, facilitating future studies on their transferability to human users. Moreover, this research can be conducted with fewer ethical, legal, and financial constraints compared to many other experimental setups.
 
 \begin{figure}
 	\centering
@@ -586,7 +589,7 @@ Despite Google's reCAPTCHA having a global market share of at least 99\%~\cite{a
 
 HCaptchas, on the other hand, have remained undefeated in the ongoing attack-defense arms race. In fact, several dedicated open-source communities collaborating on building a solver for hCaptcha report low success rates~\cite{hcaptcha2024base64, hcaptcha_challenger}. This is coupled with our observation on sophisticated defenses being rolled out by hCaptcha on an almost weekly basis. Within the last 6 months we were studying hCaptcha, we observed the obfuscation of metadata and payloads, the introduction of new reasoning-based challenges through question answering and the introduction of new classification and segmentation challenges. This leads us to believe that hCaptcha is the most robust CAPTCHA provider on the market today.
 
-Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The segmentation challenge works by overlaying images with more complex patterns, such as a grid of colored geometric shapes with varying sizes and rotations. These challenges are designed to be easily solvable by humans, but difficult for machines to classify accurately.
+Two hCaptcha challenges were selected for our experiments: a classification challenge and a segmentation challenge. The classification challenge overlays images with simple, predictable patterns like grids of colored geometric shapes (e.g., circles or squares). The segmentation challenge works by embedding images within a Perlin-noise-like pattern and overlaying various unrestricted perturbations.
 
 In this scenario, the solver / identity provider acts as the adversary, while the CAPTCHA provider is the challenger. The adversary aims to bypass the CAPTCHA, and the challenger's goal is to prevent this. The adversary's success is gauged by the solver's accuracy, whereas the challenger's success is measured by the CAPTCHA's effectiveness. 
 
@@ -665,11 +668,11 @@ For the segmentation task, we experimented with various background textures, inc
 
 We benchmarked 5 SOTA models, that can run on consumer hardware.
 
-To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, Github Trends, Pytorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
+To identify the best zero-shot open vocabulary classification, object detection and segmentation models that can run on consumer hardware, we did a near exhaustive literature review. We looked at focused research papers~\cite{wang2024benchmarking, goldblum2024battle} and checked out public leaderboards from HuggingFace, TIMM, PapersWithCode, GitHub Trends, PyTorch benchmarks and more. Our goal was to ensure that the solver could break CAPTCHAs on any machine with minimal setup.
 
 After the literature review we clustered the models by their architecture family and clustered them on a scatter plot based on their performance, inspired by~\cite{howard_image_models}. We then selected the top models from each family and attempted to run them on a consumer machine, assuming that they are publicly available. This was to test the feasibility of running these models in a real-world scenario.
 
-We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, the original ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words} and ``ResNet50x64''~\cite{He_2015_ICCV}. We highlight results for a subset of these models, specifically ConvNeXt, EVA01, EVA02, ViT-H-14 and ResNet50. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families. Additonally, we also evaluated a custom adversarially trained ResNet-50, but due to its poor performance, we decided to exclude it from the final results.
+We chose several models to test, including ``ConvNeXt\_XXLarge''~\cite{Liu_2022_CVPR}, Open CLIP's ``EVA01-g-14-plus''~\cite{Fang_2023_CVPR} and ``EVA02-L-14''~\cite{fang2024eva}, the original ``ViT-H-14-378-quickgelu''~\cite{dosovitskiy2021imageworth16x16words} and ``ResNet50x64''~\cite{He_2015_ICCV}. We highlight results for a subset of these models, specifically ConvNeXt, EVA01, EVA02, ViT-H-14 and ResNet50. These models were picked to cover key architectures in both convolutional and transformer-based approaches, allowing us to see how well our masks work across different architecture families. Additionally, we also evaluated a custom adversarially trained ResNet-50, but due to its poor performance, we decided to exclude it from the final results.
 
 When specific models are not mentioned in tables, experiments or figures, we are implicitly referring to the average performance of all the models listed.
 
@@ -711,11 +714,11 @@ We ran a hyperparameter grid search using the ``visual-layer/imagenet-1k-vl-enri
 
 Our optimization metric combined the difference in model accuracy before and after applying the mask with an average of three perceptual quality metrics. To find the best parameters, we selected examples with the highest perceptual quality for each level of accuracy difference and performed a linear regression. We then focused on samples above the regression line in multidimensional space. This approach was more manageable than our attempts with multi-objective optimization involving multiple variables.
 
-Our initial grid search revealed some interesting patterns. We found that achieving high perceptual quality generally required a combination of low opacity and high density. Specifically, the optimal opacity range appeared to be between 50 and 200. Additionally, higher density values consistently yielded better results. Among the various masks we tested, the diamond mask stood out as offering the best balance between effectiveness and perceptual quality. Based on these findings, the diamond mask seemed most promising for the subsequent steps of our experiments. Figure \ref{fig:tradeoff-1} shows the trade-off between accuracy and perceptual quality for the strongest masks, where masks are visually encoded through shapes, opacities through alpha values and densities through the size of the shapes. A linear regression line is shown to highlight the areas of interest.
+Our initial grid search revealed some interesting patterns. We found that achieving high perceptual quality generally required a combination of low opacity and high density. Specifically, the optimal opacity range appeared to be between 50 and 200. Additionally, higher density values consistently yielded better results. Among the various masks we tested, the diamond mask stood out as offering the best balance between effectiveness and perceptual quality. Based on these findings, the diamond mask seemed most promising for the following steps of our experiments. Figure \ref{fig:tradeoff-1} shows the trade-off between accuracy and perceptual quality for the strongest masks, where masks are visually encoded through shapes, opacities through alpha values and densities through the size of the shapes. A linear regression line is shown to highlight the areas of interest.
 
 Our second grid search, which combined FGSM perturbations with the chosen masks, revealed some interesting insights. We found that combining perturbations with the masks generally led to worse results. The best results were obtained using the diamond mask with FGSM disabled, a density of 50 and opacities of 150 or 170. This further validated our previous findings and hinted that FGSM should be used with caution when combined with masks. Figure \ref{fig:tradeoff-2} shows the trade-off between accuracy and perceptual quality for the diamond mask combined with different opacities, densities and perturbation settings.
 
-While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the subsequent experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
+While these results are not representative of the entire dataset or model space, they provide a good starting point for our experiments. We can conclude not to use perturbations with the masks. These initial findings also helped us identify the best configurations in opacity and density, to be used in the following experiments. The final configurations of each mask are shown in figure \ref{fig:hcaptchacombined}.
 
 \begin{figure}
 	\centering
@@ -741,7 +744,7 @@ The results of our experiment are visualized in Figure~\ref{fig:accpercept} and 
 
 The different mask types (circle, square, diamond and knit) and opacity levels show a range of performance across this trade-off spectrum. The scatter plot highlights clusters of points for each mask type, with some masks consistently striking a better balance between attack effectiveness and perceptual quality. Most importantly, these geometric pattern masks transfer well between state-of-the-art models.
 
-The circle masks, contrary to our initial hyperparameter search, seem to be the most effective at reducing accuracy across all models and opacities. The knit mask, on the other hand, has a much smaller impact on accuracy.
+The circle masks, contrary to our initial hyperparameter search, seem the most effective at reducing accuracy across all models and opacities. The knit mask, on the other hand, has a much smaller impact on accuracy.
 
 These results demonstrate that using geometric masks is a practical method for generating adversarial examples with minimal computational demands for benchmarking in future experiments.
 
@@ -800,7 +803,7 @@ We inspected individual models, examining both the drop in acc@1 and acc@5. This
 
 A negative value indicates an improvement in accuracy, while a positive value indicates a decrease. Larger values indicate a stronger effect of the adversarial examples.
 
-While the previous perspective on the data compared masks against each other, this view allows us to compare the models against each other. We can see that while all models show very similar overall trends in their behavior, the ResNet model seems to be particularly sensitive to the Diamond and Knit pattern in contrast to the others. This is particularly interesting, given that the Knit pattern is the least effective mask overall, as seen in the previous step.
+While the previous perspective on the data compared masks against each other, this view allows us to compare the models against each other. We can see that while all models show very similar overall trends in their behavior, the ResNet model seems particularly sensitive to the Diamond and Knit pattern in contrast to the others. This is particularly interesting, given that the Knit pattern is the least effective mask overall, as seen in the previous step.
 
 \begin{table}[h]
 	% this was accidentally mislabeled as subset-500 by andreas in the paper - it's actually the full imagenet dataset
@@ -881,15 +884,15 @@ While the previous perspective on the data compared masks against each other, th
 
 \section{Conclusion}
 
-In our initial experiments, we tested geometric masks against state-of-the-art models. While the results yielded several insights, two key takeaways stand out as especially relevant for the rest of this work.
+In our first set of experiments, we tested geometric masks against state-of-the-art models. While the results yielded several insights, two key takeaways stand out as especially relevant for the rest of this work.
 
 \paragraph{Geometric mask attacks are simple, effective and transferable.}
 
-Our experiments show that hCAPTCHA-inspired geometric masks are (1) simple, (2) effective, noticeably reducing model accuracy, and (3) transferable, as they perform similarly across different models. The advantage they offer over traditional imperceptible black-box adversarial examples is their simplicity, which makes it feasible to reason about their influence on models, even in latent spaces. This enables us to study adversarial vulnerabilities more effectively. This is a valuable first step in breaking down the complexity of adversarial examples and understanding the underlying mechanisms that make them effective.
+Our experiments show that hCAPTCHA-inspired geometric masks are (1) simple, (2) effective, noticeably reducing model accuracy, and (3) transferable, as they perform similarly across different models. The advantage they offer over traditional imperceptible black-box adversarial examples is their simplicity, which makes it feasible to reason about their influence on models, even in latent spaces. This enables us to break down the complexity of adversarial vulnerabilities and understand the underlying mechanisms that make them effective.
 
 \paragraph{ResNet is an outlier.}
 
-We observed that most state-of-the-art architectures exhibited similar accuracy distributions when subjected to geometric masks. However, ResNet stood out as unusually sensitive to the Diamond and Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that ResNet results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
+We observed that most state-of-the-art architectures exhibited similar accuracy distributions when subjected to geometric masks. However, ResNet stood out as unusually sensitive to the Diamond and Knit pattern \textendash{} a curious finding, given that this pattern is the least effective mask overall when averaged across all models. This suggests that the ResNet model results should be interpreted with caution, as they may not fully represent the behavior of other models under geometric mask attacks.
 
 % 
 % experiments 2
@@ -955,7 +958,7 @@ We compared $2^3$ training configurations.
 
 The author's code included several improvements not mentioned in the paper, such as random resolution shuffling, which were recommended in the code comments for better results.
 
-We aimed to keep as many hyperparameters unchanged as possible while comparing the impact of three specific training enhancements: (1) nature inspired noise, (2) channel shuffling and (3) light FGSM adversarial training, resulting in $2^3$ possible training configurations.
+We aimed to keep as many hyperparameters unchanged as possible while comparing the impact of three specific training enhancements: (1) nature-inspired noise, (2) channel shuffling and (3) light FGSM adversarial training, resulting in $2^3$ possible training configurations.
 
 The nature-inspired noise works by adding noise, applying contrast adjustments, shifting pixel positions (jittering) and modifying resolutions. In the last step it combines these augmented outputs into a multichannel input to enhance training. The random channel resolution shuffling randomly shuffles the resolutions in the stack, while the light FGSM adversarial training applies FGSM adversarial training for a few epochs to improve adversarial robustness.
 
@@ -1002,11 +1005,11 @@ For the geometric masks, we extended our rendering pipeline from previous experi
 	\hfill
 	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/10_10_10_False.png}\caption{Decagon mask}\label{fig:atk4}\end{subfigure}
 
-	\caption{Selected examples of geometric masks used in our experiments with varying sides, count of shapes per row/column, number of concentric shapes and colors.}
+	\caption{Selected samples of all geometric masks used in our experiments. Masks have varying sides, count of shapes per row/column, number of concentric shapes and colors.}
 	\label{fig:attacks-v2}
 \end{figure}
 
-To narrow down the 96 geometric mask attacks, we did a preliminary exploratory analysis. We focused on the stronger ensemble accuracy (with and without natural training) since the ensemble consistently outperformed the last layer in all challenging experiments. This is further discussed in the results section. Figure~\ref{fig:mask-limit} shows the visual results of this analysis. We found that having 4 shapes per column and row, combined with 2 concentric shapes, was the most effective. Surprisingly, the number of sides had little impact on the mask's effectiveness, although triangles performed best overall. In every opacity, color, and side combination we tested, using colored masks (like those used by hCAPTCHA) outperformed monochrome masks by a wide margin. The most important parameters to vary in the remaining analyses were opacity, the number of shapes per row/column and whether the model was naturally trained. We discuss this narrowed subset of masks in the results section.
+To narrow down the 96 geometric mask attacks, we did a preliminary exploratory analysis. We focused on the stronger ensemble accuracy (with and without natural training) since the ensemble consistently outperformed the last layer in all challenging experiments. This is further discussed in the results section. Figure~\ref{fig:mask-limit} shows the visual results of this analysis. We found that having 4 shapes per column and row, combined with 2 concentric shapes, was the most effective. Surprisingly, the number of sides had little impact on the mask's effectiveness, although triangles performed best overall. In every opacity, color, and side combination we tested, using colored masks (like those used by hCAPTCHA) outperformed monochrome masks by a wide margin. The most important parameters to vary in the remaining analyses were opacity, the number of shapes per row/column and whether the model was naturally trained. This leaves us with 3 masks to evaluate on, shown in Figure~\ref{fig:attacks-v2-subset}.
 
 \begin{figure}
 	\centering
@@ -1015,14 +1018,36 @@ To narrow down the 96 geometric mask attacks, we did a preliminary exploratory a
 	\label{fig:mask-limit}
 \end{figure}
 
+\begin{figure}[th]
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/3_2_2_True.png}\caption{Two shapes per row/column}\label{fig:atk5}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/3_4_2_True.png}\caption{Four shapes per row/column}\label{fig:atk6}\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.19\textwidth}\centering\includegraphics[width=\linewidth]{figures/3_10_2_True.png}\caption{Ten shapes per row/column}\label{fig:atk7}\end{subfigure}
+
+	\caption{The 3 most effective geometric masks against the self-ensembled ResNet, based on preliminary analysis. All masks are colored triangles with 2 concentric shapes and a varying number of per row and column.}
+	\label{fig:attacks-v2-subset}
+\end{figure}
+
 \paragraph{Baseline.} We benchmarked a ResNet-50 for comparison.
 
 ... add everything to the baseline section ...
 
 
+
+
+
+
+
+
+
 \section{Results}
 
 In this section we present our findings on the self-ensembled ResNet model, as visualized in Figures~\ref{fig:fgsm-pgd} and~\ref{fig:mask-effective}.
+
+
+
+% describe results here
 
 \begin{figure}
 	\centering
@@ -1037,6 +1062,8 @@ In this section we present our findings on the self-ensembled ResNet model, as v
 	\caption{Evaluating the most effective masks on CIFAR10. The X-axis shows intermediary layers, the Y-axis shows accuracy, the black line indicates natural training with FGSM, dotted horizontal lines show ensemble performance.}
 	\label{fig:mask-effective}
 \end{figure}
+
+
 
 
 
@@ -1107,7 +1134,7 @@ do not use semicolons.
 do not use serial commas / oxford commas.
 
 do not use dancing metaphores.
-do not use the words: AI, delve, dive, deep, uncover, discover, explore, revolutionize, tapestry, intriguing, holistic, intersection, ethical considerations, area, realm, boasts, emerge, embrace, realm, underscore, embody, nestled, vibrant, blend, ample, capture, synergy, in the realm of, paramount.
+do not use the words: AI, significant, delve, dive, deep, uncover, discover, explore, revolutionize, tapestry, intriguing, holistic, intersection, ethical considerations, area, realm, boasts, emerge, embrace, realm, underscore, embody, nestled, vibrant, blend, ample, capture, synergy, in the realm of, paramount, employed.
 \end{verbatim}
 
 Alternatively, for quick edits, the following prompt was used:
