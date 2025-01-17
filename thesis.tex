@@ -143,9 +143,9 @@
 
 \chapter*{Originality}
 
-I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work \textendash{} including tables, maps and figures \textendash{} which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
+% I hereby declare that I have written this thesis independently, that I have completely specified the utilized sources and resources and that I have definitely marked all parts of the work \textendash{} including tables, maps and figures \textendash{} which belong to other works or to the internet, literally or extracted, by referencing the source as borrowed.
 
-I further declare that I have used generative AI tools only as an aid, and that my own intellectual and creative efforts predominate in this work. In the appendix ``Overview of Generative AI Tools Used'' I have listed all generative AI tools that were used in the creation of this work, and indicated where in the work they were used. If whole passages of text were used without substantial changes, I have indicated the input (prompts) I formulated and the IT application used with its product name and version number/date.
+% I further declare that I have used generative AI tools only as an aid, and that my own intellectual and creative efforts predominate in this work. In the appendix ``Overview of Generative AI Tools Used'' I have listed all generative AI tools that were used in the creation of this work, and indicated where in the work they were used. If whole passages of text were used without substantial changes, I have indicated the input (prompts) I formulated and the IT application used with its product name and version number/date.
 
 \section*{Papers}
 
@@ -1040,7 +1040,7 @@ We attacked the backbone with the same 3 geometric masks.
 
 The self-ensembler uses the default ResNet-50 implementation from \texttt{torchvision}, pretrained on ImageNet, as its backbone. To provide a reference point for the self-ensemble, we evaluated the backbone independently with the three masks to which the self-ensemble showed the highest sensitivity, applying the same range of opacities.
 
-For each mask and opacity combination, we evaluated 9 variants of the backbone by varying the training conditions. Specifically, we used 3 training epochs (0, 2, 6) and 3 adversarial training fractions (0, 0.1, 0.2). Each variant was tuned and evaluated with the same opacity. The results of these experiments are presented in Figure~\ref{fig:vanilla}. We believe that these adjustments, including adversarial training and tuning, create a fair comparison. This aligns with the self-ensemble, where tuning is required and linear probes for each intermediate layer are retrained from scratch on the dataset for each experiment. 
+For each mask and opacity combination, we evaluated 9 variants of the backbone by varying the training conditions. Specifically, we used 3 training epochs (0, 2, 6) and 3 adversarial training fractions (0, 0.5, 1.0). Each variant was tuned and evaluated with the same opacity. The results of these experiments are presented in Figure~\ref{fig:vanilla}. We believe that these adjustments, including adversarial training and tuning, create a fair comparison. This aligns with the self-ensemble, where tuning is required and linear probes for each intermediate layer are retrained from scratch on the dataset for each experiment. 
 
 \section{Results}
 
