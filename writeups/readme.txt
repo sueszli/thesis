@@ -7,4 +7,4 @@ outlook:
 
 - adapting to out of distribution (OOD) test cases: https://arxiv.org/pdf/2403.11691
 - titan paper, adapting at test-time
-- mechanistic interpretability trump neuron
+- mechanistic interpretability
