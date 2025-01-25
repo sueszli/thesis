@@ -5,6 +5,5 @@ paper collections:
 
 outlook:
 
-- adapting to out of distribution (OOD) test cases: https://arxiv.org/pdf/2403.11691
-- titan paper, adapting at test-time
+- test time training: https://arxiv.org/pdf/1909.13231
 - mechanistic interpretability
